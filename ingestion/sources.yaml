@@ -1,0 +1,355 @@
+# Official sources for Arrive. verified: false until a team member checks the page by hand.
+# URL status checked automatically on 2026-09-26 (HTTP 200). Topics use slugs from backend/app/data/topics.json.
+# URLs are the final URL after redirects. Content of each page was fetched and matched to its topic.
+# Note: ocdsb.ca and ocsb.ca are Ottawa's public English school boards (publicly funded, not city/provincial domains).
+sources:
+  # ---------- SIN ----------
+  - url: https://www.canada.ca/en/employment-social-development/services/sin/apply.html
+    title: "Social Insurance Number: Apply"
+    jurisdiction: federal
+    language: en
+    topics: [sin]
+    verified: false
+
+  # ---------- Health ----------
+  - url: https://www.ontario.ca/page/apply-ohip-and-get-health-card
+    title: Apply for OHIP and get a health card
+    jurisdiction: ontario
+    language: en
+    topics: [health_card]
+    verified: false
+  - url: https://www.ontario.ca/page/documents-needed-get-health-card
+    title: Documents needed to get a health card
+    jurisdiction: ontario
+    language: en
+    topics: [health_card]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/health-care/interim-federal-health-program/eligibility.html
+    title: "Temporary health care coverage (IFHP): Who is eligible and for how long"
+    jurisdiction: federal
+    language: en
+    topics: [health_card, immigration_status]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/health-care/interim-federal-health-program/coverage-summary.html
+    title: "Temporary health care coverage (IFHP): What is covered"
+    jurisdiction: federal
+    language: en
+    topics: [health_card]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/health-care/insurance-types.html
+    title: "Health care in Canada: Learn about other types of health insurance"
+    jurisdiction: federal
+    language: en
+    topics: [health_card]
+    verified: false
+
+  # ---------- Banking ----------
+  - url: https://www.canada.ca/en/financial-consumer-agency/services/banking/opening-bank-account.html
+    title: Opening a bank account
+    jurisdiction: federal
+    language: en
+    topics: [banking]
+    verified: false
+
+  # ---------- Housing / tenant rights ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/housing/renting.html
+    title: "Newcomers: Renting a home in Canada"
+    jurisdiction: federal
+    language: en
+    topics: [housing]
+    verified: false
+  - url: https://www.ontario.ca/page/renting-ontario-your-rights
+    title: "Renting in Ontario: Your rights"
+    jurisdiction: ontario
+    language: en
+    topics: [housing, legal_rights]
+    verified: false
+
+  # ---------- Taxes and benefits ----------
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/newcomers-canada-immigrants.html
+    title: Newcomers to Canada and the CRA
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits, child_benefit, sin]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/international-students-studying-canada.html
+    title: Taxes for international students studying in Canada
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits, study_permit]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/important-dates-individuals.html
+    title: Due dates and payment dates - Personal income tax
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit/get-benefit.html
+    title: How to get the benefit - Canada Groceries and Essentials Benefit (formerly GST/HST credit)
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+
+  # ---------- Canada Child Benefit ----------
+  - url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/who-apply.html
+    title: Who can apply - Canada child benefit (CCB)
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-apply.html
+    title: How to apply - Canada child benefit (CCB)
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit]
+    verified: false
+
+  # ---------- School registration ----------
+  - url: https://www.ontario.ca/page/find-elementary-or-secondary-school
+    title: Find an elementary or secondary school
+    jurisdiction: ontario
+    language: en
+    topics: [school_registration]
+    verified: false
+  - url: https://www.ocdsb.ca/our-schools/registration/elementary-secondary
+    title: Elementary & Secondary registration - Ottawa-Carleton District School Board
+    jurisdiction: ottawa
+    language: en
+    topics: [school_registration]
+    verified: false
+  - url: https://www.ocsb.ca/our-schools/register/
+    title: Register - The Ottawa Catholic School Board
+    jurisdiction: ottawa
+    language: en
+    topics: [school_registration]
+    verified: false
+
+  # ---------- Language classes ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/language-skills/classes.html
+    title: Language classes funded by the Government of Canada (LINC / CLIC)
+    jurisdiction: federal
+    language: en
+    topics: [language_classes]
+    verified: false
+
+  # ---------- Employment and credentials ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/job-search.html
+    title: Look for jobs in Canada
+    jurisdiction: federal
+    language: en
+    topics: [employment]
+    verified: false
+  - url: https://www.jobbank.gc.ca/home
+    title: Job Bank
+    jurisdiction: federal
+    language: en
+    topics: [employment]
+    verified: false
+  - url: https://www.canada.ca/en/employment-social-development/programs/foreign-credential-recognition.html
+    title: Foreign Credential Recognition
+    jurisdiction: federal
+    language: en
+    topics: [credentials, employment]
+    verified: false
+  - url: https://www.ontario.ca/page/work-your-profession-or-trade
+    title: Work in your profession or trade
+    jurisdiction: ontario
+    language: en
+    topics: [credentials, employment]
+    verified: false
+
+  # ---------- Driver's licence ----------
+  - url: https://www.ontario.ca/page/exchange-out-province-drivers-licence
+    title: Exchange an out-of-province driver's licence
+    jurisdiction: ontario
+    language: en
+    topics: [drivers_licence]
+    verified: false
+
+  # ---------- Transit ----------
+  - url: https://www.octranspo.com/en/fares/costs/
+    title: Prices - OC Transpo
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+  - url: https://www.octranspo.com/en/fares/reduced-fares/equipass/
+    title: EquiPass (low-income transit discount) - OC Transpo
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+  - url: https://www.octranspo.com/en/fares/reduced-fares/u-pass/
+    title: U-Pass (post-secondary students) - OC Transpo
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+
+  # ---------- Immigration status / refugees / PR ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/resettle-refugee/after-applying/prepare-arrival.html
+    title: Prepare for arrival - Refugees resettling to Canada
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/financial.html
+    title: Financial help for refugees (Resettlement Assistance Program, Immigration Loans Program)
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/government-assisted-refugee-program/providers.html
+    title: Find help to adjust as a refugee in Canada (RAP service provider organizations)
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status, other]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/after-next-steps.html
+    title: "Get a permanent resident card: Getting your PR card after you apply"
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/newcomer-services/eligibility.html
+    title: Eligibility for newcomer services
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status, other]
+    verified: false
+
+  # ---------- Study permit (international students) ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/while-you-study/study-permit-conditions.html
+    title: Your conditions as a study permit holder in Canada
+    jurisdiction: federal
+    language: en
+    topics: [study_permit]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/work-off-campus.html
+    title: Work off campus as an international student
+    jurisdiction: federal
+    language: en
+    topics: [study_permit, work_permit, employment]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/extend-study-permit/when-to-apply.html
+    title: "Extend your study permit or restore your status: When to apply"
+    jurisdiction: federal
+    language: en
+    topics: [study_permit]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/extend-study-permit/how-to-apply.html
+    title: "Extend your study permit or restore your status: How to apply"
+    jurisdiction: federal
+    language: en
+    topics: [study_permit]
+    verified: false
+
+  # ---------- Work permit ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/eligibility.html
+    title: "Post-graduation work permit: Who can apply"
+    jurisdiction: federal
+    language: en
+    topics: [work_permit, study_permit]
+    verified: false
+
+  # ---------- Sponsorship / citizenship ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship.html
+    title: Sponsor your family members to immigrate to Canada
+    jurisdiction: federal
+    language: en
+    topics: [sponsorship]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship/adult-minor/who.html
+    title: "Canadian citizenship for adults and minor children: Who can apply"
+    jurisdiction: federal
+    language: en
+    topics: [citizenship]
+    verified: false
+
+  # ---------- Legal rights ----------
+  - url: https://www.ontario.ca/page/find-lawyer-or-paralegal
+    title: Find a lawyer or paralegal (includes Legal Aid Ontario)
+    jurisdiction: ontario
+    language: en
+    topics: [legal_rights]
+    verified: false
+
+  # ---------- Scams ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/protect-fraud.html
+    title: Protect yourself from immigration fraud
+    jurisdiction: federal
+    language: en
+    topics: [scams]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/protect-fraud/newcomers.html
+    title: Fraud targeting newcomers
+    jurisdiction: federal
+    language: en
+    topics: [scams]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/protect-fraud/study-permit-fraud.html
+    title: International student fraud
+    jurisdiction: federal
+    language: en
+    topics: [scams, study_permit]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/corporate/scams-fraud.html
+    title: Scams and fraud - CRA
+    jurisdiction: federal
+    language: en
+    topics: [scams]
+    verified: false
+  - url: https://antifraudcentre-centreantifraude.ca/index-eng.htm
+    title: Canadian Anti-Fraud Centre
+    jurisdiction: federal
+    language: en
+    topics: [scams]
+    verified: false
+  - url: https://antifraudcentre-centreantifraude.ca/report-signalez-eng.htm
+    title: Report fraud and cybercrime - Canadian Anti-Fraud Centre
+    jurisdiction: federal
+    language: en
+    topics: [scams]
+    verified: false
+
+  # ---------- Other: newcomer services, phone, library ----------
+  - url: https://ircc.canada.ca/english/newcomers/services/index.asp
+    title: Find free newcomer services near you
+    jurisdiction: federal
+    language: en
+    topics: [other, language_classes, employment]
+    verified: false
+  - url: https://www.ontario.ca/page/getting-settled-ontario
+    title: Get settled in Ontario
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/communications.html
+    title: "Settling in Canada: Communications services (phone, internet)"
+    jurisdiction: federal
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://about.biblioottawalibrary.ca/en/get-library-card
+    title: Get a library card - Ottawa Public Library
+    jurisdiction: ottawa
+    language: en
+    topics: [other]
+    verified: false
+
+# ---------- Not covered by a verified URL (team to add / check by hand) ----------
+# emergency: ottawa.ca blocks automated fetching (Incapsula bot wall returns HTTP 200 with no content),
+#   so the page below could NOT be content-checked. Found via web search, title "When to call 9-1-1 and what to say".
+# - url: [VERIFY: team to open by hand] https://ottawa.ca/en/health-and-public-safety/emergency-preparedness/community-planning-resources-and-key-contacts/when-call-9-1-1-and-what-say
+#   title: When to call 9-1-1 and what to say
+#   jurisdiction: ottawa
+#   topics: [emergency]
+# other (Ottawa newcomer info): same ottawa.ca bot wall; both URLs return 200 but content could not be read.
+# - url: [VERIFY: team to open by hand] https://ottawa.ca/en/living-ottawa/newcomers
+# - url: [VERIFY: team to open by hand] https://ottawa.ca/en/family-and-social-services/newcomers
+# legal_rights: no ontario.ca page found that is specifically "Legal Aid Ontario" (legalaid.on.ca is LAO's own site, not checked).
+# - url: [VERIFY: team to add Legal Aid Ontario page, e.g. on legalaid.on.ca, if an agency domain is acceptable]
+# study_permit: health insurance for international students (OHIP does not list study permit holders as eligible).
+# - url: [VERIFY: team to add an official page on health coverage for international students in Ontario]

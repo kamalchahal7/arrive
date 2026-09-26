@@ -1,0 +1,46 @@
+# Full stack: Caddy (HTTPS) -> /api/* backend, everything else frontend.
+# Needs .env (DOMAIN), backend/.env and frontend/.env. See README.
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    env_file: backend/.env
+    expose:
+      - "8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE_URL: /api
+        NEXT_PUBLIC_ELEVENLABS_AGENT_ID: ${NEXT_PUBLIC_ELEVENLABS_AGENT_ID:-}
+    restart: unless-stopped
+    env_file: frontend/.env
+    environment:
+      # Server-side calls from staff pages go straight to the backend on the Docker network.
+      API_INTERNAL_URL: http://backend:8000/api
+    expose:
+      - "3000"
+
+volumes:
+  caddy_data:
+  caddy_config:
