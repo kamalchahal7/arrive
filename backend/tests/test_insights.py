@@ -30,7 +30,7 @@ async def test_overview_suppresses_every_small_group() -> None:
         if "GROUP BY language" in sql:
             return [{"language": "ar", "n": 20}, {"language": "ti", "n": 3}]
         if "GROUP BY channel" in sql:
-            return [{"channel": "web", "n": 36}, {"channel": "phone", "n": 4}]
+            return [{"channel": "web", "n": 36}, {"channel": "voice_web", "n": 4}]
         return []
 
     out = await insights.overview(RecordingPool(fetchrow=fetchrow, fetch=fetch, fetchval=True))
@@ -41,7 +41,7 @@ async def test_overview_suppresses_every_small_group() -> None:
     assert topics["housing"]["spike"] is True and topics["housing"]["change_pct"] == 212.5
     assert topics["citizenship"]["this_week"] == "<5" and topics["citizenship"]["change_pct"] is None
     assert {"language": "ti", "count": "<5"} in out["languages_this_week"]
-    assert {"channel": "phone", "count": "<5"} in out["channel_mix"]
+    assert {"channel": "voice_web", "count": "<5"} in out["channel_mix"]
 
 
 async def test_gap_examples_hidden_for_small_themes(fake_gemini) -> None:

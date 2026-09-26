@@ -1,4 +1,4 @@
-"""Web voice session + server tools called by the ElevenLabs agent (web and phone).
+"""Web voice session + server tools called by the ElevenLabs agent (web app only; there is no phone line).
 
 Tool calls must carry the header X-Arrive-Secret: VOICE_TOOL_SECRET. Responses are short, speakable text.
 """
@@ -24,7 +24,6 @@ from app.services.voice import VoiceError, session_credentials, speakable
 
 router = APIRouter(tags=["voice"])
 
-VoiceChannel = Literal["voice_web", "phone"]
 
 
 @router.get("/voice/session")
@@ -45,8 +44,9 @@ def require_tool_secret(x_arrive_secret: str | None = Header(default=None)) -> N
 tools = APIRouter(prefix="/voice/tools", tags=["voice-tools"], dependencies=[Depends(require_tool_secret)])
 
 
-def _channel(value: str | None) -> VoiceChannel:
-    return "voice_web" if value == "voice_web" else "phone"
+def _channel(value: str | None) -> str:
+    # The agent only runs in the web app, so every tool call is logged as web voice.
+    return "voice_web"
 
 
 def _profile_id(value: str | None) -> str | None:

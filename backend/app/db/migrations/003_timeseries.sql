@@ -13,7 +13,7 @@ CREATE INDEX IF NOT EXISTS source_snapshots_source_idx ON source_snapshots (sour
 CREATE TABLE IF NOT EXISTS request_log (
     time            timestamptz NOT NULL DEFAULT now(),
     id              uuid NOT NULL DEFAULT gen_random_uuid(),
-    channel         text NOT NULL CHECK (channel IN ('web', 'voice_web', 'phone')),
+    channel         text NOT NULL CHECK (channel IN ('web', 'voice_web')),
     kind            text NOT NULL DEFAULT 'ask' CHECK (kind IN ('ask', 'letter', 'scam', 'handoff', 'roadmap')),
     language        text NOT NULL,
     topic           text NOT NULL,

@@ -114,12 +114,12 @@ def test_voice_tool_accepts_right_secret(client: TestClient, monkeypatch: pytest
     from app.services.ask import AskResult
 
     async def fake_ask(pool: Any, question: str, **kw: Any) -> AskResult:
-        assert kw["channel"] == "phone" and kw["style"] == "voice"
+        assert kw["channel"] == "voice_web" and kw["style"] == "voice"
         return AskResult(request_id=None, status="answered", language="en", topic="sin", urgency="normal",
                          emergency=False, possible_scam=False, answer="You can apply online.")
 
     monkeypatch.setattr("app.routers.voice.ask", fake_ask)
-    res = client.post("/api/voice/tools/ask", json={"question": "How do I get a SIN?", "channel": "phone"},
+    res = client.post("/api/voice/tools/ask", json={"question": "How do I get a SIN?", "channel": "voice_web"},
                       headers={"X-Arrive-Secret": "test-secret"})
     assert res.status_code == 200 and res.json()["text"] == "You can apply online."
 

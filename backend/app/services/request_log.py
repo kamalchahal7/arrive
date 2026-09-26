@@ -19,7 +19,7 @@ from app.services.topics import clean_topic
 
 logger = logging.getLogger("arrive.request_log")
 
-CHANNELS = {"web", "voice_web", "phone"}
+CHANNELS = {"web", "voice_web"}
 KINDS = {"ask", "letter", "scam", "handoff", "roadmap"}
 KNOWN_REGIONS = {"ottawa", "ontario_other", "unknown"}
 KNOWN_STATUSES = {

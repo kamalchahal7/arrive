@@ -50,11 +50,6 @@ class Settings(BaseSettings):
     scheduler_enabled: bool = True
     ingest_hour_utc: int = 7
 
-    # Twilio (optional, reminders only)
-    twilio_account_sid: str = ""
-    twilio_auth_token: str = ""
-    twilio_from_number: str = ""
-
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]

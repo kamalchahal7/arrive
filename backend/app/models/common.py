@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 from app.services.retrieval import Passage
 
-Channel = Literal["web", "voice_web", "phone"]
+Channel = Literal["web", "voice_web"]
 Lang = Annotated[str, Field(min_length=2, max_length=8, pattern=r"^[a-zA-Z-]+$")]
 
 
