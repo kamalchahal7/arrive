@@ -1,0 +1,12 @@
+# Runtime dependencies (spec stack). Upper bounds guard against breaking majors during the hackathon.
+fastapi>=0.141,<1
+uvicorn[standard]>=0.54,<1
+pydantic>=2.11,<3
+pydantic-settings>=2.15,<3
+asyncpg>=0.31,<1
+httpx>=0.28,<1
+google-genai>=2.25,<3
+elevenlabs>=2.69,<3
+apscheduler>=3.11,<4
+slowapi>=0.1.10,<0.2
+python-multipart>=0.0.20
