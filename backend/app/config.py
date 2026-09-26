@@ -1,12 +1,16 @@
 """All backend settings, loaded from environment variables (and backend/.env in development)."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# backend/.env, found the same way whether we run from backend/, ingestion/ or the repo root.
+ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore")
 
     # Database (Tiger Cloud)
     database_url: str = ""
@@ -17,6 +21,10 @@ class Settings(BaseSettings):
     gemini_model_vision: str = ""
     gemini_embedding_model: str = ""
     embedding_dim: int = 768
+
+    # Retrieval
+    retrieval_top_k: int = 8
+    retrieval_min_similarity: float = 0.6
 
     # ElevenLabs
     elevenlabs_api_key: str = ""
@@ -37,6 +45,10 @@ class Settings(BaseSettings):
     # Privacy
     insights_min_group_size: int = 5
     request_log_retention_days: int = 365
+
+    # Scheduler (daily re-ingest). Disable in tests or when running several replicas.
+    scheduler_enabled: bool = True
+    ingest_hour_utc: int = 7
 
     # Twilio (optional, reminders only)
     twilio_account_sid: str = ""

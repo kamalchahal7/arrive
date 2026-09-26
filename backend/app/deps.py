@@ -1,9 +1,17 @@
-"""Shared FastAPI dependencies. Auth dependencies are added in Phase 6."""
+"""Shared FastAPI dependencies."""
 
 import asyncpg
 
-from app.db.pool import get_pool
+from app.db.pool import ensure_pool
+from app.errors import AppError
 
 
-def db_pool() -> asyncpg.Pool | None:
-    return get_pool()
+async def db_pool() -> asyncpg.Pool | None:
+    return await ensure_pool()
+
+
+async def require_db() -> asyncpg.Pool:
+    pool = await ensure_pool()
+    if pool is None:
+        raise AppError("db_unavailable", status_code=503)
+    return pool

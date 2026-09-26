@@ -10,3 +10,6 @@ elevenlabs>=2.69,<3
 apscheduler>=3.11,<4
 slowapi>=0.1.10,<0.2
 python-multipart>=0.0.20
+beautifulsoup4>=4.13,<5
+pyyaml>=6,<7
+pyjwt[crypto]>=2.10,<3

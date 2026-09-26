@@ -1,0 +1,26 @@
+{
+  "_review": "fr and ar labels need native speaker review",
+  "topics": [
+    { "id": "health_card", "en": "Health card", "fr": "Carte santé", "ar": "البطاقة الصحية" },
+    { "id": "sin", "en": "Social Insurance Number", "fr": "Numéro d'assurance sociale", "ar": "رقم التأمين الاجتماعي" },
+    { "id": "banking", "en": "Banking", "fr": "Services bancaires", "ar": "الخدمات المصرفية" },
+    { "id": "housing", "en": "Housing", "fr": "Logement", "ar": "السكن" },
+    { "id": "taxes_benefits", "en": "Taxes and benefits", "fr": "Impôts et prestations", "ar": "الضرائب والإعانات" },
+    { "id": "child_benefit", "en": "Child benefit", "fr": "Allocation pour enfants", "ar": "إعانة الأطفال" },
+    { "id": "school_registration", "en": "School registration", "fr": "Inscription à l'école", "ar": "التسجيل في المدرسة" },
+    { "id": "language_classes", "en": "Language classes", "fr": "Cours de langue", "ar": "دروس اللغة" },
+    { "id": "employment", "en": "Jobs and work", "fr": "Emploi", "ar": "العمل والوظائف" },
+    { "id": "credentials", "en": "Diplomas and credentials", "fr": "Diplômes et titres de compétences", "ar": "الشهادات والمؤهلات" },
+    { "id": "drivers_licence", "en": "Driver's licence", "fr": "Permis de conduire", "ar": "رخصة القيادة" },
+    { "id": "transit", "en": "Public transit", "fr": "Transport en commun", "ar": "المواصلات العامة" },
+    { "id": "immigration_status", "en": "Immigration status", "fr": "Statut d'immigration", "ar": "وضع الهجرة" },
+    { "id": "work_permit", "en": "Work permit", "fr": "Permis de travail", "ar": "تصريح العمل" },
+    { "id": "study_permit", "en": "Study permit", "fr": "Permis d'études", "ar": "تصريح الدراسة" },
+    { "id": "sponsorship", "en": "Sponsoring family", "fr": "Parrainage de la famille", "ar": "كفالة الأسرة" },
+    { "id": "citizenship", "en": "Citizenship", "fr": "Citoyenneté", "ar": "الجنسية" },
+    { "id": "legal_rights", "en": "Legal rights", "fr": "Droits juridiques", "ar": "الحقوق القانونية" },
+    { "id": "scams", "en": "Scams and fraud", "fr": "Arnaques et fraude", "ar": "الاحتيال" },
+    { "id": "emergency", "en": "Emergency", "fr": "Urgence", "ar": "الطوارئ" },
+    { "id": "other", "en": "Other", "fr": "Autre", "ar": "أخرى" }
+  ]
+}
