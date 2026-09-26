@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Arrive",
+    "description": "Official government information for newcomers to Canada, in your language."
+  },
+  "Common": {
+    "skipToContent": "Skip to main content"
+  },
+  "Welcome": {
+    "title": "Welcome to Canada",
+    "subtitle": "Official information, explained in your language.",
+    "greetingsLabel": "Welcome in other languages",
+    "chooseLanguage": "Choose your language",
+    "privacy": "No account needed. Asking questions never affects your immigration status."
+  }
+}

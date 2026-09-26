@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/*
+  Design tokens (SPEC 9.1). Tailwind 4 reads its theme from CSS, so these replace tailwind.config.ts.
+  Usage: bg-ground, bg-surface, text-ink, text-muted, border-line, bg-teal, hover:bg-teal-hover, ...
+*/
+@theme {
+  --color-ground: #f6f3ec;
+  --color-surface: #ffffff;
+  --color-ink: #1c2321;
+  --color-muted: #5b635f;
+  --color-line: #e2ddd2;
+  --color-teal: #0e5e57;
+  --color-teal-hover: #0a4540;
+  --color-teal-light: #e3efec;
+  --color-amber-light: #fbeedc;
+  --color-amber-ink: #6b3a0e;
+  --color-danger-light: #fbeae6;
+  --color-danger-ink: #8e2a1d;
+  --color-sidebar: #123b37;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-atkinson), system-ui, sans-serif;
+  --font-arabic: var(--font-naskh), "Noto Naskh Arabic", Tahoma, sans-serif;
+
+  --radius-card: 16px;
+}
+
+html {
+  background: var(--color-ground);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+/* Arabic and Farsi use an Arabic-script face for body and headings. */
+:lang(ar) body,
+:lang(fa) body,
+:lang(ar) .font-display,
+:lang(fa) .font-display {
+  font-family: var(--font-arabic);
+}
+
+/* Visible focus ring on every interactive element (WCAG 2.4.7). */
+:focus-visible {
+  outline: 3px solid var(--color-teal);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

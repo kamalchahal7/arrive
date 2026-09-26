@@ -1,0 +1,17 @@
+{
+  "_review": "needs native speaker review",
+  "Metadata": {
+    "title": "Arrive",
+    "description": "معلومات حكومية رسمية للقادمين الجدد إلى كندا، بلغتك."
+  },
+  "Common": {
+    "skipToContent": "انتقل إلى المحتوى الرئيسي"
+  },
+  "Welcome": {
+    "title": "مرحبًا بك في كندا",
+    "subtitle": "معلومات رسمية، مشروحة بلغتك.",
+    "greetingsLabel": "الترحيب بلغات أخرى",
+    "chooseLanguage": "اختر لغتك",
+    "privacy": "لا تحتاج إلى حساب. طرح الأسئلة لا يؤثر أبدًا على وضع الهجرة الخاص بك."
+  }
+}

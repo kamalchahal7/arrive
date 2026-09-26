@@ -1,0 +1,17 @@
+{
+  "_review": "needs native speaker review",
+  "Metadata": {
+    "title": "Arrive",
+    "description": "Information officielle du gouvernement pour les nouveaux arrivants au Canada, dans votre langue."
+  },
+  "Common": {
+    "skipToContent": "Aller au contenu principal"
+  },
+  "Welcome": {
+    "title": "Bienvenue au Canada",
+    "subtitle": "L'information officielle, expliquée dans votre langue.",
+    "greetingsLabel": "Bienvenue dans d'autres langues",
+    "chooseLanguage": "Choisissez votre langue",
+    "privacy": "Aucun compte requis. Poser des questions n'a jamais d'effet sur votre statut d'immigration."
+  }
+}
