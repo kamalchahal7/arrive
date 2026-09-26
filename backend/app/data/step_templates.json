@@ -1,0 +1,779 @@
+[
+  {
+    "id": "settlement_services",
+    "topic": "other",
+    "order_hint": 10,
+    "title_en": "Connect with a free newcomer (settlement) agency",
+    "summary_en": "Settlement agencies funded by the Government of Canada help newcomers adjust to life in Canada, find a job and learn English or French. Permanent residents, including resettled refugees, can use these services for free.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [],
+    "where_en": "Use the online service finder to find an agency near you. Call or email before you go in person.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 7,
+      "official": false,
+      "label_en": "Suggested: in your first week"
+    },
+    "source_url": "https://ircc.canada.ca/english/newcomers/services/index.asp",
+    "unlocks": ["language_classes"],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page lists no documents to bring; check with a local agency what they ask for]",
+      "[VERIFY: government-assisted refugees are met by a Resettlement Assistance Program (RAP) provider; IRCC's RAP list shows Catholic Centre for Immigrants for Ottawa. Decide if this step should point RAP clients there instead]",
+      "[VERIFY: international students are not in the page's eligibility list, so this step is refugee_pr only]"
+    ]
+  },
+  {
+    "id": "sin",
+    "topic": "sin",
+    "order_hint": 20,
+    "title_en": "Get your Social Insurance Number (SIN)",
+    "summary_en": "A SIN is a 9-digit number you need to work in Canada or to get government programs and benefits.",
+    "conditions": {
+      "statuses": ["refugee_pr", "international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Permanent residents: your PR card, or your Confirmation of Permanent Residence (COPR) if you became a PR less than 1 year ago",
+      "International students: your study permit, if it says you \"may accept employment\" or \"may work\" in Canada",
+      "A second ID with your legal name and date of birth, such as a passport",
+      "Completed and signed SIN application form"
+    ],
+    "where_en": "Online, by mail, or in person with Service Canada",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: in your first 2 weeks"
+    },
+    "source_url": "https://www.canada.ca/en/employment-social-development/services/sin/apply.html",
+    "unlocks": ["work_off_campus", "job_search", "child_benefit", "cgeb_new_resident", "child_benefit_student"],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: document list against the page; the page's tool gives the exact list per status and per method (online, mail, in person)]",
+      "[VERIFY: documents must be valid digital copies of originals and in English or French, or translated, per the page]",
+      "[VERIFY: whether the application form is needed for every method, or only for mail]",
+      "[VERIFY: 'unlocks' for benefits is based on the CRA newcomers page ('You need a SIN to get benefit and credit payments'); the CRA also mentions a temporary tax number (TTN) if you can't get a SIN]"
+    ]
+  },
+  {
+    "id": "ifhp",
+    "topic": "health_card",
+    "order_hint": 30,
+    "title_en": "Check your temporary health coverage (IFHP)",
+    "summary_en": "The Interim Federal Health Program (IFHP) gives resettled refugees limited, temporary health coverage until they qualify for provincial health insurance, such as OHIP.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your unique client identifier (UCI) number, found on the official documents IRCC sent you",
+      "An email address, to create your IFHP portal account"
+    ],
+    "where_en": "Online, in the Medavie Blue Cross IFHP portal (check if you are covered, what is covered, and where to get care)",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 3,
+      "official": false,
+      "label_en": "Suggested: in your first few days"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/health-care/interim-federal-health-program/eligibility.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: IFHP applies to refugees and protected persons only, not to other permanent residents in the refugee_pr group; consider adding a sub-status condition]",
+      "[VERIFY: for resettled refugees the page says basic coverage lasts until provincial insurance starts; supplemental benefits and prescriptions end when RAP income support or private sponsorship support ends]",
+      "[VERIFY: the coverage page says care must come from IFHP-registered providers, with a co-payment for prescriptions and supplemental benefits]"
+    ]
+  },
+  {
+    "id": "ohip",
+    "topic": "health_card",
+    "order_hint": 40,
+    "title_en": "Apply for OHIP and get your Ontario health card",
+    "summary_en": "OHIP is Ontario's health plan. It pays for many health services, like visits to a family doctor or an emergency room. If you qualify, your coverage starts right away, with no waiting period.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": ["ontario"],
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Completed Registration for Ontario Health Insurance Coverage form",
+      "1 original document that proves your immigration status (for example, a Permanent Resident Card)",
+      "1 document that proves you live in Ontario (for example, a rental or lease agreement)",
+      "1 original document that proves your identity (for example, a passport)"
+    ],
+    "where_en": "In person at a ServiceOntario centre (photocopies are not accepted)",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: in your first 2 weeks"
+    },
+    "source_url": "https://www.ontario.ca/page/apply-ohip-and-get-health-card",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: full list of accepted documents is on ontario.ca/page/documents-needed-get-health-card (in sources); it also accepts the COPR and a letter from the IRB confirming protected person status]",
+      "[VERIFY: an IRCC video says provincial coverage 'may take up to 3 months'; the Ontario page (updated July 21, 2025) says there is no longer a waiting period. Use the Ontario page]",
+      "[VERIFY: study permit holders are not in the page's list of eligible statuses, so this step is refugee_pr only]"
+    ]
+  },
+  {
+    "id": "bank_account",
+    "topic": "banking",
+    "order_hint": 50,
+    "title_en": "Open a bank account",
+    "summary_en": "You have the right to open a bank account in Canada, even if you don't have a job or money to put in right away. Ask about fees before you sign.",
+    "conditions": {
+      "statuses": ["refugee_pr", "international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "2 original ID documents from the bank's approved list: one with your name and address, one with your name and date of birth (a foreign passport is on the list)",
+      "Or: 1 ID with your name and date of birth, if a customer in good standing or a respected community member confirms who you are"
+    ],
+    "where_en": "At a bank or credit union. You may need to go in person if you are not a Canadian citizen.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: in your first 2 weeks"
+    },
+    "source_url": "https://www.canada.ca/en/financial-consumer-agency/services/banking/opening-bank-account.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page lists 'identification issued by the Government of Canada' but does not name the PR card, COPR or study permit specifically]",
+      "[VERIFY: the CRA newcomers page says a SIN is needed to 'open most types of bank accounts'; the FCAC page does not mention a SIN. Decide whether bank_account should depend on sin]"
+    ]
+  },
+  {
+    "id": "phone_plan",
+    "topic": "other",
+    "order_hint": 60,
+    "title_en": "Get a phone plan",
+    "summary_en": "To get a cell phone or home phone, contact a private phone company. Plans and monthly prices are different, so compare before you sign up.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "2 pieces of ID (for example, a passport)"
+    ],
+    "where_en": "At a private phone company. If you have no credit history or job, tell them you are new to Canada and ask what options you have.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 7,
+      "official": false,
+      "label_en": "Suggested: in your first week"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/communications.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: source is IRCC's general 'Communications services' page, not a consumer-protection page; the team may prefer a CRTC wireless rights page if one is added and fetched]",
+      "[VERIFY: page says you might be asked to agree to a credit check or give proof of employment]",
+      "[VERIFY: consider also showing this step to refugee_pr (not added to keep that roadmap at 14 steps)]"
+    ]
+  },
+  {
+    "id": "transit_pass",
+    "topic": "transit",
+    "order_hint": 70,
+    "title_en": "Get a Presto card and check if you qualify for EquiPass",
+    "summary_en": "OC Transpo buses and the O-Train use a Presto card. If your family income is low, the EquiPass gives you a monthly pass or single rides at about half the regular price.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": ["ontario"],
+      "cities": ["ottawa"],
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Completed EquiPass application form",
+      "Proof of income: your CRA Notice of Assessment, or other documents if you are a newcomer who has not filed taxes yet"
+    ],
+    "where_en": "Get the form online, by mail, at the OC Transpo Customer Service Centre (Rideau Centre), or at a City of Ottawa Client Service Centre",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: in your first 2 weeks"
+    },
+    "source_url": "https://www.octranspo.com/en/fares/reduced-fares/equipass/",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page says you should NOT apply for EquiPass if you currently receive transportation benefits from the Government-Assisted Refugee program (GAR)]",
+      "[VERIFY: which 'other documentation' newcomers can use instead of a Notice of Assessment; the page says to contact OC Transpo]",
+      "[VERIFY: the page says the Presto card is free for first-time applicants who qualify]"
+    ]
+  },
+  {
+    "id": "upass",
+    "topic": "transit",
+    "order_hint": 70,
+    "title_en": "Use your U-Pass for OC Transpo",
+    "summary_en": "Full-time students at participating Ottawa schools get a U-Pass. It is paid in your student fees and lets you ride OC Transpo and STO as much as you want during the term.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": ["ontario"],
+      "cities": ["ottawa"],
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your student card (at Algonquin College, Carleton University and the University of Ottawa, the U-Pass is built into it)"
+    ],
+    "where_en": "Through your school; contact your student association for details",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 7,
+      "official": false,
+      "label_en": "Suggested: before your first week of classes"
+    },
+    "source_url": "https://www.octranspo.com/en/fares/reduced-fares/u-pass/",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: participating schools listed on the page: Carleton University, University of Ottawa, Saint Paul University, Algonquin College]",
+      "[VERIFY: how Saint Paul University students get their U-Pass is not described on the page]",
+      "[VERIFY: students at other schools, or part-time students, pay regular Presto fares (octranspo.com/en/fares/costs/)]"
+    ]
+  },
+  {
+    "id": "work_off_campus",
+    "topic": "study_permit",
+    "order_hint": 80,
+    "title_en": "Know the rules for working off campus",
+    "summary_en": "If your permit allows it, you can work off campus up to 24 hours a week during school terms, and unlimited hours during scheduled breaks. Working more than allowed can make you lose your student status.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your study permit, with conditions printed on it that allow you to work off campus",
+      "Your Social Insurance Number (SIN)"
+    ],
+    "where_en": "No application needed. You and your employer must check that you meet all the rules before you start working.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: before you look for a job (you can only start working once your study program begins)"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/work-off-campus.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: full requirements on the page: full-time student at a designated learning institution, program at least 6 months long leading to a degree, diploma or certificate, and a valid study permit]",
+      "[VERIFY: you can't work off campus during an authorized leave or if you are only in an ESL/FSL program]",
+      "[VERIFY: you must keep track of your own hours; remote work for an employer outside Canada does not count toward the 24 hours]"
+    ]
+  },
+  {
+    "id": "school_registration",
+    "topic": "school_registration",
+    "order_hint": 90,
+    "title_en": "Register your children for school",
+    "summary_en": "Your child's public school depends on where you live. Find your school with the board's School Locator, then fill in the online registration form.",
+    "conditions": {
+      "statuses": ["refugee_pr", "international_student"],
+      "provinces": ["ontario"],
+      "cities": ["ottawa"],
+      "requires_children": true,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "1 proof of your child's age (for example, birth certificate, PR card or Confirmation of Permanent Residence, or passport)",
+      "2 proofs of address (for example, a rent or lease agreement, plus a utility bill or bank statement)",
+      "Parents with temporary status (for example, refugee or study permit): your immigration documents",
+      "High school students: most recent report card or transcript, if you have one",
+      "Your child's immunization (vaccine) records, to keep Ottawa Public Health up to date"
+    ],
+    "where_en": "Online registration form on the Ottawa-Carleton District School Board website (use a computer, not a phone or tablet). The school then confirms your documents.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 14,
+      "official": false,
+      "label_en": "Suggested: in your first 2 weeks"
+    },
+    "source_url": "https://www.ocdsb.ca/our-schools/registration/elementary-secondary",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: this is the OCDSB (English public board) process only; the Ottawa Catholic School Board (ocsb.ca, in sources) and the French boards have their own steps]",
+      "[VERIFY: OCDSB asks families with temporary status to send immigration documents to its admissions office; contact details are on the page]",
+      "[VERIFY: driver's licences and mobile phone bills are NOT accepted as proof of address; some schools ask for 3 proofs of address]",
+      "[VERIFY: ontario.ca/page/find-elementary-or-secondary-school says most children can attend a publicly funded school for free regardless of immigration status; consider adding this line to the summary]"
+    ]
+  },
+  {
+    "id": "child_benefit",
+    "topic": "child_benefit",
+    "order_hint": 100,
+    "title_en": "Apply for the Canada Child Benefit (CCB)",
+    "summary_en": "The Canada Child Benefit is a monthly, tax-free payment to help families with the cost of raising children under 18. Apply as soon as you are eligible.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": true,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Form RC66, Canada Child Benefits Application",
+      "Schedule RC66SCH, Status in Canada/Statement of Income (for newcomers)",
+      "Proof of birth for each child, with a translation if it is not in English or French"
+    ],
+    "where_en": "Newcomers mail Form RC66 and Schedule RC66SCH to their CRA tax centre",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 30,
+      "official": false,
+      "label_en": "Suggested: in your first month (the CRA says to apply as soon as you are eligible)"
+    },
+    "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-apply.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: 'monthly, tax-free, children under 18' comes from the CRA newcomers page, not the how-to-apply page]",
+      "[VERIFY: when two parents live together, the page says the female parent is presumed responsible and should apply, unless a signed letter says otherwise]",
+      "[VERIFY: if your spouse or partner was a non-resident for part of the year, Form CTB9 is also needed]",
+      "[VERIFY: applying with RC66 also counts as your Canada Groceries and Essentials Benefit application (per the CGEB page)]"
+    ]
+  },
+  {
+    "id": "cgeb_new_resident",
+    "topic": "taxes_benefits",
+    "order_hint": 110,
+    "title_en": "Apply for the Canada Groceries and Essentials Benefit (formerly GST/HST credit)",
+    "summary_en": "This benefit (formerly the GST/HST credit) is a tax-free payment every 3 months. As a new resident, you can apply before you file your first tax return.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "No children: the online Form RC151",
+      "Children under 19: the paper Form RC151 (or Form RC66, if you are eligible for the Canada Child Benefit)",
+      "Proof of birth for each child you include"
+    ],
+    "where_en": "Online (no children) or by mail to your CRA tax centre (with children). Only one application per household.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 30,
+      "official": false,
+      "label_en": "Suggested: in your first month"
+    },
+    "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit/get-benefit.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the old GST/HST credit page now says 'No longer available'; the benefit was renamed. Check all app copy uses the new name]",
+      "[VERIFY: international students who are residents of Canada for tax purposes may also be able to apply; not added to the student roadmap]",
+      "[VERIFY: the CRA newcomers page says you may be asked for income from all sources for up to 2 years before you arrived]"
+    ]
+  },
+  {
+    "id": "language_classes",
+    "topic": "language_classes",
+    "order_hint": 120,
+    "title_en": "Sign up for free English or French classes (LINC/CLIC)",
+    "summary_en": "Permanent residents and protected persons can take English or French classes at no cost. Classes can be online or in person, full-time or part-time.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [],
+    "where_en": "Start at an organization that helps newcomers. They will send you for a language assessment, then you register for classes.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 21,
+      "official": false,
+      "label_en": "Suggested: in your first 3 weeks"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/language-skills/classes.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page lists no documents for the assessment or registration]",
+      "[VERIFY: the page says some locations offer child minding and transportation; availability in Ottawa not confirmed]",
+      "[VERIFY: a CLB level 4 or higher certificate in speaking and listening can be used as proof for the citizenship language requirement, per the page]"
+    ]
+  },
+  {
+    "id": "library_card",
+    "topic": "other",
+    "order_hint": 130,
+    "title_en": "Get an Ottawa Public Library card",
+    "summary_en": "With a library card you can borrow books, ebooks and movies, use public computers, and find language learning and online classes.",
+    "conditions": {
+      "statuses": ["refugee_pr", "international_student"],
+      "provinces": ["ontario"],
+      "cities": ["ottawa"],
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Photo ID",
+      "Proof of address",
+      "No ID or no permanent address? You can still visit a branch to get a card"
+    ],
+    "where_en": "In person at any of the library's 33 branches (some cards can be started online)",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 30,
+      "official": false,
+      "label_en": "Suggested: in your first month"
+    },
+    "source_url": "https://about.biblioottawalibrary.ca/en/get-library-card",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page lists fees only for people who live outside Ottawa; confirm cards are free for Ottawa residents before saying 'free']",
+      "[VERIFY: children 0-15 need a parent's signature; teens 16-17 do not]"
+    ]
+  },
+  {
+    "id": "job_search",
+    "topic": "employment",
+    "order_hint": 140,
+    "title_en": "Start looking for a job",
+    "summary_en": "Newcomer organizations and Job Bank can help you find work, write a résumé and get ready for interviews. You need a SIN to work in Canada.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your Social Insurance Number (SIN)",
+      "A résumé and cover letter"
+    ],
+    "where_en": "An immigrant-serving organization, Job Bank online, or a Service Canada Centre",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 30,
+      "official": false,
+      "label_en": "Suggested: in your first month"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/job-search.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: for regulated jobs (for example, doctor, nurse, engineer), link the credentials pages in sources: ontario.ca/page/work-your-profession-or-trade and canada.ca foreign credential recognition]",
+      "[VERIFY: the page mentions bridging programs and the Federal Internship for Newcomers Program; eligibility not checked]"
+    ]
+  },
+  {
+    "id": "drivers_licence",
+    "topic": "drivers_licence",
+    "order_hint": 150,
+    "title_en": "Switch to an Ontario driver's licence (if you drive)",
+    "summary_en": "When you move to Ontario, you can use a valid licence from another country for 60 days. After that, you need an Ontario driver's licence. You may need to take tests, depending on where your licence is from.",
+    "conditions": {
+      "statuses": ["refugee_pr", "international_student"],
+      "provinces": ["ontario"],
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your original, valid foreign driver's licence",
+      "Original identity documents showing your legal name and date of birth",
+      "Original documents showing your driving experience, in English or French, if you have them",
+      "A translation by an approved translator, if your licence is not in English or French"
+    ],
+    "where_en": "In person at a DriveTest centre",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 60,
+      "official": true,
+      "label_en": "Within 60 days of moving to Ontario, if you drive"
+    },
+    "source_url": "https://www.ontario.ca/page/exchange-out-province-drivers-licence",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page says 'you can use a valid licence from another province, state or country for 60 days. After 60 days, you need to switch to an Ontario driver's licence']",
+      "[VERIFY: whether international students count as 'new residents' for this 60-day rule, or as visitors (ontario.ca/page/drive-ontario-visitors, not in sources)]",
+      "[VERIFY: the page links to special exemptions for protected persons and refugees who can't provide a valid original licence]",
+      "[VERIFY: fees apply; amounts are not on the page. A vision test is required; knowledge or road tests depend on your country]"
+    ]
+  },
+  {
+    "id": "scams_student",
+    "topic": "scams",
+    "order_hint": 160,
+    "title_en": "Learn the warning signs of student immigration scams",
+    "summary_en": "Be careful if someone promises you a job or permanent residence, or tells you that you can stay longer than your study permit allows. Pay tuition only to your school, and never send documents or money through social media.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [],
+    "where_en": "No application. If something seems suspicious, report it (see the IRCC fraud and Canadian Anti-Fraud Centre pages).",
+    "timing": {
+      "kind": "none",
+      "official": false,
+      "label_en": "Suggested: read this in your first month"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/protect-fraud/study-permit-fraud.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the page is written mostly for people before they apply; confirm it is the best page for students already in Canada (alternative: protect-fraud/newcomers.html, in sources)]",
+      "[VERIFY: only paid representatives authorized in Canada (lawyers, paralegals, Quebec notaries, registered consultants) can charge fees for immigration help, per the page]",
+      "[VERIFY: consider a matching scams step for refugee_pr using protect-fraud/newcomers.html]"
+    ]
+  },
+  {
+    "id": "tax_return",
+    "topic": "taxes_benefits",
+    "order_hint": 170,
+    "title_en": "File your tax return every year",
+    "summary_en": "File a tax return every year, even if you had no income. The CRA uses it to calculate your benefit payments, like the Canada Child Benefit. Your first return is for the year you arrived.",
+    "conditions": {
+      "statuses": ["refugee_pr"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your tax slips from your employer or other payers",
+      "Your SIN (or a temporary tax number from the CRA)"
+    ],
+    "where_en": "Online with NETFILE-certified tax software (some are free), on paper by mail, or at a free tax clinic if you have a modest income and a simple tax situation",
+    "timing": {
+      "kind": "annual_deadline",
+      "month": 4,
+      "day": 30,
+      "official": true,
+      "label_en": "Due April 30 each year (June 15 if you or your partner are self-employed)"
+    },
+    "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/newcomers-canada-immigrants.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: page example: if you arrived in 2025, your 2025 return is due April 30, 2026]",
+      "[VERIFY: for the year you arrived, you only report income received after you arrived in Canada (see 'Completing your return for newcomers', not in sources)]",
+      "[VERIFY: keep supporting documents for at least 6 years, per the page]"
+    ]
+  },
+  {
+    "id": "study_permit_conditions",
+    "topic": "study_permit",
+    "order_hint": 10,
+    "title_en": "Know your study permit conditions",
+    "summary_en": "To keep your student status, stay enrolled at your school, keep making progress in your program, and follow the conditions printed on your permit. If you don't, you may lose your status and have to leave Canada.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Your study permit (read the conditions printed on it)"
+    ],
+    "where_en": "Nothing to submit. IRCC may ask you to prove you meet your conditions, for example with enrolment letters or transcripts from your school.",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 7,
+      "official": false,
+      "label_en": "Suggested: in your first week"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/while-you-study/study-permit-conditions.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: you must be enrolled full-time or part-time every academic semester (except scheduled breaks), and authorized leaves can't be longer than 150 days, per the page]",
+      "[VERIFY: to change post-secondary schools you must apply to extend your study permit, per the page]",
+      "[VERIFY: if you don't meet your conditions, you may have to wait 6 months before applying for a new study permit, visitor visa or work permit in Canada]"
+    ]
+  },
+  {
+    "id": "tax_return_student",
+    "topic": "taxes_benefits",
+    "order_hint": 170,
+    "title_en": "Find out if you need to file a Canadian tax return",
+    "summary_en": "As an international student, you may need to file a Canadian tax return. It depends on your residency status for tax purposes, which is based on your ties to Canada, like a home here.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "Optional: Form NR74, if you want the CRA's opinion on your residency status"
+    ],
+    "where_en": "Canada Revenue Agency (CRA)",
+    "timing": {
+      "kind": "annual_deadline",
+      "month": 4,
+      "day": 30,
+      "official": false,
+      "label_en": "Suggested: check your status before tax season each spring"
+    },
+    "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/international-students-studying-canada.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: the April 30 filing date is on the CRA due dates page (in sources), not on this page; set official true only if the team uses that page as source]",
+      "[VERIFY: page was last updated 2022-01-18]"
+    ]
+  },
+  {
+    "id": "study_permit_extension",
+    "topic": "study_permit",
+    "order_hint": 180,
+    "title_en": "Extend your study permit before it expires",
+    "summary_en": "If you need more time to finish your studies, apply to extend your study permit before it expires. If you apply in time and stay in Canada, you can keep studying under your current conditions while you wait for a decision.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [
+      "A valid passport (your study permit can't be extended past your passport's expiry date)"
+    ],
+    "where_en": "With IRCC (see the 'How to apply' page)",
+    "timing": {
+      "kind": "before_permit_expiry",
+      "days_before": 90,
+      "official": false,
+      "label_en": "Suggested: start 90 days before your permit expires"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/extend-study-permit/when-to-apply.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: page statement: 'you must apply to extend your permit at least 30 days before it expires']",
+      "[VERIFY: if you finish your studies early, your permit expires 90 days after you complete your studies, or on the date on the permit, whichever comes first]",
+      "[VERIFY: full document list (letter of acceptance or enrolment, possibly a provincial attestation letter, payment card) is on the 'How to apply' page in sources, which says you must apply online]"
+    ]
+  },
+  {
+    "id": "pgwp",
+    "topic": "work_permit",
+    "order_hint": 190,
+    "title_en": "Learn about the post-graduation work permit (PGWP)",
+    "summary_en": "After you graduate, you may be able to get a post-graduation work permit. You must apply within 180 days of getting confirmation that you finished your program.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": false,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 0
+    },
+    "documents": [],
+    "where_en": "With IRCC (see the post-graduation work permit pages)",
+    "timing": {
+      "kind": "none",
+      "official": false,
+      "label_en": "Suggested: read this in your last year of study"
+    },
+    "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/eligibility.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: general rules on the page: PGWP-eligible school, program at least 8 months long, full-time status each semester (part-time allowed in the final semester), apply within 180 days, study permit valid at some point in those 180 days]",
+      "[VERIFY: field-of-study requirements may apply; not everyone is eligible (for example, ESL/FSL only, or more than 50% distance learning)]",
+      "[VERIFY: the page warns not to let your status expire while you wait for your marks]",
+      "[VERIFY: documents to include are not listed in general terms on this page; check the 'How to apply' page]"
+    ]
+  },
+  {
+    "id": "child_benefit_student",
+    "topic": "child_benefit",
+    "order_hint": 200,
+    "title_en": "Check if you can get the Canada Child Benefit",
+    "summary_en": "Temporary residents, like international students, may get the Canada Child Benefit after living in Canada for 18 months, if they have a valid permit in the 19th month.",
+    "conditions": {
+      "statuses": ["international_student"],
+      "provinces": null,
+      "cities": null,
+      "requires_children": true,
+      "requires_seniors": false,
+      "min_weeks_since_arrival": 78
+    },
+    "documents": [
+      "A valid permit in your 19th month in Canada (it must not say \"does not confer status\")"
+    ],
+    "where_en": "Canada Revenue Agency (see the CCB 'How to apply' page)",
+    "timing": {
+      "kind": "after_arrival",
+      "days": 548,
+      "official": false,
+      "label_en": "Suggested: in your 19th month in Canada"
+    },
+    "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/who-apply.html",
+    "unlocks": [],
+    "reviewed": false,
+    "verify_notes": [
+      "[VERIFY: 78 weeks and 548 days are Arrive's approximation of '18 months']",
+      "[VERIFY: you must also be a resident of Canada for tax purposes and be primarily responsible for the child, per the page]",
+      "[VERIFY: the CRA newcomers page says to send the CRA your new permit before the current one expires, or payments stop]"
+    ]
+  }
+]
