@@ -33,7 +33,7 @@ and stop at the end of each phase to summarize what you did and wait for approva
 - Database: Tiger Data (Tiger Cloud, PostgreSQL with TimescaleDB and pgvector)
 - Frontend: Next.js (App Router, TypeScript), Tailwind CSS, next-intl, Recharts, `@elevenlabs/react`, `@auth0/nextjs-auth0`
 - Auth: Auth0 (roles: `settlement_worker`, `gov_analyst`, `admin`)
-- Voice: ElevenLabs agent (web and phone); Twilio phone number is connected in the ElevenLabs dashboard
+- Voice: ElevenLabs agent in the web app only (the phone line and Twilio were removed from scope)
 - Hosting: Docker Compose on a Vultr server with Caddy (automatic HTTPS); domain from GoDaddy Registry
 
 ## Commands (fill in as the project grows)

@@ -4,6 +4,10 @@
 > language, by text or voice, with a real person when they need one, and anonymized needs data that helps
 > government serve them better.
 
+> **Scope change (2026-09-26):** the phone line is removed. There is no Twilio integration, no phone number, no
+> SMS reminders and no `phone` channel. Voice is the ElevenLabs agent in the web app (`voice_web`) plus read-aloud.
+> Anything below that mentions Twilio, phone calls to the agent or SMS no longer applies.
+
 This document is the source of truth for building Arrive. Build it in the phases in section 14. At the end of
 each phase, stop, summarize what was built, list anything marked `[VERIFY: ...]`, list manual setup steps the
 team must do (dashboards, keys, DNS), and wait for approval before continuing.
