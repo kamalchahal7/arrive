@@ -1,5 +1,6 @@
 # Full stack: Caddy (HTTPS) -> /api/* backend, everything else frontend.
-# Needs .env (DOMAIN), backend/.env and frontend/.env. See README.
+# Needs .env (DOMAIN), backend/.env, and frontend/.env or frontend/.env.local. See README.
+# Requires Docker Compose v2.24+ (optional env_file entries).
 services:
   caddy:
     image: caddy:2-alpine
@@ -34,7 +35,13 @@ services:
         NEXT_PUBLIC_API_BASE_URL: /api
         NEXT_PUBLIC_ELEVENLABS_AGENT_ID: ${NEXT_PUBLIC_ELEVENLABS_AGENT_ID:-}
     restart: unless-stopped
-    env_file: frontend/.env
+    # Runtime settings (Auth0, APP_BASE_URL). Either file may be used; .env.local wins if both exist.
+    # These are NOT used at build time: the only public build value is NEXT_PUBLIC_API_BASE_URL above.
+    env_file:
+      - path: frontend/.env
+        required: false
+      - path: frontend/.env.local
+        required: false
     environment:
       # Server-side calls from staff pages go straight to the backend on the Docker network.
       API_INTERNAL_URL: http://backend:8000/api

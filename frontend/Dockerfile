@@ -6,7 +6,8 @@ RUN npm ci
 
 FROM node:24-alpine AS build
 WORKDIR /app
-# NEXT_PUBLIC_* values are inlined into the client bundle at build time.
+# NEXT_PUBLIC_* values are inlined into the client bundle at build time. They come only from these build args
+# (set in docker-compose.yml), never from .env files, which .dockerignore keeps out of the build context.
 ARG NEXT_PUBLIC_API_BASE_URL=/api
 ARG NEXT_PUBLIC_ELEVENLABS_AGENT_ID=
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
