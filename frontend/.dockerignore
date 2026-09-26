@@ -1,5 +1,8 @@
 node_modules
 .next
+# Keep every real env file (.env, .env.local, ...) out of the build context so secrets such as
+# AUTH0_CLIENT_SECRET never end up in an image layer. Public build values come from build args
+# in docker-compose.yml; runtime values come from env_file.
 .env
 .env.*
 !.env.example

@@ -135,18 +135,33 @@ friendly "You don't have access" page; the API also refuses it (`403`).
 
 1. **Server:** Vultr → Deploy → Cloud Compute, Ubuntu 24.04, 2 vCPU / 4 GB is plenty. Add your SSH key.
 2. **Docker:** `curl -fsSL https://get.docker.com | sh` then `sudo usermod -aG docker $USER` (log out and in).
+   Check `docker compose version` is v2.24 or newer (needed for the optional frontend env files).
 3. **Firewall:** allow 22, 80, 443 (TCP) and 443 (UDP) only: `sudo ufw allow OpenSSH && sudo ufw allow 80,443/tcp && sudo ufw allow 443/udp && sudo ufw enable`.
 4. **Code:** `git clone <repo> arrive && cd arrive`, then create `.env`, `backend/.env`, `frontend/.env` (copy from your
    laptop with `scp`, never through git). For production set:
    - `.env`: `DOMAIN=<your domain>`
    - `backend/.env`: `CORS_ORIGINS=https://<DOMAIN>`, `PUBLIC_BASE_URL=https://<DOMAIN>`
-   - `frontend/.env`: `APP_BASE_URL=https://<DOMAIN>` (`NEXT_PUBLIC_API_BASE_URL` is set to `/api` by compose)
-5. **DNS:** in the GoDaddy Registry domain's DNS, add an **A record** `@` → the server's IPv4 (and `www` if you want it).
-   Wait until `dig +short <DOMAIN>` returns the IP.
+   - `frontend/.env` **or** `frontend/.env.local` (either works; `.env.local` wins if both exist):
+     `APP_BASE_URL=https://<DOMAIN>`. These are runtime values only. Env files are never copied into the image;
+     the one public build value, `NEXT_PUBLIC_API_BASE_URL`, is set to `/api` by compose.
+5. **DNS:** in the GoDaddy Registry domain's DNS, add **A records** `@` → the server's IPv4 and `www` → the same IPv4.
+   Caddy redirects `www.<DOMAIN>` permanently to `https://<DOMAIN>`. Wait until `dig +short <DOMAIN>` and
+   `dig +short www.<DOMAIN>` both return the IP.
 6. **Run:** `docker compose up -d --build`. Caddy gets the HTTPS certificate automatically on first request.
-7. **Database:** `docker compose exec backend python -m app.db.migrate`, then
-   `docker compose exec backend python ../ingestion/ingest.py`, and optionally
-   `docker compose exec backend python -m scripts.seed_sample_insights`.
+7. **Database** (in order; the backend container's working directory is `/srv/backend`):
+   ```sh
+   docker compose exec backend python -m app.db.migrate                 # tables, hypertables, aggregates, policies
+   docker compose restart backend                                        # loads the roadmap step templates on startup
+   docker compose exec backend python ../ingestion/ingest.py            # fetch + embed official pages (~2-3 min)
+   docker compose exec backend python -m scripts.seed_sample_insights   # optional SAMPLE dashboard data
+   ```
+   Or on the host with Python 3.12 (Ubuntu 24.04: `sudo apt install -y python3-venv`), using `backend/.env`:
+   ```sh
+   cd backend && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+   .venv/bin/python -m app.db.migrate && docker compose restart backend
+   .venv/bin/python ../ingestion/ingest.py
+   .venv/bin/python -m scripts.seed_sample_insights
+   ```
 8. **Auth0:** add the `https://<DOMAIN>` URLs above.
 9. **ElevenLabs:** set each tool URL to `https://<DOMAIN>/api/voice/tools/...` and add the domain to Allowed hosts.
 10. **Check:** `curl https://<DOMAIN>/api/health` → `{"status":"ok","db":"ok"}`.
