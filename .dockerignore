@@ -1,0 +1,10 @@
+# Build context for the backend image is the repo root. Keep secrets and heavy folders out.
+**/.env
+**/.env.*
+!**/.env.example
+**/__pycache__
+**/.venv
+**/.pytest_cache
+frontend
+docs
+.git
