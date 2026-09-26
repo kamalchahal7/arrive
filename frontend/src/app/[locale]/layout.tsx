@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Fraunces, Noto_Naskh_Arabic } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { SettingsProvider } from "@/components/SettingsProvider";
 import { isRtl, routing } from "@/i18n/routing";
+import { SETTINGS_BOOT_SCRIPT } from "@/lib/storage";
 import "../globals.css";
 
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" });
@@ -18,7 +20,10 @@ const naskh = Noto_Naskh_Arabic({
   weight: ["400", "700"],
   variable: "--font-naskh",
   display: "swap",
+  preload: false, // only needed on Arabic-script pages
 });
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0E5E57" };
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -27,7 +32,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  return { title: t("title"), description: t("description") };
+  return { title: { default: t("title"), template: `%s · ${t("title")}` }, description: t("description") };
 }
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
@@ -41,7 +46,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       lang={locale}
       dir={isRtl(locale) ? "rtl" : "ltr"}
       className={`${fraunces.variable} ${atkinson.variable} ${naskh.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SETTINGS_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-dvh bg-ground text-ink antialiased">
         <a
           href="#main"
@@ -49,7 +58,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         >
           {t("skipToContent")}
         </a>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <SettingsProvider>{children}</SettingsProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

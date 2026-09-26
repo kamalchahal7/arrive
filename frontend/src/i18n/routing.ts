@@ -6,6 +6,9 @@ export const routing = defineRouting({
   defaultLocale: "en",
 });
 
+// Language names are always written in their own language.
+export const LANGUAGE_NAMES: Record<string, string> = { en: "English", fr: "Français", ar: "العربية" };
+
 export type AppLocale = (typeof routing.locales)[number];
 
 const RTL_LOCALES: readonly string[] = ["ar", "fa"];
