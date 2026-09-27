@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test:a11y": "playwright test"
+    "lint": "eslint && node scripts/check-messages.mjs",
+    "test:a11y": "playwright test",
+    "check:messages": "node scripts/check-messages.mjs"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.30.0",
