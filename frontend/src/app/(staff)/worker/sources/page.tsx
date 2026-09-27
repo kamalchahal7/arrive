@@ -56,7 +56,7 @@ export default async function SourcesPage() {
             {sources.map((s) => (
               <tr key={s.url} className="border-b border-line last:border-0">
                 <td className="px-4 py-3">
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1 font-bold text-teal underline">
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1 font-bold text-brand underline">
                     {s.title}
                     <ExternalLink aria-hidden className="mt-1 size-3.5 shrink-0" />
                   </a>

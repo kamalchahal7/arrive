@@ -1,0 +1,266 @@
+{
+  "_review": "Drafted by Claude (2026-09-27). Needs review by a native speaker.",
+  "Metadata": {
+    "title": "Arrive",
+    "description": "Tus primeros pasos en Ottawa, en tu idioma, con Aba."
+  },
+  "Common": {
+    "skipToContent": "Ir al contenido principal",
+    "appName": "Arrive",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "loading": "Cargando…",
+    "retry": "Intentar de nuevo",
+    "listen": "Escuchar",
+    "stopListening": "Detener",
+    "loadingAudio": "Cargando el audio…",
+    "source": "Fuente oficial",
+    "opensNewTab": "(se abre en una pestaña nueva)",
+    "language": "Idioma",
+    "backHome": "Volver a mi lista",
+    "yes": "Sí",
+    "no": "No",
+    "notGiven": "No indicado"
+  },
+  "Errors": {
+    "offline": "Parece que no tienes conexión. Revisa tu conexión e inténtalo de nuevo.",
+    "rate_limited": "Demasiadas solicitudes. Espera un minuto e inténtalo de nuevo.",
+    "ai_unavailable": "Aba no está disponible ahora. Inténtalo de nuevo.",
+    "db_unavailable": "Arrive tiene un problema ahora. Inténtalo de nuevo pronto.",
+    "profile_not_found": "No encontramos tus respuestas guardadas. Empecemos de nuevo.",
+    "invalid_input": "Algo no está bien. Revisa tus respuestas.",
+    "invalid_household": "Revisa el número de personas de tu familia.",
+    "voice_not_configured": "La voz no está disponible ahora. Puedes escribir.",
+    "voice_session_failed": "No pudimos iniciar la voz de Aba. Puedes escribir.",
+    "tts_failed": "Escuchar no está disponible ahora.",
+    "item_not_found": "No encontramos esta página.",
+    "internal_error": "Lo sentimos, algo salió mal. Inténtalo de nuevo."
+  },
+  "Language": {
+    "title": "Elige tu idioma",
+    "saved": "Tu lista está guardada en este teléfono."
+  },
+  "Avatar": {
+    "idle": "Listo",
+    "speaking": "Hablando…",
+    "listening": "Escuchando…",
+    "thinking": "Pensando…"
+  },
+  "Speak": {
+    "speak": "Toca para hablar",
+    "connecting": "Preparando…",
+    "listening": "Escuchando… habla ahora",
+    "cancel": "Detener",
+    "heard": "Escuché: «{text}»",
+    "notHeard": "No te escuché. Inténtalo de nuevo o escribe tu respuesta.",
+    "micDenied": "El micrófono está bloqueado. Escribe tu respuesta.",
+    "failed": "Hablar no funciona ahora. Escribe tu respuesta."
+  },
+  "Onboarding": {
+    "introTitle": "Hola, soy Aba.",
+    "introBody": "Te haré algunas preguntas para preparar tu lista de primeros pasos en Canadá.",
+    "introHow": "Puedes responder hablando o tocando la pantalla.",
+    "start": "Empezar",
+    "haveId": "Ya tengo un ID de Arrive",
+    "autoListen": "Empezar a escuchar solo después de cada pregunta",
+    "progress": "Pregunta {current} de {total}",
+    "back": "Atrás",
+    "repeat": "Repetir",
+    "skip": "Saltar",
+    "next": "Siguiente",
+    "orType": "O escribe tu respuesta",
+    "orTap": "O toca tu respuesta",
+    "addressed": "{name}, {question}",
+    "niceToMeet": "Mucho gusto, {name}.",
+    "firstName": {
+      "question": "¿Cómo te llamo?",
+      "label": "Nombre"
+    },
+    "city": {
+      "question": "¿En qué ciudad te instalaron?",
+      "label": "Ciudad"
+    },
+    "country": {
+      "question": "¿De qué país vienes?",
+      "label": "País de origen"
+    },
+    "gender": {
+      "question": "¿Cuál es tu género?",
+      "label": "Género",
+      "spoken": "Puedes decir: hombre, mujer, otro género, o prefiero no decirlo.",
+      "man": "Hombre",
+      "woman": "Mujer",
+      "another": "Otro género",
+      "prefer_not_to_say": "Prefiero no decirlo"
+    },
+    "selfAge": {
+      "question": "¿Tienes 65 años o más?",
+      "label": "65 años o más"
+    },
+    "household": {
+      "question": "¿Quién llega contigo?",
+      "label": "Familia",
+      "hint": "No te cuentes a ti.",
+      "spoken": "Por ejemplo, puedes decir: dos adultos y un niño.",
+      "adults": "Adultos (18 a 64 años)",
+      "seniors": "Personas mayores (65 años o más)",
+      "children_0_5": "Niños (0 a 5 años)",
+      "children_6_17": "Niños (6 a 17 años)",
+      "fewer": "Uno menos: {group}",
+      "more": "Uno más: {group}",
+      "alone": "Vine solo"
+    },
+    "disability": {
+      "question": "¿Alguien de tu familia tiene una discapacidad o un problema de salud de largo plazo?",
+      "label": "Discapacidad o problema de largo plazo"
+    },
+    "summary": {
+      "title": "¿Esto es correcto?",
+      "intro": "Revisa tus respuestas. Toca Cambiar para corregir una.",
+      "change": "Cambiar",
+      "adults": "{count, plural, one {# adulto} other {# adultos}}",
+      "seniors": "{count, plural, one {# persona mayor} other {# personas mayores}}",
+      "children": "{count, plural, one {# niño} other {# niños}}",
+      "consentTitle": "Ayuda a mejorar los servicios para recién llegados",
+      "consentBody": "Comparte información anónima sobre cómo usas Arrive. Tu nombre nunca se comparte. Puedes decir que no.",
+      "create": "Preparar mi lista",
+      "creating": "Preparando tu lista…"
+    },
+    "done": {
+      "title": "Tu lista está lista",
+      "idLabel": "Tu ID de Arrive",
+      "idNote": "Guarda tu ID: escríbelo o tómale una foto. Puedes usarlo para abrir tu lista en otro teléfono.",
+      "go": "Ir a mi lista"
+    },
+    "restore": {
+      "title": "Abrir mi lista",
+      "intro": "Escribe el ID de Arrive que recibiste al hacer tu lista.",
+      "label": "Tu ID de Arrive",
+      "open": "Abrir mi lista",
+      "invalid": "Esto no parece un ID de Arrive. Empieza con ARV.",
+      "notFound": "No encontramos este ID. Revísalo e inténtalo de nuevo.",
+      "startOver": "Hacer una lista nueva"
+    }
+  },
+  "Home": {
+    "hello": "Hola, {name}",
+    "helloNoName": "Hola",
+    "progress": "{done} de {total} hechos",
+    "noProfile": "Responde algunas preguntas para hacer tu lista.",
+    "start": "Empezar",
+    "checklistTitle": "Tu lista",
+    "allDone": "Terminaste todos los pasos. ¡Muy bien!",
+    "now": "Ahora",
+    "phaseProgress": "{done} de {total}",
+    "markDone": "Hecho: {title}",
+    "askAba": "Pregunta a Aba",
+    "idButton": "Mi ID",
+    "endSession": "Terminar la sesión"
+  },
+  "Phases": {
+    "day1_3": "Días 1–3",
+    "week1": "Semana 1",
+    "weeks2_4": "Semanas 2–4",
+    "months2_3": "Meses 2–3",
+    "months4_6": "Meses 4–6"
+  },
+  "Programs": {
+    "title": "Programas del gobierno",
+    "none": "Todavía no hay programas para mostrar.",
+    "who": {
+      "everyone": "Todas las personas en Ottawa",
+      "kids": "Familias con hijos",
+      "kids_0_5": "Familias con hijos menores de 6 años",
+      "kids_6_17": "Familias con hijos de 6 a 17 años",
+      "seniors": "Personas mayores de 65 años o más",
+      "disability": "Personas con una discapacidad o un problema de salud de largo plazo"
+    }
+  },
+  "Apply": {
+    "call_visit": "Llámalos, o ve durante el horario de atención.",
+    "phone": "Llama al número de abajo. Pide un intérprete en tu idioma.",
+    "online_city": "Solicítalo en línea, o en cualquier centro recreativo de la Ciudad de Ottawa.",
+    "registry": "Inscríbete en línea en el Registro de Cuidado Infantil de la Ciudad de Ottawa, o llama al 3-1-1.",
+    "doctor": "Pide a tu médico o profesional de salud que haga la solicitud contigo.",
+    "lhin": "Llama al 310-2222 y pide una evaluación de cuidado en casa.",
+    "register_ottawa": "Inscríbete en línea en registerottawa.ca, o llama al número de abajo.",
+    "school": "Pregunta en la escuela de tu hijo, o llama a OCISO.",
+    "app": "Descarga la aplicación ConnectHear en tu teléfono.",
+    "ow_odsp": "Pregunta a tu trabajador de Ontario Works u ODSP, o ve al servicio al cliente de OC Transpo.",
+    "odsp": "Pide una solicitud en la oficina del ODSP. Tu médico llena los formularios médicos."
+  },
+  "Item": {
+    "back": "Volver a mi lista",
+    "done": "Hecho",
+    "markDone": "Marcar como hecho",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "call": "Llamar",
+    "hours": "Horario",
+    "openMaps": "Abrir Google Maps",
+    "documents": "Documentos que debes llevar",
+    "documentsHint": "Toca cada documento que ya tienes listo.",
+    "steps": "Pasos",
+    "step1": "Habla con la persona de recepción",
+    "step2": "Toca el botón de tu ID",
+    "step3": "Muéstraselo a la persona",
+    "idButton": "Mi ID",
+    "eligibility": "Quién puede recibirlo",
+    "howToApply": "Cómo solicitarlo",
+    "where": "Adónde ir",
+    "interested": "Me interesa",
+    "interestedDone": "Gracias, anotamos tu interés."
+  },
+  "StaffCard": {
+    "forStaff": "Para el personal",
+    "sharing": "Se está compartiendo tu información.",
+    "invalid": "No se pudo leer esta tarjeta."
+  },
+  "IdCard": {
+    "title": "Mi tarjeta de identificación",
+    "back": "Volver a mi lista",
+    "none": "Todavía no tienes un ID de Arrive en este teléfono.",
+    "start": "Hacer mi lista",
+    "id": "ID de Arrive",
+    "language": "Idioma"
+  },
+  "Assistant": {
+    "title": "Pregunta a Aba",
+    "back": "Volver a mi lista",
+    "intro": "Pregúntame sobre tu lista o sobre los servicios en Ottawa.",
+    "greeting": "Hola {name}, soy Aba. ¿Qué te gustaría saber?",
+    "greetingNoName": "Hola, soy Aba. ¿Qué te gustaría saber?",
+    "type": "Escribe tu pregunta",
+    "send": "Enviar"
+  },
+  "Voice": {
+    "start": "Toca para hablar con Aba",
+    "stop": "Terminar la conversación",
+    "idle": "Listo.",
+    "connecting": "Conectando…",
+    "listening": "Escuchando… habla ahora.",
+    "thinking": "Pensando…",
+    "speaking": "Hablando…",
+    "ended": "La conversación terminó.",
+    "denied": "El micrófono está bloqueado. Puedes escribir tu pregunta.",
+    "transcript": "Conversación",
+    "you": "Tú",
+    "aba": "Aba"
+  },
+  "End": {
+    "title": "Terminar la sesión",
+    "back": "Volver a mi lista",
+    "helped": "¿Te ayudó Arrive hoy?",
+    "face1": "Nada",
+    "face2": "Un poco",
+    "face3": "Algo",
+    "face4": "Mucho",
+    "face5": "Muchísimo",
+    "notUnderstood": "Lo siento, no entendí. Toca una cara.",
+    "missing": "¿Falta algo, o hay algo que te gustaría que Arrive hiciera?",
+    "missingHint": "Opcional. No escribas tu nombre ni números.",
+    "send": "Enviar",
+    "thanks": "¡Gracias!",
+    "saved": "Tu lista está guardada en este teléfono. Tu ID es:"
+  }
+}

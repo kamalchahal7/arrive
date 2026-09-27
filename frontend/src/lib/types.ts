@@ -30,7 +30,7 @@ export type AskResponse = {
 
 export type Status = "refugee_pr" | "international_student" | "unknown";
 
-export type Gender = "woman" | "man" | "another" | "prefer_not_to_say";
+export type Gender = "man" | "woman" | "another" | "prefer_not_to_say";
 
 export type Profile = {
   id: string;
@@ -60,6 +60,8 @@ export type Profile = {
   disability_child: boolean | null;
   other_languages: string[];
   analytics_consent: boolean;
+  /** Kept on this phone only: the country as the person said it (shown when it has no ISO code). */
+  country_text?: string | null;
 };
 
 export type ProfileInput = Partial<Omit<Profile, "id" | "created_at" | "public_id">>;
@@ -70,13 +72,11 @@ export const profileRef = (p: Pick<Profile, "id" | "public_id">): string => p.pu
 export type OnboardingQuestion =
   | "first_name"
   | "city"
-  | "province"
   | "country_of_origin"
   | "gender"
   | "self_age"
   | "household"
-  | "disability"
-  | "languages_spoken";
+  | "disability";
 
 export type OnboardingAnswer = {
   question_key: OnboardingQuestion;

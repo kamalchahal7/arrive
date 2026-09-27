@@ -16,7 +16,7 @@ import type { ScamResult } from "@/lib/types";
 const VERDICT_STYLE = {
   likely_scam: { icon: ShieldAlert, cls: "border-danger-ink bg-danger-light text-danger-ink" },
   unsure: { icon: HelpCircle, cls: "border-amber-ink/40 bg-amber-light text-amber-ink" },
-  likely_real: { icon: ShieldCheck, cls: "border-teal bg-teal-light text-teal" },
+  likely_real: { icon: ShieldCheck, cls: "border-brand bg-brand-light text-brand" },
 } as const;
 
 export default function ScamCheckPage() {
@@ -172,7 +172,7 @@ export default function ScamCheckPage() {
             </div>
           )}
 
-          <p className="rounded-card bg-teal-light p-4 font-bold">{t("reassurance")}</p>
+          <p className="rounded-card bg-brand-light p-4 font-bold">{t("reassurance")}</p>
           <button
             type="button"
             className="btn btn-secondary"

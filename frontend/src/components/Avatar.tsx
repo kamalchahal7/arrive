@@ -1,6 +1,6 @@
 "use client";
 
-// The Arrive helper: a friendly illustrated character (not a person, so it carries no ethnicity, gender or
+// Aba, the Arrive helper: a friendly illustrated character (not a person, so it carries no ethnicity, gender or
 // religious signal). States: idle, speaking, listening, thinking. While speaking its mouth follows the audio level;
 // while listening a ring follows the microphone level. With reduced motion it stays still and a small badge shows
 // the state. The state is always also given as text for screen readers (docs/REDESIGN.md 4.3).
@@ -39,6 +39,7 @@ export function Avatar({
   label,
   getLevel,
   size = 176,
+  bare = false,
 }: {
   state: AvatarState;
   /** The state in words ("Speaking…"), announced politely. */
@@ -46,6 +47,8 @@ export function Avatar({
   /** 0..1: the voice level while speaking, the microphone level while listening. */
   getLevel?: () => number;
   size?: number;
+  /** Just the face (e.g. as an icon on the "Ask Aba" button): no state badge, no label. */
+  bare?: boolean;
 }) {
   const still = useReducedMotion();
   const mouth = useRef<SVGEllipseElement>(null);
@@ -104,7 +107,7 @@ export function Avatar({
             cy="104"
             r="90"
             fill="none"
-            stroke="var(--color-teal)"
+            stroke="var(--color-brand)"
             strokeWidth="5"
             style={{ opacity: state === "listening" ? 0.35 : 0, transition: "opacity 200ms" }}
           />
@@ -112,10 +115,10 @@ export function Avatar({
           {/* body */}
           <path
             d="M100 22c44 0 76 30 76 76 0 46-30 84-76 84S24 144 24 98c0-46 32-76 76-76z"
-            fill="var(--color-teal)"
+            fill="var(--color-brand)"
           />
           {/* sprout on top */}
-          <path d="M100 24c-2-10 2-17 12-20-1 9-5 15-12 20z" fill="#7fb8a8" />
+          <path d="M100 24c-2-10 2-17 12-20-1 9-5 15-12 20z" fill="#e9a6a0" />
           {/* face */}
           <ellipse cx="100" cy="104" rx="56" ry="50" fill="#f6f3ec" />
           {/* cheeks */}
@@ -144,7 +147,7 @@ export function Avatar({
           )}
           {/* thinking dots */}
           {state === "thinking" && (
-            <g fill="var(--color-teal)">
+            <g fill="var(--color-brand)">
               <circle className={still ? "" : "avatar-dot"} cx="152" cy="40" r="6" />
               <circle className={still ? "" : "avatar-dot avatar-dot-2"} cx="170" cy="26" r="7" />
               <circle className={still ? "" : "avatar-dot avatar-dot-3"} cx="190" cy="10" r="8" />
@@ -152,18 +155,20 @@ export function Avatar({
           )}
         </svg>
         {/* The badge is the main state cue when motion is reduced, and a helpful extra otherwise. */}
-        <span
-          className={`absolute end-0 bottom-0 flex items-center justify-center rounded-full border-2 border-surface bg-teal text-white shadow ${
+        {!bare && <span
+          className={`absolute end-0 bottom-0 flex items-center justify-center rounded-full border-2 border-surface bg-brand text-white shadow ${
             small ? "size-7" : "size-10"
           }`}
           aria-hidden
         >
           <Badge className={`${small ? "size-4" : "size-5"} ${state === "thinking" && !still ? "animate-spin" : ""}`} />
-        </span>
+        </span>}
       </div>
-      <p aria-live="polite" className="flex items-center gap-2 text-base font-bold text-muted">
-        {label}
-      </p>
+      {!bare && (
+        <p aria-live="polite" className="flex items-center gap-2 text-base font-bold text-muted">
+          {label}
+        </p>
+      )}
     </div>
   );
 }

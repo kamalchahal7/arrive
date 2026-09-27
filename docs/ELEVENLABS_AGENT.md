@@ -11,7 +11,7 @@ Agent id (from `.env`): `ELEVENLABS_AGENT_ID` / `NEXT_PUBLIC_ELEVENLABS_AGENT_ID
 - **Agent → Security → Enable authentication: on.** The web app gets a short-lived conversation token from
   `GET /api/voice/session` (the API key never reaches the browser).
 - **Allowed hosts:** add `localhost:3000` and your production domain.
-- **Overrides:** leave off. The web app sends only *dynamic variables* (below), not prompt overrides.
+- **Overrides:** allow the system prompt (with tool ids), first message and language. The web app sends them for every session (frontend/src/lib/aba.ts): Ask Aba gets the Ottawa reference data, the person's name and no tools; onboarding uses a silent "listen only" session for its speech-to-text.
 - **Privacy:** in the agent's advanced/privacy settings, set conversation (transcript and audio) retention as short as
   your plan allows. The Arrive trust page tells users their voice is processed by ElevenLabs.
 
@@ -40,7 +40,8 @@ Add them under **Agent → Dynamic variables** with these defaults: `channel = v
 
 ## 4. First message
 
-> Hello, I'm the Arrive helper. I can tell you what to do next on your checklist, and explain official government
+> (The web app now sends its own first message, prompt and language for every session: see frontend/src/lib/aba.ts.)
+> Hello, I'm Aba. I can tell you what to do next on your checklist, and explain official government
 > information in your language. What would you like to know?
 
 (Enable "translate first message" if available so it is spoken in the detected language.)

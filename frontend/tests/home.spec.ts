@@ -1,152 +1,123 @@
 import { expect, test } from "@playwright/test";
 import { mockApi, PROFILE_ID, withProfile } from "./fixtures";
 
-// docs/REDESIGN.md R3: home screen, item detail, staff card with a fragment-only QR code, ID card.
+// The fixture profile: Amira, an adult with one child aged 0-5 and one aged 6-17, no disability, from Syria.
 
-test("home shows the greeting, progress and the current phase, and a tick is saved", async ({ page }) => {
-  const log = await mockApi(page, "en");
-  await withProfile(page);
-  await page.goto("/en/home");
-  await expect(page.getByRole("heading", { name: "Hello, Amira" })).toBeVisible();
-  await expect(page.getByText("1 of 5 done")).toBeVisible();
-  // The current phase is open, the next one is closed.
-  await expect(page.getByRole("button", { name: /First 3 days/ })).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("button", { name: /First 2 weeks/ })).toHaveAttribute("aria-expanded", "false");
-  await page.getByRole("button", { name: /First 2 weeks/ }).click();
-
-  const box = page.getByRole("checkbox", { name: "Apply for a Social Insurance Number, for Amira" });
-  await expect(box).toHaveAttribute("aria-checked", "false");
-  await box.click();
-  await expect(box).toHaveAttribute("aria-checked", "true");
-  await expect(page.getByText("2 of 5 done")).toBeVisible();
-  const patch = log.find((r) => r.method === "PATCH" && r.path === `/checklist/${PROFILE_ID}/items`);
-  expect(patch?.body).toEqual({ items: [{ item_id: "sin", person_key: "self", status: "done" }] });
-
-  await expect(page.getByRole("heading", { name: "Programs for your family" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Healthy Smiles Ontario/ })).toBeVisible();
-  await page.getByRole("button", { name: "More help" }).click();
-  for (const name of ["Talk to a person", "Scan a letter", "Is this real?", "Accessibility settings", "How Arrive works"]) {
-    await expect(page.getByRole("link", { name })).toBeVisible();
-  }
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("link", { name: "Talk to a person" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Ask the avatar" })).toBeVisible();
-  await page.screenshot({ path: "test-results/home-en.png", fullPage: true });
-});
-
-test("a tick made offline is kept on the phone and sent later", async ({ page }) => {
-  const log = await mockApi(page, "en");
-  await withProfile(page);
-  await page.goto("/en/home");
-  await page.getByRole("button", { name: /First 3 days/ }).isVisible();
-  // Lose the connection for progress updates only.
-  await page.route(/\/api\/checklist\/.*\/items/, (route) => route.abort("internetdisconnected"));
-  await page.getByRole("checkbox", { name: /Understand your temporary health coverage/ }).click();
-  await expect(page.getByText("Saved on this phone. It will be sent when you are back online.")).toBeVisible();
-  const queued = await page.evaluate(() => localStorage.getItem("arrive.pendingProgress"));
-  expect(JSON.parse(queued ?? "[]")).toEqual([{ item_id: "ifhp", person_key: "household", status: "done" }]);
-
-  await page.unroute(/\/api\/checklist\/.*\/items/);
-  await page.reload();
-  await expect(page.getByRole("checkbox", { name: /Understand your temporary health coverage/ })).toHaveAttribute("aria-checked", "true");
-  expect(log.filter((r) => r.method === "PATCH").at(-1)?.body).toEqual({
-    items: [{ item_id: "ifhp", person_key: "household", status: "done" }],
-  });
-  expect(await page.evaluate(() => localStorage.getItem("arrive.pendingProgress"))).toBe("[]");
-});
-
-test("item detail in Arabic follows the spec order and works with the keyboard", async ({ page }) => {
-  await mockApi(page, "ar");
-  await withProfile(page, "ar");
-  await page.goto("/ar/item/health_card");
-  await expect(page.getByRole("heading", { level: 1, name: "قدّم طلب البطاقة الصحية في أونتاريو" })).toBeVisible();
-  await expect(page.getByText("أساسي").first()).toBeVisible();
-  // Per-person rows: the child is already done.
-  await expect(page.getByRole("button", { name: /الطفل 1/ })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByText("لا توجد صورة لهذا المكان بعد")).toBeVisible();
-  const map = page.locator("iframe");
-  await expect(map).toHaveAttribute("src", /openstreetmap\.org\/export\/embed\.html\?bbox=.*marker=45\.4208154,-75\.6901177/);
-  await expect(page.getByRole("link", { name: /افتح في خرائط Google/ })).toHaveAttribute(
-    "href",
-    /google\.com\/maps\/search\/\?api=1&query=ServiceOntario/,
-  );
-  await expect(page.getByRole("link", { name: /613-232-9634/ })).toHaveAttribute("href", "tel:6132329634");
-  await expect(page.getByText("غير متوفر بعد")).toBeVisible(); // hours not known yet
-  const doc = page.getByRole("checkbox", { name: "نموذج التسجيل" });
-  await doc.focus();
-  await page.keyboard.press("Space");
-  await expect(doc).toHaveAttribute("aria-checked", "true");
-  await expect(page.getByRole("list").filter({ hasText: "اذهب إلى ServiceOntario" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Apply for OHIP and get a health card/ })).toBeVisible();
-  await expect(page.getByText(/26 سبتمبر 2026|٢٦ سبتمبر ٢٠٢٦/)).toBeVisible(); // a local date, not a day early
-  await page.screenshot({ path: "test-results/item-ar.png", fullPage: true });
-});
-
-test("the staff card opens on a clerk's phone from the QR code with no request to the backend", async ({ page, browser }) => {
-  await mockApi(page, "ar");
-  await withProfile(page, "ar");
-  await page.goto("/ar/item/health_card");
-  await page.getByRole("button", { name: "أظهر بطاقتي" }).click();
-  await expect(page).toHaveURL(/\/ar\/card#1\./);
-  const cardUrl = page.url();
-  const card = page.getByRole("article");
-  await expect(card).toContainText("Hello, my name is Amira.");
-  await expect(card).toContainText("I am here to apply for Ontario health cards (OHIP) for my family.");
-  await expect(card).toContainText("I speak Arabic (and also English).");
-  await expect(card).toContainText("Bonjour, je m'appelle Amira.");
-  await expect(card).toContainText("Je parle arabe (et aussi anglais).");
-  await expect(card).toContainText("Your Permanent Resident card or COPR");
-  await expect(card).toContainText("مرحبًا، اسمي Amira.");
-  await expect(card).toContainText(PROFILE_ID);
-  await expect(page.getByRole("img", { name: "رمز QR لهذه البطاقة" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "رجوع" })).toBeVisible();
-  await page.screenshot({ path: "test-results/staff-card-ar.png", fullPage: true });
-
-  // The clerk's phone: a fresh browser with nothing stored. Count every request.
-  const clerk = await browser.newContext();
-  const clerkPage = await clerk.newPage();
-  const requests: string[] = [];
-  clerkPage.on("request", (r) => requests.push(r.url()));
-  await clerkPage.goto(cardUrl);
-  await expect(clerkPage.getByRole("article")).toContainText("Hello, my name is Amira.");
-  await expect(clerkPage.getByRole("button", { name: "Larger text / Texte plus grand" })).toBeVisible();
-  await expect(clerkPage.getByRole("link", { name: "رجوع" })).toHaveCount(0);
-  const fragment = cardUrl.split("#")[1];
-  expect(requests.filter((u) => u.includes("/api/"))).toEqual([]);
-  expect(requests.filter((u) => u.includes(fragment.slice(0, 24)))).toEqual([]);
-  await clerk.close();
-
-  // Back on the person's phone: the landscape "Show to staff" view.
-  await page.getByRole("button", { name: "أظهر للموظف" }).click();
-  await expect(page.locator(".staff-landscape")).toContainText("I speak Arabic");
-  await page.getByRole("button", { name: "أغلق عرض الموظف" }).click();
-});
-
-test("a broken or edited card link shows a clear message", async ({ page }) => {
-  await page.goto("/en/card#1.not-a-real-card");
-  await expect(page.getByText("This card could not be read. Ask the person to show it again.")).toBeVisible();
-});
-
-test("the ID card shows the ID, the family and a QR code, and the QR link reopens the profile", async ({ page }) => {
+test("home: the five phases, the checklist filtered by the family, government-run programs, no More help", async ({ page }) => {
   await mockApi(page, "en");
   await withProfile(page);
   await page.goto("/en/home");
-  await page.getByRole("link", { name: "My ID" }).click();
-  await expect(page).toHaveURL(/\/en\/id/);
-  await expect(page.getByText("Amira", { exact: true })).toBeVisible();
-  await expect(page.getByText(PROFILE_ID)).toBeVisible();
-  await expect(page.getByText("Family of 4")).toBeVisible();
-  await expect(page.getByRole("img", { name: "QR code with your Arrive ID" })).toBeVisible();
-  await expect(page.getByText("You can show this card when you introduce yourself.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Hello, Amira" })).toBeVisible();
+  await expect(page.locator("h3 button")).toContainText(["Day 1–3", "Week 1", "Weeks 2–4", "Months 2–3", "Months 4–6"]);
+  await expect(page.getByText("More help")).toHaveCount(0);
 
-  await page.goto(`/en/onboarding#open=${PROFILE_ID}`);
-  await expect(page.getByLabel("Your Arrive ID")).toHaveValue(PROFILE_ID);
+  await page.getByRole("button", { name: /Weeks 2–4/ }).click();
+  await expect(page.getByRole("link", { name: "Enroll your children in school" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Register for childcare" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /disability support/ })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Services for seniors" })).toHaveCount(0);
+
+  const programs = page.locator("#programs-title ~ ul a");
+  await expect(page.getByRole("heading", { name: "Government-run programs" })).toBeVisible();
+  await expect(programs.first()).toHaveText("Ottawa Public Library – newcomer services");
+  await expect(programs.filter({ hasText: "EarlyON" })).toHaveCount(1);
+  await expect(programs.filter({ hasText: "ODSP" })).toHaveCount(0);
+
+  const tick = page.getByRole("checkbox", { name: "Done: Confirm your health coverage (IFHP)" });
+  await tick.click();
+  await page.reload();
+  await expect(page.getByRole("checkbox", { name: "Done: Confirm your health coverage (IFHP)" })).toHaveAttribute("aria-checked", "true");
+  await page.screenshot({ path: "test-results/home-en.png", fullPage: true });
 });
 
-test("Tigrinya pages have no read-aloud button", async ({ page }) => {
-  await mockApi(page, "ti");
-  await withProfile(page, "ti");
-  await page.goto("/ti/item/health_card");
-  await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator("button:has(svg.lucide-volume-2)")).toHaveCount(0);
+test("a senior with a disability sees the seniors and disability items and programs, in that order", async ({ page }) => {
+  const overrides = { self_age_group: "senior", adults: 0, seniors: 1, children_0_5: 0, children_6_17: 0, disability_senior: true };
+  await mockApi(page, "en", { profile: overrides });
+  await withProfile(page, "en", overrides);
+  await page.goto("/en/home");
+  await page.getByRole("button", { name: /Weeks 2–4/ }).click();
+  await expect(page.getByRole("link", { name: "Services for seniors" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /disability support/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Enroll your children in school" })).toHaveCount(0);
+  const titles = await page.locator("#programs-title ~ ul a").allInnerTexts();
+  expect(titles.indexOf("Council on Aging of Ottawa")).toBeLessThan(titles.indexOf("CNIB Ottawa (Canadian National Institute for the Blind)"));
+  expect(titles.indexOf("Ottawa Food Bank")).toBeLessThan(titles.indexOf("Council on Aging of Ottawa"));
+});
+
+test("checklist item: location, Google Maps, documents, the three standard steps; the ID button opens the QR", async ({ page }) => {
+  const log = await mockApi(page, "en");
+  await withProfile(page);
+  await page.goto("/en/item/sin");
+  await expect(page.getByRole("heading", { name: "Get your Social Insurance Number (SIN)" })).toBeVisible();
+  await expect(page.getByText("360 Albert St, Ottawa ON K1R 7X7")).toBeVisible();
+  await expect(page.getByRole("link", { name: /1-866-274-6627/ })).toHaveAttribute("href", "tel:18662746627");
+  await expect(page.getByRole("link", { name: "Open Google Maps" })).toHaveAttribute("href", /google\.com\/maps/);
+  await expect(page.locator("iframe")).toHaveCount(0);
+  await expect(page.locator("main img")).toHaveCount(0);
+  await expect(page.getByText(/Draft/)).toHaveCount(0);
+  await expect(page.getByText("Who this is for")).toHaveCount(0);
+  const steps = page.locator("ol li");
+  await expect(steps.nth(0)).toContainText("Meet the front desk worker");
+  await expect(steps.nth(1)).toContainText("Tap your ID button");
+  await expect(steps.nth(2)).toContainText("Show the worker");
+  await expect(page.getByRole("link", { name: "Apply for a SIN (canada.ca)" })).toBeVisible();
+
+  await steps.nth(1).getByRole("button", { name: "My ID" }).click();
+  await expect(page).toHaveURL(/\/en\/card#/);
+  await expect(page.getByText("For staff")).toBeVisible();
+  await expect(page.getByText("Your information is being shared.")).toBeVisible();
+  await expect(page.getByRole("img", { name: "QR code for staff" })).toBeVisible();
+  await expect(page.getByText("Larger text")).toHaveCount(0);
+
+  // The staff member's phone: the English page from the QR code, built only from the fragment.
+  const hash = new URL(page.url()).hash;
+  const before = log.length;
+  await page.goto(`/en/for-staff${hash}`);
+  const card = page.getByRole("article");
+  await expect(card).toContainText("Hello, my name is Amira.");
+  await expect(card).toContainText("I am here to apply for my Social Insurance Number.");
+  await expect(card).toContainText("I speak English.");
+  await expect(page.locator("main")).toContainText("Syria");
+  await expect(page.locator("main")).toContainText(PROFILE_ID);
+  expect(log.slice(before)).toEqual([]);
+});
+
+test("every checklist item has the three standard steps and the ID button", async ({ page }) => {
+  await mockApi(page, "en");
+  await withProfile(page);
+  for (const id of ["ifhp", "ohip", "school", "ccb", "community"]) {
+    await page.goto(`/en/item/${id}`);
+    await expect(page.locator("ol li").nth(1)).toContainText("Tap your ID button");
+    await expect(page.locator("ol li").nth(1).getByRole("button", { name: "My ID" })).toBeVisible();
+  }
+});
+
+test("program page: description, who, how to apply, and 'I'm interested' is logged once", async ({ page }) => {
+  const log = await mockApi(page, "en");
+  await withProfile(page);
+  await page.goto("/en/item/food_bank");
+  await expect(page.getByRole("heading", { name: "Ottawa Food Bank" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Who can get it" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "How to apply" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open Google Maps" })).toBeVisible();
+  await page.getByRole("button", { name: "I'm interested" }).click();
+  await expect(page.getByRole("button", { name: "Thank you, we noted your interest." })).toBeDisabled();
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Thank you, we noted your interest." })).toBeDisabled();
+  const interests = log.filter((r) => r.path === "/events" && (r.body as { event?: string })?.event === "program_interest");
+  expect(interests).toHaveLength(1);
+  expect(interests[0].body).toMatchObject({ target_id: "food_bank", profile_id: PROFILE_ID });
+});
+
+test("ID card: the Arrive ID and the onboarding answers, no QR code", async ({ page }) => {
+  await mockApi(page, "ar");
+  await withProfile(page, "ar");
+  await page.goto("/ar/id");
+  const card = page.getByRole("article");
+  await expect(card).toContainText(PROFILE_ID);
+  await expect(card).toContainText("Gender");
+  await expect(card).toContainText("الجنس");
+  await expect(card).toContainText("Amira");
+  await expect(page.getByRole("img")).toHaveCount(0);
+  await page.screenshot({ path: "test-results/id-ar.png", fullPage: true });
 });

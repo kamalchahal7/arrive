@@ -42,7 +42,7 @@ const CONTACT_ICON = { phone: Phone, text: MessageSquare, whatsapp: MessageSquar
 const URGENCY_STYLE = {
   emergency: "bg-danger-light text-danger-ink",
   high: "bg-amber-light text-amber-ink",
-  normal: "bg-teal-light text-teal",
+  normal: "bg-brand-light text-brand",
 };
 
 function waiting(created: string): string {
@@ -101,7 +101,7 @@ export default async function WorkerPage({ searchParams }: PageProps<"/worker">)
                   <Link
                     href={`/worker?id=${h.id}`}
                     aria-current={isSel ? "true" : undefined}
-                    className={`card flex flex-col gap-2 !p-4 hover:border-teal ${isSel ? "!border-2 !border-teal" : ""} ${h.status === "resolved" ? "opacity-70" : ""}`}
+                    className={`card flex flex-col gap-2 !p-4 hover:border-brand ${isSel ? "!border-2 !border-brand" : ""} ${h.status === "resolved" ? "opacity-70" : ""}`}
                   >
                     <span className="flex flex-wrap items-center gap-2 text-sm">
                       <span className={`rounded-full px-2 py-0.5 font-bold ${URGENCY_STYLE[h.urgency]}`}>

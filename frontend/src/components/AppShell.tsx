@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, FileText, Map, MessageCircle, Settings, ShieldQuestion } from "lucide-react";
+import { ArrowLeft, FileText, Map, MessageCircle, ShieldQuestion } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -17,15 +17,10 @@ export function AppHeader() {
   return (
     <header className="border-b border-line bg-surface">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2">
-        <Link href="/home" lang="en" className="font-display text-2xl font-semibold text-teal" aria-label={t("appName")}>
+        <Link href="/home" lang="en" className="font-display text-2xl font-semibold text-brand" aria-label={t("appName")}>
           Arrive
         </Link>
-        <div className="flex items-center gap-2">
-          <LanguageSwitcher compact />
-          <Link href="/settings" className="btn btn-quiet !px-2" aria-label={t("settings")} title={t("settings")}>
-            <Settings aria-hidden className="size-6" />
-          </Link>
-        </div>
+        <LanguageSwitcher compact />
       </div>
     </header>
   );
@@ -50,11 +45,11 @@ export function BottomNav() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-sm font-bold ${
-                  active ? "text-teal" : "text-muted hover:text-ink"
+                  active ? "text-brand" : "text-muted hover:text-ink"
                 }`}
               >
                 <span
-                  className={`flex h-8 w-12 items-center justify-center rounded-full ${active ? "bg-teal-light" : ""}`}
+                  className={`flex h-8 w-12 items-center justify-center rounded-full ${active ? "bg-brand-light" : ""}`}
                 >
                   <Icon aria-hidden className="size-6" strokeWidth={active ? 2.5 : 2} />
                 </span>

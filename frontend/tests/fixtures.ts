@@ -116,6 +116,8 @@ const answer = (lang: string) => ({
 type Options = {
   /** What /api/onboarding/answer returns, per question key. */
   answers?: Record<string, { value: Record<string, unknown>; confirmation: string; heard?: string }>;
+  /** Fields that GET /api/profile/:id returns differently from the default profile. */
+  profile?: Record<string, unknown>;
 };
 
 /** Mocks every call to the Arrive API used by the newcomer pages. Returns a log of the requests. */
@@ -139,7 +141,7 @@ export async function mockApi(page: Page, lang: string, options: Options = {}): 
     if (path === "/ask") return json(answer(lang));
     if (path === "/profile" && method === "POST") return json(profile({ ...(body as object), preferred_language: lang }), 201);
     if (path.startsWith("/profile/") && method === "GET") {
-      return path.endsWith(PROFILE_ID) ? json(profile({ preferred_language: lang })) : json({ error: "profile_not_found" }, 404);
+      return path.endsWith(PROFILE_ID) ? json(profile({ preferred_language: lang, ...options.profile })) : json({ error: "profile_not_found" }, 404);
     }
     if (path.startsWith("/profile/")) return json(profile({ ...(body as object) }));
     if (path.startsWith("/checklist/")) return method === "GET" ? json(checklist(lang)) : json({ updated: 1, done: 2, total: 5 });
@@ -156,6 +158,7 @@ export async function mockApi(page: Page, lang: string, options: Options = {}): 
       return json({ question_key: key, understood: true, declined: false, heard: "", ...a });
     }
     // No read-aloud in tests: the app falls back to text, as it does for a language without speech.
+    if (path === "/events" || path === "/survey") return route.fulfill({ status: 204 });
     if (path === "/tts") return json({ error: "tts_not_configured" }, 503);
     if (path === "/voice/session") return json({ error: "voice_not_configured" }, 503);
     return json({ error: "internal_error" }, 500);
@@ -164,7 +167,7 @@ export async function mockApi(page: Page, lang: string, options: Options = {}): 
 }
 
 /** A device that already has a profile (and, like after onboarding, the profile cached on the phone). */
-export async function withProfile(page: Page, lang = "en") {
+export async function withProfile(page: Page, lang = "en", overrides: Record<string, unknown> = {}) {
   await page.addInitScript(
     ({ id, cached }) => {
       try {
@@ -174,6 +177,6 @@ export async function withProfile(page: Page, lang = "en") {
         /* ignore */
       }
     },
-    { id: PROFILE_ID, cached: profile({ preferred_language: lang }) },
+    { id: PROFILE_ID, cached: profile({ preferred_language: lang, ...overrides }) },
   );
 }

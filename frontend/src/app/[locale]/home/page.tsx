@@ -5,7 +5,7 @@ import { HomeHeader } from "@/components/home/HomeHeader";
 export async function generateMetadata({ params }: PageProps<"/[locale]/home">) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Home" });
-  return { title: t("title") };
+  return { title: t("checklistTitle") };
 }
 
 export default async function HomePage({ params }: PageProps<"/[locale]/home">) {

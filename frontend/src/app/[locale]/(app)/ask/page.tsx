@@ -71,7 +71,7 @@ export default function AskPage() {
           <ul className="flex flex-col gap-2">
             {examples.map((e) => (
               <li key={e}>
-                <button type="button" onClick={() => ask(e)} className="card w-full !p-4 text-start font-bold text-teal hover:border-teal">
+                <button type="button" onClick={() => ask(e)} className="card w-full !p-4 text-start font-bold text-brand hover:border-brand">
                   {e}
                 </button>
               </li>
@@ -83,7 +83,7 @@ export default function AskPage() {
       <div role="log" aria-live="polite" aria-relevant="additions" className="flex flex-col gap-5">
         {turns.map((turn) => (
           <div key={turn.id} className="flex flex-col gap-3">
-            <p dir="auto" className="max-w-[85%] self-end rounded-2xl rounded-ee-md bg-teal px-4 py-2.5 text-white">
+            <p dir="auto" className="max-w-[85%] self-end rounded-2xl rounded-ee-md bg-brand px-4 py-2.5 text-white">
               <span className="sr-only">{t("you")}: </span>
               {turn.question}
             </p>
@@ -100,7 +100,7 @@ export default function AskPage() {
         ))}
         {pending && (
           <p role="status" className="flex items-center gap-2 font-bold text-muted">
-            <Loader2 aria-hidden className="size-5 animate-spin text-teal" />
+            <Loader2 aria-hidden className="size-5 animate-spin text-brand" />
             {t("thinking")}
           </p>
         )}

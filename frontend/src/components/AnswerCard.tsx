@@ -114,7 +114,7 @@ export function AnswerCard({
                 type="button"
                 dir="auto"
                 onClick={() => onFollowUp(f)}
-                className="min-h-11 rounded-full border-2 border-teal bg-surface px-4 py-2 text-start font-bold text-teal hover:bg-teal-light"
+                className="min-h-11 rounded-full border-2 border-brand bg-surface px-4 py-2 text-start font-bold text-brand hover:bg-brand-light"
               >
                 {f}
               </button>

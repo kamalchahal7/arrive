@@ -100,7 +100,7 @@ export function clearAll(): void {
   // Checklist, programs, item pages, ticked documents and interests saved on this phone.
   try {
     for (const key of Object.keys(window.localStorage)) {
-      if (/^arrive\.(checklist|pendingProgress|programs|itemCache|docs\.|interest\.)/.test(key)) write(key, null);
+      if (/^arrive\.(done|checklist|pendingProgress|programs|itemCache|docs\.|interest\.)/.test(key)) write(key, null);
     }
   } catch {
     /* storage unavailable */

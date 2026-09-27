@@ -19,10 +19,10 @@ export function LanguageScreen() {
   return (
     <main id="main" className="mx-auto flex min-h-dvh max-w-xl flex-col justify-center gap-6 px-5 py-10">
       <div className="flex flex-col items-center gap-2 text-center">
-        <p className="font-display text-3xl font-semibold text-teal" lang="en">
+        <p className="font-display text-3xl font-semibold text-brand" lang="en">
           Arrive
         </p>
-        <Globe2 aria-hidden className="size-12 text-teal" />
+        <Globe2 aria-hidden className="size-12 text-brand" />
         <h1 className="text-xl font-bold">{t("title")}</h1>
       </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -33,7 +33,7 @@ export function LanguageScreen() {
               locale={l.code}
               lang={l.code}
               dir={l.dir}
-              className="flex min-h-20 items-center justify-center rounded-card border-2 border-line bg-surface px-5 py-3 text-3xl font-bold hover:border-teal hover:bg-teal-light"
+              className="flex min-h-20 items-center justify-center rounded-card border-2 border-line bg-surface px-5 py-3 text-3xl font-bold hover:border-brand hover:bg-brand-light"
             >
               {l.nativeName}
             </Link>
