@@ -1,6 +1,7 @@
 import { ExternalLink, FlaskConical, TrendingDown, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
 import { BriefPanel } from "@/components/staff/BriefPanel";
+import { HouseholdInsights } from "@/components/staff/HouseholdInsights";
 import { LanguagesChart, OverTimeChart, TopTopicsChart } from "@/components/staff/LazyCharts";
 import { AccessDenied, StaffShell } from "@/components/staff/StaffShell";
 import { type Confusing, type Gaps, type Languages, langName, type Overview, type OverTime, show } from "@/components/staff/insights-types";
@@ -242,6 +243,11 @@ export default async function InsightsPage() {
             )}
           </section>
         </div>
+
+        <section aria-labelledby="household-insights" className="flex flex-col gap-3">
+          <h2 id="household-insights" className="font-display text-2xl font-semibold">Household checklist and programs</h2>
+          <HouseholdInsights />
+        </section>
 
         <BriefPanel />
       </div>

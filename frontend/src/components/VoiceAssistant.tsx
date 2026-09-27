@@ -3,9 +3,10 @@
 import { ConversationProvider, useConversation } from "@elevenlabs/react";
 import { Ear, Loader2, Mic, MicOff, PhoneOff, Sparkles, Volume2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { api, errorCode } from "@/lib/api";
+import { track } from "@/lib/events";
 import { getProfileId } from "@/lib/storage";
 
 type Phase = "idle" | "permission" | "connecting" | "listening" | "thinking" | "speaking" | "ended" | "denied" | "error";
@@ -24,7 +25,16 @@ const PHASE_ICON = {
   error: MicOff,
 } as const;
 
-function Panel({ big }: { big: boolean }) {
+export type VoicePhase = Phase;
+type PanelProps = {
+  big: boolean;
+  /** Tells the avatar what the agent is doing. */
+  onPhase?: (phase: Phase) => void;
+  /** Receives a function that returns the current voice level (0..1) for the avatar's mouth and ring. */
+  levelSource?: (get: () => number) => void;
+};
+
+function Panel({ big, onPhase, levelSource }: PanelProps) {
   const t = useTranslations("Voice");
   const te = useTranslations("Errors");
   const locale = useLocale();
@@ -52,9 +62,22 @@ function Panel({ big }: { big: boolean }) {
       thinking.current = false;
     },
     onMessage: ({ message, role }) => {
-      if (message?.trim()) setLines((prev) => [...prev, { role: role === "user" ? "user" : "agent", text: message }]);
+      if (!message?.trim()) return;
+      if (role === "user") track("assistant_question", locale);
+      setLines((prev) => [...prev, { role: role === "user" ? "user" : "agent", text: message }]);
     },
   });
+
+  useEffect(() => onPhase?.(phase), [onPhase, phase]);
+  useEffect(() => {
+    levelSource?.(() => {
+      try {
+        return phase === "speaking" ? conversation.getOutputVolume() : phase === "listening" ? conversation.getInputVolume() : 0;
+      } catch {
+        return 0;
+      }
+    });
+  }, [conversation, levelSource, phase]);
 
   const connect = useCallback(async () => {
     setError(null);
@@ -176,10 +199,10 @@ function Panel({ big }: { big: boolean }) {
   );
 }
 
-export function VoiceAssistant({ big = false }: { big?: boolean }) {
+export function VoiceAssistant({ big = false, onPhase, levelSource }: Partial<PanelProps>) {
   return (
     <ConversationProvider>
-      <Panel big={big} />
+      <Panel big={big} onPhase={onPhase} levelSource={levelSource} />
     </ConversationProvider>
   );
 }
