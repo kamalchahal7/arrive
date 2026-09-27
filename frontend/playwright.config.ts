@@ -11,6 +11,8 @@ export default defineConfig({
     baseURL: "http://localhost:3100",
     ...devices["Pixel 7"],
     locale: "en-CA",
+    // A fake microphone (a test tone) for the voice onboarding tests, with the permission prompt accepted.
+    launchOptions: { args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"] },
   },
   webServer: {
     command: "npx next start -p 3100",

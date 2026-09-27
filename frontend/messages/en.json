@@ -51,64 +51,180 @@
     "tts_not_configured": "Read aloud is not available right now.",
     "tts_failed": "Read aloud is not available right now.",
     "step_not_found": "We could not find this step.",
-    "internal_error": "Sorry, something went wrong. Please try again."
+    "internal_error": "Sorry, something went wrong. Please try again.",
+    "encryption_not_configured": "We can't send contact details right now. Please visit a settlement agency, or try again later.",
+    "answer_required": "Please say or tap your answer.",
+    "audio_too_large": "That recording is too long. Please try a shorter answer.",
+    "unsupported_audio": "We could not use that recording. Please try again, or tap your answer.",
+    "stt_unsupported_language": "Speaking your answers is not available in this language yet. Please tap your answer.",
+    "stt_not_configured": "Voice answers are not available right now. Please tap your answer.",
+    "stt_failed": "We could not hear that clearly. Please try again, or tap your answer.",
+    "tts_unsupported_language": "Listening is not available in this language yet.",
+    "invalid_household": "Please check the number of people in your family.",
+    "checklist_unavailable": "Your checklist is not available right now. Please try again soon.",
+    "unknown_checklist_item": "This step is no longer on your checklist.",
+    "item_not_found": "We could not find this step."
   },
-  "Welcome": {
-    "title": "Welcome to Canada",
-    "subtitle": "Official information, explained in your language.",
-    "greetingsLabel": "Welcome in other languages",
-    "chooseLanguage": "Choose your language",
-    "orSpeak": "Or just start speaking",
-    "privacy": "No account needed. Asking questions never affects your immigration status.",
-    "continue": "Continue",
-    "myRoadmap": "Go to my roadmap"
+  "Language": {
+    "title": "Choose your language",
+    "saved": "Your checklist is saved on this phone."
+  },
+  "Avatar": {
+    "idle": "Ready",
+    "speaking": "Speaking…",
+    "listening": "Listening…",
+    "thinking": "Thinking…"
   },
   "Onboarding": {
-    "title": "A few questions",
-    "intro": "Your answers help us show the steps that fit you. They stay private.",
+    "introTitle": "Hello! I am the Arrive helper.",
+    "introBody": "I will ask you a few questions to make your checklist of first steps in Canada.",
+    "introPrivacy": "Nothing you tell me is shared with immigration officials.",
+    "introHow": "You can answer by speaking or by tapping.",
+    "introHowTap": "Tap your answers on the screen.",
+    "start": "Start",
+    "listenIntro": "Listen",
+    "haveId": "I already have an Arrive ID",
+    "autoListen": "Start listening by myself after each question",
+    "voiceOff": "Voice is not available yet in {language}. You can read the questions and tap your answers.",
+    "listenOnly": "You can listen to the questions. Speaking your answers is not available yet in {language}, so please tap them.",
+    "speakOnly": "Reading aloud is not available yet in {language}. You can read the questions, then speak or tap your answers.",
+    "ttsFailed": "Listening is not available right now. Please read the questions.",
     "progress": "Question {current} of {total}",
-    "status": {
-      "question": "What is your situation in Canada?",
-      "refugee_pr": "Permanent resident",
-      "refugee_prHint": "For example, a resettled refugee",
-      "international_student": "International student",
-      "international_studentHint": "You have a study permit"
-    },
-    "arrival": {
-      "question": "When did you arrive in Canada?",
-      "thisWeek": "This week",
-      "lessThanMonth": "Less than a month ago",
-      "oneToThree": "1 to 3 months ago",
-      "moreThanThree": "More than 3 months ago"
+    "back": "Back",
+    "repeat": "Repeat question",
+    "speak": "Answer by speaking",
+    "stopSpeaking": "I'm done speaking",
+    "micHint": "Tap the microphone, then say your answer.",
+    "micPermission": "Arrive uses your microphone only while you answer. Your voice is turned into text and then deleted.",
+    "micDenied": "The microphone is blocked. Please tap your answer instead.",
+    "micUnsupported": "This browser can't record your voice. Please tap your answer.",
+    "noSound": "I did not hear anything. Please try again, or tap your answer.",
+    "understanding": "Understanding your answer…",
+    "heard": "I heard: “{text}”",
+    "yes": "Yes, that's right",
+    "tryAgain": "No, try again",
+    "tapInstead": "Type or tap instead",
+    "orTap": "Or tap your answer",
+    "skip": "Skip",
+    "next": "Next",
+    "optional": "You can skip this question.",
+    "firstName": {
+      "question": "What should I call you?",
+      "label": "Your first name",
+      "hint": "Only your first name. It is kept private and used on your cards."
     },
     "city": {
-      "question": "Where do you live?",
+      "question": "Which city are you living in now?",
       "ottawa": "Ottawa",
-      "otherOntario": "Somewhere else in Ontario"
+      "other": "Another city",
+      "nameLabel": "Name of your city"
     },
-    "children": {
-      "question": "Do you have children under 18 with you?",
-      "yes": "Yes",
-      "no": "No"
+    "province": {
+      "question": "Is your city in Ontario?",
+      "ontario": "Yes, in Ontario",
+      "other": "No, another province"
     },
-    "seniors": {
-      "question": "Does someone aged 65 or older live with you?",
-      "yes": "Yes",
-      "no": "No"
+    "country": {
+      "question": "Which country are you coming from?",
+      "hint": "This is only used for anonymous statistics.",
+      "other": "Another country",
+      "selectLabel": "Choose your country",
+      "choose": "Choose…"
     },
-    "needs": {
-      "question": "What do you need help with first?",
-      "hint": "Choose all that fit.",
-      "health": "Health care",
-      "housing": "Housing",
-      "work": "Work",
-      "school": "School for children",
-      "language": "English or French classes",
-      "money": "Money and benefits",
-      "documents": "Documents and cards"
+    "gender": {
+      "question": "How do you describe your gender?",
+      "hint": "This does not change your checklist.",
+      "woman": "Woman",
+      "man": "Man",
+      "another": "Another gender",
+      "prefer_not_to_say": "I prefer not to say"
     },
-    "finish": "See my roadmap",
-    "creating": "Making your roadmap…"
+    "selfAge": {
+      "question": "Are you 65 years old or older?",
+      "yes": "Yes, 65 or older",
+      "no": "No, under 65"
+    },
+    "household": {
+      "question": "Who arrived in Canada with you?",
+      "hint": "Count the family members who came with you. Do not count yourself.",
+      "adults": "Adults (18 to 64)",
+      "seniors": "Seniors (65 or older)",
+      "children_0_5": "Children (0 to 5 years)",
+      "children_6_17": "Children (6 to 17 years)",
+      "fewer": "One less: {group}",
+      "more": "One more: {group}",
+      "alone": "I came alone",
+      "agesNeeded": "{count, plural, one {Please tell us how old the child is.} other {Please tell us how old the # children are.}}",
+      "total": "{count, plural, one {Just you} other {Family of #}}"
+    },
+    "disability": {
+      "question": "Does anyone in your family have a disability or a long-term health condition?",
+      "hint": "Choose all that fit. This helps show programs that can help.",
+      "none": "No one",
+      "adult": "An adult (18 to 64)",
+      "senior": "A senior (65 or older)",
+      "child": "A child",
+      "prefer_not": "I prefer not to say"
+    },
+    "languages": {
+      "question": "Which other languages do you speak?",
+      "hint": "Choose all that fit. Staff can then find an interpreter for you.",
+      "none": "No other language"
+    },
+    "summary": {
+      "title": "Is this right?",
+      "intro": "Check your answers. Tap Change to fix one.",
+      "change": "Change",
+      "changeLabel": "Change: {item}",
+      "notGiven": "Not given",
+      "name": "Name",
+      "city": "City",
+      "province": "Province",
+      "ontario": "Ontario",
+      "otherProvince": "Another province",
+      "country": "Country",
+      "gender": "Gender",
+      "age": "Your age",
+      "ageSenior": "65 or older",
+      "ageAdult": "Under 65",
+      "adults": "{count, plural, one {# adult} other {# adults}}",
+      "seniors": "{count, plural, one {# senior} other {# seniors}}",
+      "children_0_5": "{count, plural, one {# child aged 0 to 5} other {# children aged 0 to 5}}",
+      "children_6_17": "{count, plural, one {# child aged 6 to 17} other {# children aged 6 to 17}}",
+      "disability": "Disability or long-term condition",
+      "languages": "Other languages",
+      "consentTitle": "Help improve services for newcomers",
+      "consentBody": "Share anonymous information about how you use Arrive, like which steps are hard and your country of origin. Your name is never shared. You can say no.",
+      "create": "Create my checklist",
+      "creating": "Making your checklist…"
+    },
+    "done": {
+      "title": "Your checklist is ready",
+      "idLabel": "Your Arrive ID",
+      "idNote": "Your ID is saved on this phone. Write it down or take a photo of it: you can use it to open your checklist on another phone.",
+      "go": "Go to my checklist"
+    },
+    "restore": {
+      "title": "Open my checklist",
+      "intro": "Type the Arrive ID you got when you made your checklist.",
+      "label": "Your Arrive ID",
+      "open": "Open my checklist",
+      "invalid": "This does not look like an Arrive ID. It starts with ARV.",
+      "notFound": "We could not find this ID. Please check it and try again.",
+      "startOver": "Make a new checklist instead"
+    }
+  },
+  "Home": {
+    "title": "Your checklist",
+    "hello": "Hello, {name}",
+    "helloNoName": "Hello",
+    "progress": "{done} of {total} done",
+    "noProfile": "Answer a few questions to make your checklist.",
+    "start": "Start",
+    "essential": "Essential",
+    "forPerson": "For: {person}",
+    "markDone": "Mark as done: {title} ({person})",
+    "offline": "You are offline. This is your saved checklist."
   },
   "Roadmap": {
     "title": "Your roadmap",
@@ -274,6 +390,7 @@
     "simpleModeHint": "Fewer things on the screen and bigger buttons.",
     "autoRead": "Read answers aloud automatically",
     "reduceMotion": "Reduce motion",
+    "autoListen": "Start listening by myself after each onboarding question",
     "language": "Language",
     "deleteTitle": "Delete my data",
     "deleteBody": "This deletes your answers and roadmap from Arrive and from this phone.",

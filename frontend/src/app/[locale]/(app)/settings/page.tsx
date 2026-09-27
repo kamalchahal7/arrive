@@ -89,6 +89,7 @@ export default function SettingsPage() {
         <Toggle id="simple" label={t("simpleMode")} hint={t("simpleModeHint")} checked={settings.simpleMode} onChange={(v) => update({ simpleMode: v })} />
         <Toggle id="autoread" label={t("autoRead")} checked={settings.autoRead} onChange={(v) => update({ autoRead: v })} />
         <Toggle id="motion" label={t("reduceMotion")} checked={settings.reduceMotion} onChange={(v) => update({ reduceMotion: v })} />
+        <Toggle id="autolisten" label={t("autoListen")} checked={settings.autoListen} onChange={(v) => update({ autoListen: v })} />
       </section>
 
       <section className="card">

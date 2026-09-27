@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible, Fraunces, Noto_Naskh_Arabic } from "next/font/google";
+import { Atkinson_Hyperlegible, Fraunces, Noto_Naskh_Arabic, Noto_Sans_Ethiopic } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -20,7 +20,14 @@ const naskh = Noto_Naskh_Arabic({
   weight: ["400", "700"],
   variable: "--font-naskh",
   display: "swap",
-  preload: false, // only needed on Arabic-script pages
+  preload: false, // only needed on Arabic-script pages (Arabic, Dari, Pashto)
+});
+const ethiopic = Noto_Sans_Ethiopic({
+  subsets: ["ethiopic"],
+  weight: ["400", "700"],
+  variable: "--font-noto-ethiopic",
+  display: "swap",
+  preload: false, // only needed on Tigrinya pages
 });
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0E5E57" };
@@ -45,7 +52,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     <html
       lang={locale}
       dir={isRtl(locale) ? "rtl" : "ltr"}
-      className={`${fraunces.variable} ${atkinson.variable} ${naskh.variable}`}
+      className={`${fraunces.variable} ${atkinson.variable} ${naskh.variable} ${ethiopic.variable}`}
       suppressHydrationWarning
     >
       <head>

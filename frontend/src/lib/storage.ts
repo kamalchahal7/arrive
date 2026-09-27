@@ -4,6 +4,8 @@
 const PROFILE_KEY = "arrive.profileId";
 const SETTINGS_KEY = "arrive.settings";
 const ROADMAP_KEY = "arrive.roadmapCache";
+const PROFILE_CACHE_KEY = "arrive.profile";
+const DRAFT_KEY = "arrive.onboardingDraft";
 
 export type A11ySettings = {
   textSize: 1 | 2 | 3 | 4;
@@ -11,6 +13,8 @@ export type A11ySettings = {
   simpleMode: boolean;
   autoRead: boolean;
   reduceMotion: boolean;
+  /** Voice onboarding: start listening by itself after each question is read. */
+  autoListen: boolean;
 };
 
 export const DEFAULT_SETTINGS: A11ySettings = {
@@ -19,6 +23,7 @@ export const DEFAULT_SETTINGS: A11ySettings = {
   simpleMode: false,
   autoRead: false,
   reduceMotion: false,
+  autoListen: false,
 };
 
 function read(key: string): string | null {
@@ -62,8 +67,37 @@ export function getCachedRoadmap<T>(lang: string): T | null {
 export const cacheRoadmap = (lang: string, roadmap: unknown): void =>
   write(ROADMAP_KEY, JSON.stringify({ lang, roadmap }));
 
+// The last profile, kept on the device so the home screen and ID card work on a bad connection.
+// It holds the first name, which stays on this phone.
+export function getCachedProfile<T>(): T | null {
+  try {
+    return JSON.parse(read(PROFILE_CACHE_KEY) || "null") as T | null;
+  } catch {
+    return null;
+  }
+}
+export const cacheProfile = (profile: unknown): void => write(PROFILE_CACHE_KEY, JSON.stringify(profile));
+
+// Onboarding answers so far, for this tab only (sessionStorage), so a reload does not lose them.
+export function getDraft<T>(): T | null {
+  try {
+    return JSON.parse(window.sessionStorage.getItem(DRAFT_KEY) || "null") as T | null;
+  } catch {
+    return null;
+  }
+}
+export function saveDraft(draft: unknown): void {
+  try {
+    if (draft === null) window.sessionStorage.removeItem(DRAFT_KEY);
+    else window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
 export function clearAll(): void {
-  for (const key of [PROFILE_KEY, SETTINGS_KEY, ROADMAP_KEY]) write(key, null);
+  for (const key of [PROFILE_KEY, SETTINGS_KEY, ROADMAP_KEY, PROFILE_CACHE_KEY]) write(key, null);
+  saveDraft(null);
 }
 
 // Runs before React hydrates (inlined in the layout) so settings apply without a flash.

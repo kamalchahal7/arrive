@@ -1,6 +1,40 @@
 import type { Page } from "@playwright/test";
 
-export const PROFILE_ID = "11111111-2222-4333-8444-555555555555";
+export const PROFILE_UUID = "11111111-2222-4333-8444-555555555555";
+export const PROFILE_ID = "ARV-7K3P-9QXM-2D4F";
+
+export const profile = (overrides: Record<string, unknown> = {}) => ({
+  id: PROFILE_UUID, public_id: PROFILE_ID, status: "unknown", arrival_date: null, city: "ottawa", province: "ontario",
+  has_children: true, has_seniors: false, languages: ["en"], preferred_language: "en", needs: [], created_at: "2026-09-26T12:00:00Z",
+  first_name: "Amira", city_name: null, country_of_origin: "SY", gender: "woman", self_age_group: "adult", adults: 2, seniors: 0,
+  children_0_5: 1, children_6_17: 1, disability_adult: false, disability_senior: false, disability_child: false,
+  other_languages: ["en"], analytics_consent: false, ...overrides,
+});
+
+const row = (item: string, person: string, label: string, title: string, essential = false, status = "todo") => ({
+  item_id: item, person_key: person, person_label: label, title, summary: `${title}.`, essential, in_person: true,
+  status, completed_at: null,
+});
+
+export const checklist = (lang: string) => {
+  const ar = lang === "ar";
+  return {
+    profile_id: PROFILE_ID, language: lang, done: 1, total: 5, current_phase: "first_3_days", notes: [],
+    phases: [
+      { id: "first_3_days", label: ar ? "الأيام الثلاثة الأولى" : "First 3 days", done: 1, total: 2, items: [
+        row("rap_orientation", "household", ar ? "عائلتك" : "Your family", ar ? "قابل موظف إعادة التوطين" : "Meet your resettlement worker", false, "done"),
+        row("ifhp", "household", ar ? "عائلتك" : "Your family", ar ? "افهم تغطيتك الصحية المؤقتة" : "Understand your temporary health coverage"),
+      ] },
+      { id: "first_2_weeks", label: ar ? "الأسبوعان الأولان" : "First 2 weeks", done: 0, total: 3, items: [
+        row("sin", "self", "Amira", ar ? "قدّم طلب رقم التأمين الاجتماعي" : "Apply for a Social Insurance Number", true),
+        row("health_card", "self", "Amira", ar ? "قدّم طلب البطاقة الصحية" : "Apply for an Ontario health card (OHIP)", true),
+        row("health_card", "child-1", ar ? "الطفل 1" : "Child 1", ar ? "قدّم طلب البطاقة الصحية" : "Apply for an Ontario health card (OHIP)", true),
+      ] },
+    ],
+  };
+};
+
+export type ApiLog = { path: string; method: string; body: unknown }[];
 
 const roadmap = (lang: string) => ({
   profile_id: PROFILE_ID,
@@ -44,20 +78,49 @@ const answer = (lang: string) => ({
   disclaimer: "This is information, not legal or tax advice.",
 });
 
-/** Mocks every call to the Arrive API used by the newcomer pages. */
-export async function mockApi(page: Page, lang: string) {
+type Options = {
+  /** What /api/onboarding/answer returns, per question key. */
+  answers?: Record<string, { value: Record<string, unknown>; confirmation: string; heard?: string }>;
+};
+
+/** Mocks every call to the Arrive API used by the newcomer pages. Returns a log of the requests. */
+export async function mockApi(page: Page, lang: string, options: Options = {}): Promise<ApiLog> {
+  const log: ApiLog = [];
   await page.route(/\/api\//, async (route) => {
-    const url = new URL(route.request().url());
+    const req = route.request();
+    const url = new URL(req.url());
     const path = url.pathname.replace(/^\/api/, "");
-    const json = (body: unknown, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(body) });
+    const method = req.method();
+    let body: unknown = null;
+    try {
+      body = req.postDataJSON();
+    } catch {
+      body = req.postData();
+    }
+    log.push({ path, method, body });
+    const json = (data: unknown, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(data) });
     if (path.startsWith("/roadmap/steps/")) return route.fulfill({ status: 204 });
     if (path.startsWith("/roadmap/")) return json(roadmap(lang));
     if (path === "/ask") return json(answer(lang));
-    if (path === "/profile") return json({ id: PROFILE_ID }, 201);
-    if (path.startsWith("/profile/")) return json({ id: PROFILE_ID });
+    if (path === "/profile" && method === "POST") return json(profile({ ...(body as object), preferred_language: lang }), 201);
+    if (path.startsWith("/profile/") && method === "GET") {
+      return path.endsWith(PROFILE_ID) ? json(profile({ preferred_language: lang })) : json({ error: "profile_not_found" }, 404);
+    }
+    if (path.startsWith("/profile/")) return json(profile({ ...(body as object) }));
+    if (path.startsWith("/checklist/")) return method === "GET" ? json(checklist(lang)) : json({ updated: 1, done: 2, total: 5 });
+    if (path === "/onboarding/answer") {
+      const form = req.postDataBuffer()?.toString("latin1") ?? "";
+      const key = /name="question_key"\r\n\r\n([a-z_]+)/.exec(form)?.[1] ?? "";
+      const a = options.answers?.[key];
+      if (!a) return json({ question_key: key, understood: false, declined: false, value: {}, confirmation: "Sorry, I did not understand.", heard: "" });
+      return json({ question_key: key, understood: true, declined: false, heard: "", ...a });
+    }
+    // No read-aloud in tests: the app falls back to text, as it does for a language without speech.
+    if (path === "/tts") return json({ error: "tts_not_configured" }, 503);
     if (path === "/voice/session") return json({ error: "voice_not_configured" }, 503);
     return json({ error: "internal_error" }, 500);
   });
+  return log;
 }
 
 export async function withProfile(page: Page) {

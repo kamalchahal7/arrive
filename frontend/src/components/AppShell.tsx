@@ -17,7 +17,7 @@ export function AppHeader() {
   return (
     <header className="border-b border-line bg-surface">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2">
-        <Link href="/" className="font-display text-2xl font-semibold text-teal" aria-label={t("appName")}>
+        <Link href="/" lang="en" className="font-display text-2xl font-semibold text-teal" aria-label={t("appName")}>
           Arrive
         </Link>
         <div className="flex items-center gap-2">
