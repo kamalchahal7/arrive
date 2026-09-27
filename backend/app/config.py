@@ -33,6 +33,13 @@ class Settings(BaseSettings):
     elevenlabs_agent_id: str = ""
     elevenlabs_tts_model: str = ""
     elevenlabs_voice_id_default: str = ""
+    # Optional second TTS model for languages the default model does not speak (for example Pashto needs a model
+    # with wider language support). Empty = those languages have no read-aloud.
+    elevenlabs_tts_model_extended: str = ""
+    # Speech-to-text (Scribe) model for voice onboarding answers.
+    elevenlabs_stt_model: str = ""
+    # Zero retention mode for speech-to-text (ElevenLabs enterprise accounts only; other accounts must leave it off).
+    elevenlabs_zero_retention: bool = False
     voice_tool_secret: str = ""
 
     # Auth0
@@ -45,6 +52,8 @@ class Settings(BaseSettings):
     public_base_url: str = ""
 
     # Privacy
+    # Fernet key(s) for first names and handoff contact details, comma-separated; the first one encrypts.
+    pii_encryption_key: str = ""
     insights_min_group_size: int = 5
     request_log_retention_days: int = 365
 

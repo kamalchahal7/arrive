@@ -15,8 +15,11 @@ from app.config import get_settings
 from app.db.pool import close_pool, ensure_pool, get_pool, open_pool
 from app.errors import AppError
 from app.ratelimit import limiter
-from app.routers import admin, ask, checklist, handoffs, health, insights, media, profile, roadmap, sources, staff_card, voice
+from app.routers import (
+    admin, ask, checklist, handoffs, health, insights, media, profile, roadmap, sources, staff_card, voice,
+)
 from app.services.gemini import GeminiError
+from app.services.pii import PIIUnavailable
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("arrive")
@@ -94,6 +97,11 @@ def create_app() -> FastAPI:
     async def ai_down(request: Request, exc: GeminiError) -> JSONResponse:
         logger.error("gemini error on %s", request.url.path)
         return JSONResponse({"error": "ai_unavailable"}, status_code=503)
+
+    @app.exception_handler(PIIUnavailable)
+    async def no_pii_key(request: Request, exc: PIIUnavailable) -> JSONResponse:
+        logger.error("PII_ENCRYPTION_KEY is not set; refused to store personal details on %s", request.url.path)
+        return JSONResponse({"error": "encryption_not_configured"}, status_code=503)
 
     @app.exception_handler(Exception)
     async def unhandled(request: Request, exc: Exception) -> JSONResponse:

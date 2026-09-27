@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 from app.auth import Principal, require_role
 from app.deps import require_db
 from app.errors import AppError
-from app.models.common import Lang
+from app.models.common import Lang, ProfileRef
 from app.ratelimit import limiter
 from app.services import handoff
 
@@ -23,7 +23,7 @@ class HandoffIn(BaseModel):
     contact_value: str | None = Field(default=None, max_length=200)
     preferred_time: str | None = Field(default=None, max_length=100)
     consent: bool
-    profile_id: uuid.UUID | None = None
+    profile_id: ProfileRef | None = None
     request_id: uuid.UUID | None = None
     topic: str | None = Field(default=None, max_length=40)
 
@@ -38,7 +38,7 @@ async def create(request: Request, body: HandoffIn, pool: asyncpg.Pool = Depends
     created = await handoff.create_handoff(
         pool, need=body.need, language=body.language, contact_method=body.contact_method,
         contact_value=body.contact_value, preferred_time=body.preferred_time, consent=True, channel="web",
-        profile_id=str(body.profile_id) if body.profile_id else None, request_id=body.request_id,
+        profile_id=body.profile_id, request_id=body.request_id,
         topic_hint=body.topic,
     )
     return {"id": created.id, "summary": created.summary_native, "urgency": created.urgency}

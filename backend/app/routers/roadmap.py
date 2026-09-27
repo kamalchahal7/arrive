@@ -2,7 +2,7 @@ import dataclasses
 import uuid
 
 import asyncpg
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Path, Query, Request
 
 from app.deps import require_db
 from app.errors import AppError
@@ -12,6 +12,9 @@ from app.ratelimit import PUBLIC, limiter
 from app.services import profiles, roadmap
 
 router = APIRouter(tags=["roadmap"])
+
+# A readable ID (ARV-...) or the internal uuid of an older profile.
+ProfileRefPath = Path(min_length=12, max_length=40)
 
 
 def step_out(s: roadmap.RoadmapStep) -> StepOut:
@@ -27,7 +30,7 @@ def step_out(s: roadmap.RoadmapStep) -> StepOut:
 @router.get("/roadmap/{profile_id}", response_model=RoadmapOut)
 @limiter.limit(PUBLIC)
 async def get_roadmap(
-    request: Request, profile_id: uuid.UUID, lang: Lang = Query("en"), pool: asyncpg.Pool = Depends(require_db)
+    request: Request, profile_id: str = ProfileRefPath, lang: Lang = Query("en"), pool: asyncpg.Pool = Depends(require_db)
 ) -> RoadmapOut:
     profile = await profiles.get_profile(pool, profile_id)
     if not profile:
@@ -51,8 +54,9 @@ async def patch_step(
 @router.post("/roadmap/{profile_id}/custom", status_code=201)
 @limiter.limit(PUBLIC)
 async def add_custom(
-    request: Request, profile_id: uuid.UUID, body: CustomStepIn, pool: asyncpg.Pool = Depends(require_db)
+    request: Request, body: CustomStepIn, profile_id: str = ProfileRefPath, pool: asyncpg.Pool = Depends(require_db)
 ) -> dict[str, str]:
-    if not await profiles.get_profile(pool, profile_id):
+    profile = await profiles.get_profile(pool, profile_id)
+    if not profile:
         raise AppError("profile_not_found", 404)
-    return {"id": await roadmap.add_custom_step(pool, profile_id, body.title, body.due_date, body.note)}
+    return {"id": await roadmap.add_custom_step(pool, profile["id"], body.title, body.due_date, body.note)}

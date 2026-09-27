@@ -26,6 +26,8 @@ class ProfileIn(BaseModel):
     preferred_language: Lang | None = None
     needs: list[Need] | None = Field(default=None, max_length=12)
     # Household profile (docs/REDESIGN.md section 4). The person themself is one of the adults or seniors.
+    # first_name is stored encrypted (services/pii.py) and never appears in analytics.
+    first_name: str | None = Field(default=None, max_length=40)
     city_name: str | None = Field(default=None, max_length=80)
     country_of_origin: str | None = Field(default=None, pattern=r"^[A-Za-z]{2}$")
     gender: Gender | None = None
@@ -45,6 +47,15 @@ class ProfileIn(BaseModel):
     def upper_country(cls, v: str | None) -> str | None:
         return v.upper() if v else v
 
+    @field_validator("first_name", "city_name")
+    @classmethod
+    def tidy(cls, v: str | None) -> str | None:
+        # Blank means "not given". Control characters are dropped.
+        if v is None:
+            return None
+        v = " ".join("".join(c for c in v if c.isprintable()).split())
+        return v or None
+
 
 class ProfileOut(BaseModel):
     id: uuid.UUID
@@ -59,6 +70,7 @@ class ProfileOut(BaseModel):
     needs: list[str]
     created_at: datetime
     public_id: str | None = None
+    first_name: str | None = None
     city_name: str | None = None
     country_of_origin: str | None = None
     gender: str | None = None

@@ -11,7 +11,7 @@ import asyncpg
 from pydantic import BaseModel
 
 from app import prompts
-from app.services import gemini, request_log
+from app.services import gemini, pii, request_log
 from app.services.answer import situation_text
 from app.services.classifier import classify
 from app.services.privacy import scrub
@@ -30,8 +30,19 @@ class _Summary(BaseModel):
 
 
 def _household(profile: dict[str, Any] | None) -> str | None:
+    """A coarse household description for the worker (counts only, never names)."""
     if not profile:
         return None
+    groups = (
+        ("adults", "adult", "adults"), ("seniors", "senior", "seniors"),
+        ("children_0_5", "child aged 0-5", "children aged 0-5"), ("children_6_17", "child aged 6-17", "children aged 6-17"),
+    )
+    if profile.get("public_id"):
+        counts = [(int(profile.get(k) or 0), one, many) for k, one, many in groups]
+        total = sum(n for n, _, _ in counts)
+        if total <= 1:
+            return "Arrived alone"
+        return f"Family of {total}: " + ", ".join(f"{n} {one if n == 1 else many}" for n, one, many in counts if n)
     parts = []
     if profile.get("has_children"):
         parts.append("children")
@@ -72,6 +83,9 @@ async def create_handoff(
         raise ValueError("consent_required")
     if contact_method not in CONTACT_METHODS:
         raise ValueError("invalid_contact_method")
+    contact = (contact_value or "").strip()[:200] or None
+    # Contact details are encrypted at rest. Without a key they are never stored in plain text.
+    stored_contact = pii.encrypt_text(contact) if contact else None
 
     profile = await get_profile(pool, profile_id)
     today = datetime.now(timezone.utc).date()
@@ -94,7 +108,7 @@ async def create_handoff(
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true, $11, $12, $13) RETURNING id""",
         language, topic, scrub(summary.summary_en), scrub(summary.summary_native), scrub(summary.already_done),
         _household(profile), (profile or {}).get("status") or "unknown", contact_method,
-        (contact_value or "").strip()[:200] or None, (preferred_time or "").strip()[:100] or None,
+        stored_contact, (preferred_time or "").strip()[:100] or None,
         cls.urgency, _parse_date(summary.deadline), channel,
     )
     await request_log.log_request(
@@ -106,6 +120,12 @@ async def create_handoff(
     return HandoffCreated(id=str(row["id"]), summary_native=summary.summary_native, urgency=cls.urgency)
 
 
+def _readable(row: Any) -> dict[str, Any]:
+    h = dict(row)
+    h["contact_value"] = pii.decrypt_text(h.get("contact_value"))
+    return h
+
+
 async def list_handoffs(pool: asyncpg.Pool, status: str | None = None) -> list[dict[str, Any]]:
     rows = await pool.fetch(
         """SELECT * FROM handoffs WHERE ($1::text IS NULL OR status = $1)
@@ -113,12 +133,12 @@ async def list_handoffs(pool: asyncpg.Pool, status: str | None = None) -> list[d
                     (status = 'resolved'), deadline NULLS LAST, created_at""",
         status,
     )
-    return [dict(r) for r in rows]
+    return [_readable(r) for r in rows]
 
 
 async def get_handoff(pool: asyncpg.Pool, handoff_id: uuid.UUID) -> dict[str, Any] | None:
     row = await pool.fetchrow("SELECT * FROM handoffs WHERE id = $1", handoff_id)
-    return dict(row) if row else None
+    return _readable(row) if row else None
 
 
 async def update_handoff(
@@ -129,4 +149,4 @@ async def update_handoff(
            WHERE id = $1 RETURNING *""",
         handoff_id, status, assigned_to,
     )
-    return dict(row) if row else None
+    return _readable(row) if row else None

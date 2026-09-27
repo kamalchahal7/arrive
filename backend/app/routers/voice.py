@@ -16,7 +16,7 @@ from app.deps import require_db
 from app.errors import AppError
 from app.models.common import Lang, dedupe_sources
 from app.ratelimit import limiter
-from app.services import handoff, profiles, roadmap, scam
+from app.services import handoff, pii, profiles, public_id, roadmap, scam
 from app.services.ask import ask
 from app.services.messages import message
 from app.services.request_log import log_request
@@ -50,8 +50,13 @@ def _channel(value: str | None) -> str:
 
 
 def _profile_id(value: str | None) -> str | None:
+    """A readable ID (ARV-...) or an older uuid; anything else (e.g. an empty dynamic variable) is ignored."""
+    if not value:
+        return None
+    if public_id.normalize(value):
+        return public_id.normalize(value)
     try:
-        return str(uuid.UUID(value)) if value else None
+        return str(uuid.UUID(value))
     except ValueError:
         return None
 
@@ -131,11 +136,14 @@ class HandoffTool(BaseModel):
 async def tool_handoff(body: HandoffTool, pool: asyncpg.Pool = Depends(require_db)) -> ToolReply:
     if not body.consent:
         return ToolReply(text="I need your permission before I share your request with a settlement worker.")
-    created = await handoff.create_handoff(
-        pool, need=body.need, language=body.language or "en", contact_method=body.contact_method,
-        contact_value=body.contact_value, preferred_time=body.preferred_time, consent=True,
-        channel=_channel(body.channel), profile_id=_profile_id(body.profile_id),
-    )
+    try:
+        created = await handoff.create_handoff(
+            pool, need=body.need, language=body.language or "en", contact_method=body.contact_method,
+            contact_value=body.contact_value, preferred_time=body.preferred_time, consent=True,
+            channel=_channel(body.channel), profile_id=_profile_id(body.profile_id),
+        )
+    except pii.PIIUnavailable:
+        return ToolReply(text=speakable(await message("handoff_unavailable", body.language or "en")), handoff_suggested=True)
     return ToolReply(text=speakable(created.summary_native))
 
 

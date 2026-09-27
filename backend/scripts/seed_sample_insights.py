@@ -17,6 +17,7 @@ import asyncpg
 
 from app.config import get_settings
 from app.db.pool import connect
+from app.services import pii
 
 WEEKS = 8
 SEED = 42
@@ -155,7 +156,10 @@ async def main() -> None:
                        deadline, channel, is_sample)
                    VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true, $12, $13, 'web', true)""",
                 created, h["language"], h["topic"], h["summary"], h["summary_native"], h["already_done"],
-                h["household"], h["status_category"], h["contact_method"], h["contact_value"], h["preferred_time"],
+                h["household"], h["status_category"], h["contact_method"],
+                # Sample numbers are fake (555), but are encrypted like real ones when a key is set.
+                pii.encrypt_text(h["contact_value"]) if h["contact_value"] and pii.available() else h["contact_value"],
+                h["preferred_time"],
                 h["urgency"], deadline,
             )
         await refresh(conn)
