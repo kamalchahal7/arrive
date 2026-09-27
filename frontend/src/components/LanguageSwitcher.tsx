@@ -16,7 +16,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
 
   return (
     <label className="flex items-center gap-2">
-      <Languages aria-hidden className="size-5 text-teal" />
+      <Languages aria-hidden className="size-5 text-brand" />
       <span className={compact ? "sr-only" : "font-bold"}>{t("language")}</span>
       <select
         className="field !min-h-11 !w-auto !py-1.5 font-bold"

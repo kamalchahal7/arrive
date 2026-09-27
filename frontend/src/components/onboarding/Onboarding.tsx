@@ -1,57 +1,49 @@
 "use client";
 
-// Voice onboarding (docs/REDESIGN.md section 4): intro, one question per screen (spoken by the avatar, answered by
-// voice or by tapping), a summary with analytics consent, then the readable profile ID.
+// Voice onboarding: Aba greets the person (spoken automatically), then asks seven questions, one per screen. Each
+// question can be answered by speaking (tap to speak; the answer is understood and filled in automatically) or by
+// tapping/typing. Then a summary ("Is this right?") and the readable Arrive ID.
 
-import {
-  ArrowLeft, ArrowRight, Baby, Building2, Check, Globe2, Keyboard, Loader2, MapPin, Mic, RotateCcw,
-  Square, User, UserRound, Users, Volume2,
-} from "lucide-react";
+import { ConversationProvider } from "@elevenlabs/react";
+import { ArrowLeft, ArrowRight, Baby, Check, Loader2, RotateCcw, User, UserRound, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Avatar, type AvatarState, useReducedMotion } from "@/components/Avatar";
+import { useEffect, useRef, useState } from "react";
+import { Avatar, type AvatarState } from "@/components/Avatar";
+import { useBi } from "@/components/Bi";
 import { ErrorNote } from "@/components/Notices";
 import { useSettings } from "@/components/SettingsProvider";
-import { ALL_COUNTRIES, COMMON_COUNTRIES } from "@/config/countries";
-import { OTHER_LANGUAGES, countryName, languageInfo, languageName } from "@/config/languages";
-import { canRecord, useRecorder } from "@/hooks/useRecorder";
+import { type SpeakProblem, SpeakPanel } from "@/components/SpeakPanel";
+import { countryName, languageInfo } from "@/config/languages";
+import { canListen, useAbaListener } from "@/hooks/useAbaListener";
 import { prefetchSpeech, unlockAudio, useSpeaker } from "@/hooks/useSpeaker";
 import { useRouter } from "@/i18n/navigation";
 import { api, errorCode } from "@/lib/api";
 import { cacheProfile, getDraft, getProfileId, saveDraft, setProfileId } from "@/lib/storage";
-import { type OnboardingAnswer, type OnboardingQuestion, type Profile, profileRef } from "@/lib/types";
-import { type Choice, ChoiceCards, Chips, Stepper, TextAnswer } from "./AnswerControls";
-import {
-  applyVoiceValue, type Draft, EMPTY_DRAFT, familySize, groupsPresent, isAnswered, markAnswered, questionsFor, REQUIRED,
-  toProfileInput, totals,
-} from "./draft";
+import { type Gender, type OnboardingQuestion, type Profile, profileRef } from "@/lib/types";
+import { extractCity, extractCountry, extractGender, extractHousehold, extractName, isSenior, yesNo } from "@/lib/understand";
+import { ChoiceCards, Stepper, TextAnswer } from "./AnswerControls";
+import { type Draft, EMPTY_DRAFT, isAnswered, markAnswered, QUESTIONS, REQUIRED, toProfileInput, totals } from "./draft";
 
 type Phase = "intro" | "question" | "summary" | "done" | "restore";
-type Voice =
-  | { status: "idle" }
-  | { status: "recording" }
-  | { status: "sending" }
-  | { status: "confirm"; result: OnboardingAnswer }
-  | { status: "problem"; message: string };
 type Saved = { draft: Draft; phase: Phase; index: number };
 
 const KEY: Record<OnboardingQuestion, string> = {
   first_name: "firstName",
   city: "city",
-  province: "province",
   country_of_origin: "country",
   gender: "gender",
   self_age: "selfAge",
   household: "household",
   disability: "disability",
-  languages_spoken: "languages",
 };
+const GENDERS: readonly Gender[] = ["man", "woman", "another", "prefer_not_to_say"];
 const HOUSEHOLD_GROUPS = [
   { id: "adults", icon: UserRound },
   { id: "seniors", icon: User },
   { id: "children_0_5", icon: Baby },
   { id: "children_6_17", icon: Users },
 ] as const;
+const AUTO_NEXT_MS = 1400; // time to see a spoken answer filled in before the next question
 
 // ARV-XXXX-XXXX-XXXX in Crockford base32, read the way backend/app/services/public_id.py does.
 function normalizeId(value: string): string | null {
@@ -62,77 +54,80 @@ function normalizeId(value: string): string | null {
   return `ARV-${raw.slice(0, 4)}-${raw.slice(4, 8)}-${raw.slice(8)}`;
 }
 
-function LevelMeter({ getLevel }: { getLevel: () => number }) {
-  const bar = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    let frame = 0;
-    const tick = () => {
-      if (bar.current) bar.current.style.transform = `scaleX(${Math.max(0.04, getLevel())})`;
-      frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [getLevel]);
+export function Onboarding() {
   return (
-    <div aria-hidden className="h-3 w-full max-w-xs overflow-hidden rounded-full bg-line">
-      <div ref={bar} className="h-full w-full origin-left rounded-full bg-teal rtl:origin-right" />
-    </div>
+    <ConversationProvider>
+      <Flow />
+    </ConversationProvider>
   );
 }
 
-export function Onboarding() {
+function Flow() {
   const t = useTranslations("Onboarding");
+  const b = useBi("Onboarding");
+  const bc = useBi("Common");
   const ta = useTranslations("Avatar");
   const te = useTranslations("Errors");
   const locale = useLocale();
   const router = useRouter();
   const info = languageInfo(locale);
   const { settings, update } = useSettings();
-  const still = useReducedMotion();
 
   const [phase, setPhase] = useState<Phase>("intro");
+  const [autoIntro, setAutoIntro] = useState(true);
+  const [introStuck, setIntroStuck] = useState(false);
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
   const [index, setIndex] = useState(0);
   const [toSummary, setToSummary] = useState(false);
-  const [voice, setVoice] = useState<Voice>({ status: "idle" });
+  const [heard, setHeard] = useState<{ text: string; ok: boolean } | null>(null);
+  const [problem, setProblem] = useState<SpeakProblem | null>(null);
   const [micReady, setMicReady] = useState(false);
   const [created, setCreated] = useState<Profile | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [nameInput, setNameInput] = useState("");
   const [cityInput, setCityInput] = useState("");
-  const [otherCountry, setOtherCountry] = useState(false);
+  const [countryInput, setCountryInput] = useState("");
   const [restoreInput, setRestoreInput] = useState("");
   const [restoreError, setRestoreError] = useState<string | null>(null);
 
   const speaker = useSpeaker(locale, info.tts);
-  const recorder = useRecorder();
+  const listener = useAbaListener(locale);
   const heading = useRef<HTMLHeadingElement>(null);
-  const tapArea = useRef<HTMLElement>(null);
   const moved = useRef(false);
+  const autoNext = useRef<number | null>(null);
+  const listenRef = useRef<() => void>(() => {});
 
-  const questions = useMemo(() => questionsFor(draft), [draft]);
-  const q = questions[Math.min(index, questions.length - 1)];
+  const q = QUESTIONS[Math.min(index, QUESTIONS.length - 1)];
   const k = KEY[q];
-  const canSpeakAnswers = info.stt && micReady && recorder.state !== "denied" && recorder.state !== "unsupported";
+  const canSpeak = info.stt && micReady;
+
+  const clearAutoNext = () => {
+    if (autoNext.current !== null) window.clearTimeout(autoNext.current);
+    autoNext.current = null;
+  };
 
   // Restore answers after a reload or a language switch (this tab only).
   useEffect(() => {
     const saved = getDraft<Saved>();
     /* eslint-disable react-hooks/set-state-in-effect -- saved answers and the microphone are only readable after hydration */
-    if (saved?.draft) {
-      setDraft({ ...EMPTY_DRAFT, ...saved.draft });
+    if (saved?.draft && QUESTIONS.includes(QUESTIONS[saved.index] ?? "first_name")) {
+      const d = { ...EMPTY_DRAFT, ...saved.draft };
+      setDraft(d);
       setPhase(saved.phase === "done" ? "intro" : saved.phase);
-      setIndex(saved.index || 0);
-      setNameInput(saved.draft.first_name ?? "");
-      setCityInput(saved.draft.city_name ?? "");
+      setIndex(Math.min(saved.index || 0, QUESTIONS.length - 1));
+      setNameInput(d.first_name ?? "");
+      setCityInput(d.city_name ?? "");
+      setCountryInput(d.country_text ?? "");
+      if (saved.phase !== "intro") setAutoIntro(false);
     }
-    setMicReady(canRecord());
-    // Scanned from an ID card QR code: /onboarding#open=ARV-...
+    setMicReady(canListen());
+    // Scanned from an older ID card QR code: /onboarding#open=ARV-...
     const opened = /^#open=([A-Za-z0-9-]{12,24})$/.exec(window.location.hash)?.[1];
     if (opened) {
       setRestoreInput(opened);
       setPhase("restore");
+      setAutoIntro(false);
       history.replaceState(null, "", window.location.pathname);
     }
     /* eslint-enable react-hooks/set-state-in-effect */
@@ -142,39 +137,40 @@ export function Onboarding() {
     if (phase !== "done") saveDraft({ draft, phase, index } satisfies Saved);
   }, [draft, phase, index]);
 
-  // ---------- speaking the question ----------
+  // ---------- Aba speaks ----------
 
-  const optionLabels = useCallback(
-    (question: OnboardingQuestion): string[] => {
-      switch (question) {
-        case "city":
-          return [t("city.ottawa"), t("city.other")];
-        case "province":
-          return [t("province.ontario"), t("province.other")];
-        case "gender":
-          return [t("gender.woman"), t("gender.man"), t("gender.another"), t("gender.prefer_not_to_say")];
-        case "self_age":
-          return [t("selfAge.yes"), t("selfAge.no")];
-        default:
-          return [];
+  const spokenQuestion = (question: OnboardingQuestion, d: Draft): string => {
+    const key = KEY[question];
+    const name = d.first_name;
+    let text = t(`${key}.question`);
+    if (question === "city" && name) text = `${t("niceToMeet", { name })} ${text}`;
+    else if (name && question !== "first_name") text = t("addressed", { name, question: text });
+    if (question === "gender") text += ` ${t("gender.spoken")}`;
+    if (question === "household") text += ` ${t("household.hint")} ${t("household.spoken")}`;
+    return text;
+  };
+
+  // The greeting starts by itself after the language is chosen, then the first question follows.
+  useEffect(() => {
+    if (phase !== "intro" || !autoIntro) return;
+    let active = true;
+    void (async () => {
+      const finished = await speaker.speak([t("introTitle"), t("introBody"), t("introHow")].join(" "));
+      if (!active) return;
+      if (finished) {
+        setAutoIntro(false);
+        setPhase("question");
+      } else {
+        setIntroStuck(true); // read-aloud blocked or unavailable: show a Start button
       }
-    },
-    [t],
-  );
-
-  const spokenQuestion = useCallback(
-    (question: OnboardingQuestion) => {
-      const key = KEY[question];
-      const parts = [t(`${key}.question`)];
-      if (question === "household") parts.push(t("household.hint"));
-      const options = optionLabels(question);
-      if (options.length) parts.push(options.join(", "));
-      return parts.join(" ");
-    },
-    [optionLabels, t],
-  );
-
-  const listenRef = useRef<() => void>(() => {});
+    })();
+    prefetchSpeech(spokenQuestion(QUESTIONS[0], draft), locale);
+    return () => {
+      active = false;
+      speaker.stop();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- speak once when the intro is shown
+  }, [phase, autoIntro]);
 
   useEffect(() => {
     if (phase !== "question") return;
@@ -182,82 +178,50 @@ export function Onboarding() {
     moved.current = true;
     let active = true;
     void (async () => {
-      const finished = await speaker.speak(spokenQuestion(q));
-      if (active && finished && settings.autoListen && info.stt) listenRef.current();
+      const finished = await speaker.speak(spokenQuestion(q, draft));
+      if (active && finished && settings.autoListen && canSpeak) listenRef.current();
     })();
-    const next = questions[index + 1];
-    if (next && speaker.available) prefetchSpeech(spokenQuestion(next), locale);
+    const next = QUESTIONS[index + 1];
+    if (next && speaker.available) prefetchSpeech(spokenQuestion(next, draft), locale);
     return () => {
       active = false;
       speaker.stop();
-      recorder.cancel();
+      listener.cancel();
+      clearAutoNext();
     };
-    // Speak once per question shown; the speaker and recorder functions are stable.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- speak once per question shown
   }, [phase, q]);
-
-  // ---------- answering by voice ----------
-
-  const listen = useCallback(async () => {
-    unlockAudio();
-    speaker.stop();
-    setVoice({ status: "recording" });
-    const rec = await recorder.record();
-    if (!rec.audio) {
-      if (rec.reason === "cancelled") return setVoice({ status: "idle" });
-      const message =
-        rec.reason === "denied" ? t("micDenied") : rec.reason === "unsupported" ? t("micUnsupported") : t("noSound");
-      return setVoice({ status: "problem", message });
-    }
-    setVoice({ status: "sending" });
-    const form = new FormData();
-    form.append("question_key", q);
-    form.append("language", locale);
-    form.append("audio", rec.audio, `answer.${rec.audio.type.includes("mp4") ? "m4a" : "webm"}`);
-    try {
-      const result = await api<OnboardingAnswer>("/onboarding/answer", { method: "POST", form });
-      setVoice({ status: "confirm", result });
-      void speaker.speak(result.confirmation);
-    } catch (err) {
-      const code = errorCode(err);
-      setVoice({ status: "problem", message: te(te.has(code) ? code : "stt_failed") });
-    }
-  }, [locale, q, recorder, speaker, t, te]);
-
-  useEffect(() => {
-    listenRef.current = () => void listen();
-  }, [listen]);
 
   // ---------- moving between questions ----------
 
-  const goTo = useCallback((next: Draft, nextIndex: number) => {
-    setVoice({ status: "idle" });
+  const goNext = (next: Draft) => {
+    clearAutoNext();
+    setHeard(null);
+    setProblem(null);
     setError(null);
-    const list = questionsFor(next);
+    const open = QUESTIONS.findIndex((question) => REQUIRED.includes(question) && !isAnswered(next, question));
     if (toSummary) {
-      // Coming from the summary: only stop at a required question that is still open (e.g. the province).
-      const open = list.findIndex((question) => REQUIRED.includes(question) && !isAnswered(next, question));
-      if (open >= 0) {
-        setIndex(open);
-        return;
-      }
+      if (open >= 0 && QUESTIONS[open] !== q) return setIndex(open);
       setToSummary(false);
-      setPhase("summary");
-      return;
+      return setPhase("summary");
     }
-    if (nextIndex >= list.length) setPhase("summary");
-    else setIndex(nextIndex);
-  }, [toSummary]);
+    const pos = QUESTIONS.indexOf(q);
+    if (pos + 1 >= QUESTIONS.length) setPhase("summary");
+    else setIndex(pos + 1);
+  };
 
-  const advance = (next: Draft) => {
-    setDraft(next);
-    goTo(next, questions.indexOf(q) + 1);
+  const answer = (next: Draft) => {
+    const done = markAnswered(next, q);
+    setDraft(done);
+    goNext(done);
   };
 
   const back = () => {
     speaker.stop();
-    recorder.cancel();
-    setVoice({ status: "idle" });
+    listener.cancel();
+    clearAutoNext();
+    setHeard(null);
+    setProblem(null);
     if (toSummary) {
       setToSummary(false);
       setPhase("summary");
@@ -268,32 +232,80 @@ export function Onboarding() {
     }
   };
 
-  const confirmVoice = (result: OnboardingAnswer) => {
-    speaker.stop();
-    const next = applyVoiceValue(draft, q, result.value);
-    if (q === "first_name") setNameInput(next.first_name ?? "");
-    if (q === "city") setCityInput(next.city_name ?? "");
-    if (q === "household" && next.children_age_unknown > 0) {
-      // Voice said how many children but not their ages: stay here so the steppers can fix it.
-      setDraft(next);
-      setVoice({ status: "idle" });
-      tapArea.current?.focus();
-      return;
+  // ---------- answering by voice ----------
+
+  /** Understand what was said for the current question, fill it in, and move on. */
+  const understood = (text: string) => {
+    let next: Draft | null = null;
+    switch (q) {
+      case "first_name": {
+        const name = extractName(text);
+        if (name) {
+          setNameInput(name);
+          next = { ...draft, first_name: name };
+        }
+        break;
+      }
+      case "city": {
+        const city = extractCity(text);
+        if (city) {
+          setCityInput(city);
+          next = { ...draft, city_name: city };
+        }
+        break;
+      }
+      case "country_of_origin": {
+        const c = extractCountry(text, locale);
+        if (c?.name) {
+          setCountryInput(c.name);
+          next = { ...draft, country_of_origin: c.code, country_text: c.name };
+        }
+        break;
+      }
+      case "gender": {
+        const g = extractGender(text);
+        if (g) next = { ...draft, gender: g };
+        break;
+      }
+      case "self_age": {
+        const s = isSenior(text);
+        if (s !== null) next = { ...draft, self_age_group: s ? "senior" : "adult" };
+        break;
+      }
+      case "household": {
+        const h = extractHousehold(text);
+        if (h) next = { ...draft, others: h };
+        break;
+      }
+      case "disability": {
+        const y = yesNo(text);
+        if (y !== null) next = { ...draft, disability: y };
+        break;
+      }
     }
-    if (q === "city" && next.city === "other" && !next.city_name) {
-      setDraft(next);
-      setVoice({ status: "idle" });
-      return;
-    }
-    advance(next);
+    setHeard({ text, ok: next !== null });
+    if (!next) return setProblem("notHeard");
+    const filled = markAnswered(next, q);
+    setDraft(filled);
+    // The steppers stay on screen so the counts can be checked; every other answer moves on by itself.
+    if (q !== "household") autoNext.current = window.setTimeout(() => goNext(filled), AUTO_NEXT_MS);
   };
 
-  const tapInstead = () => {
+  const listen = async () => {
+    unlockAudio();
     speaker.stop();
-    recorder.cancel();
-    setVoice({ status: "idle" });
-    tapArea.current?.focus();
+    clearAutoNext();
+    setHeard(null);
+    setProblem(null);
+    const r = await listener.listen();
+    if (r.text !== null) return understood(r.text);
+    if (r.reason === "denied") setProblem("micDenied");
+    else if (r.reason === "silent") setProblem("notHeard");
+    else if (r.reason === "failed") setProblem("failed");
   };
+  useEffect(() => {
+    listenRef.current = () => void listen();
+  });
 
   // ---------- creating the profile ----------
 
@@ -313,11 +325,17 @@ export function Onboarding() {
         profile = await api<Profile>("/profile", { method: "POST", body });
       }
       setProfileId(profileRef(profile));
-      // Keep the first name on this phone even if the server has no encryption key to store it.
-      cacheProfile({ ...profile, first_name: profile.first_name ?? body.first_name ?? null });
+      // The first name and the country as said stay on this phone even if the server cannot store them.
+      cacheProfile({
+        ...profile,
+        first_name: profile.first_name ?? body.first_name ?? null,
+        city_name: draft.city_name,
+        country_text: draft.country_text,
+      });
       saveDraft(null);
       setCreated(profile);
       setPhase("done");
+      void speaker.speak(draft.first_name ? t("addressed", { name: draft.first_name, question: t("done.title") }) : t("done.title"));
     } catch (err) {
       setError(errorCode(err));
     } finally {
@@ -346,86 +364,50 @@ export function Onboarding() {
   // ---------- avatar ----------
 
   const avatarState: AvatarState =
-    voice.status === "recording"
+    listener.state === "listening"
       ? "listening"
-      : voice.status === "sending" || speaker.state === "loading"
+      : listener.state === "connecting" || speaker.state === "loading"
         ? "thinking"
         : speaker.state === "speaking"
           ? "speaking"
           : "idle";
-  const getLevel = useCallback(
-    () => (voice.status === "recording" ? recorder.getLevel() : speaker.getLevel()),
-    [recorder, speaker, voice.status],
-  );
-
-  const modeNote =
-    !info.stt && !info.tts
-      ? t("voiceOff", { language: info.nativeName })
-      : info.tts && !info.stt
-        ? t("listenOnly", { language: info.nativeName })
-        : !info.tts && info.stt
-          ? t("speakOnly", { language: info.nativeName })
-          : null;
+  const getLevel = listener.state === "listening" ? listener.getLevel : speaker.getLevel;
 
   // ---------- screens ----------
 
   if (phase === "intro") {
-    const greeting = [t("introTitle"), t("introBody"), t("introPrivacy"), info.stt ? t("introHow") : t("introHowTap")].join(" ");
     return (
       <main id="main" className="mx-auto flex max-w-xl flex-col items-center gap-6 px-5 py-8 text-center">
         <Avatar state={avatarState} label={ta(avatarState)} getLevel={getLevel} />
-        <h1 className="font-display text-3xl font-semibold">{t("introTitle")}</h1>
+        <h1 className="font-display text-3xl font-semibold">{b("introTitle")}</h1>
         <div className="flex flex-col gap-3 text-lg">
-          <p>{t("introBody")}</p>
-          <p className="flex items-start justify-center gap-2 rounded-card bg-teal-light p-3 text-start font-bold text-teal">
-            <Check aria-hidden className="mt-1 size-5 shrink-0" />
-            {t("introPrivacy")}
-          </p>
-          <p>{info.stt ? t("introHow") : t("introHowTap")}</p>
+          <p>{b("introBody")}</p>
+          <p className="font-bold">{b("introHow")}</p>
         </div>
-        {modeNote && (
-          <p role="note" className="card w-full bg-amber-light text-start text-amber-ink">
-            {modeNote}
-          </p>
-        )}
-        {speaker.available && (
+        {introStuck && (
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-primary min-h-14 w-full text-lg"
             onClick={() => {
               unlockAudio();
-              void speaker.speak(greeting);
+              setAutoIntro(false);
+              setPhase("question");
             }}
           >
-            <Volume2 aria-hidden className="size-5" />
-            {t("listenIntro")}
+            {b("start")}
+            <ArrowRight aria-hidden className="size-6 rtl:-scale-x-100" />
           </button>
-        )}
-        {info.stt && micReady && (
-          <label className="flex w-full items-center justify-between gap-3 rounded-card border border-line bg-surface p-3 text-start">
-            <span className="font-bold">{t("autoListen")}</span>
-            <input
-              type="checkbox"
-              className="size-6 accent-teal"
-              checked={settings.autoListen}
-              onChange={(e) => update({ autoListen: e.target.checked })}
-            />
-          </label>
         )}
         <button
           type="button"
-          className="btn btn-primary min-h-14 w-full text-lg"
+          className="btn btn-quiet"
           onClick={() => {
-            unlockAudio();
             speaker.stop();
-            setPhase("question");
+            setAutoIntro(false);
+            setPhase("restore");
           }}
         >
-          {t("start")}
-          <ArrowRight aria-hidden className="size-6 rtl:-scale-x-100" />
-        </button>
-        <button type="button" className="btn btn-quiet" onClick={() => setPhase("restore")}>
-          {t("haveId")}
+          {b("haveId")}
         </button>
       </main>
     );
@@ -436,10 +418,10 @@ export function Onboarding() {
       <main id="main" className="mx-auto flex max-w-xl flex-col gap-5 px-5 py-8">
         <button type="button" className="btn btn-quiet self-start !px-0" onClick={() => setPhase("intro")}>
           <ArrowLeft aria-hidden className="size-5 rtl:-scale-x-100" />
-          {t("back")}
+          {b("back")}
         </button>
-        <h1 className="font-display text-3xl font-semibold">{t("restore.title")}</h1>
-        <p className="text-lg">{t("restore.intro")}</p>
+        <h1 className="font-display text-3xl font-semibold">{b("restore.title")}</h1>
+        <p className="text-lg">{b("restore.intro")}</p>
         <form
           className="flex flex-col gap-3"
           onSubmit={(e) => {
@@ -448,14 +430,13 @@ export function Onboarding() {
           }}
         >
           <label htmlFor="restore-id" className="label text-lg">
-            {t("restore.label")}
+            {b("restore.label")}
           </label>
           <input
             id="restore-id"
             className="field min-h-14 font-mono text-2xl tracking-widest uppercase"
             lang="en"
             dir="ltr"
-            inputMode="text"
             autoCapitalize="characters"
             autoComplete="off"
             spellCheck={false}
@@ -473,11 +454,11 @@ export function Onboarding() {
           )}
           <button type="submit" className="btn btn-primary min-h-14 text-lg" disabled={saving}>
             {saving && <Loader2 aria-hidden className="size-5 animate-spin" />}
-            {t("restore.open")}
+            {b("restore.open")}
           </button>
         </form>
-        <button type="button" className="btn btn-quiet self-start" onClick={() => setPhase("intro")}>
-          {t("restore.startOver")}
+        <button type="button" className="btn btn-quiet self-start" onClick={() => setPhase("question")}>
+          {b("restore.startOver")}
         </button>
       </main>
     );
@@ -487,19 +468,19 @@ export function Onboarding() {
     const id = profileRef(created);
     return (
       <main id="main" className="mx-auto flex max-w-xl flex-col items-center gap-6 px-5 py-8 text-center">
-        <Avatar state="idle" label={ta("idle")} />
-        <h1 className="font-display text-3xl font-semibold">{t("done.title")}</h1>
+        <Avatar state={avatarState} label={ta(avatarState)} getLevel={getLevel} />
+        <h1 className="font-display text-3xl font-semibold">{b("done.title")}</h1>
         <section aria-labelledby="id-label" className="card flex w-full flex-col items-center gap-2">
           <h2 id="id-label" className="eyebrow">
-            {t("done.idLabel")}
+            {b("done.idLabel")}
           </h2>
-          <p lang="en" dir="ltr" className="font-mono text-3xl font-bold tracking-wider text-teal break-all">
+          <p lang="en" dir="ltr" className="font-mono text-3xl font-bold tracking-wider text-brand break-all">
             {id}
           </p>
         </section>
-        <p className="text-lg">{t("done.idNote")}</p>
+        <p className="text-lg">{b("done.idNote")}</p>
         <button type="button" className="btn btn-primary min-h-14 w-full text-lg" onClick={() => router.push("/home")}>
-          {t("done.go")}
+          {b("done.go")}
           <ArrowRight aria-hidden className="size-6 rtl:-scale-x-100" />
         </button>
       </main>
@@ -511,299 +492,145 @@ export function Onboarding() {
   // ---------- one question ----------
 
   const optional = !REQUIRED.includes(q);
-  const skip = () => advance(markAnswered(q === "first_name" ? { ...draft, first_name: null } : draft, q));
-  const total = questions.length;
-  const position = questions.indexOf(q) + 1;
+  const position = QUESTIONS.indexOf(q) + 1;
+  const total = QUESTIONS.length;
 
   return (
     <main id="main" className="mx-auto flex max-w-xl flex-col gap-5 px-5 pt-4 pb-12">
       <div className="flex items-center justify-between gap-3">
         <button type="button" className="btn btn-quiet !px-0" onClick={back}>
           <ArrowLeft aria-hidden className="size-5 rtl:-scale-x-100" />
-          {t("back")}
+          {b("back")}
         </button>
-        <p className="eyebrow">{t("progress", { current: position, total })}</p>
+        <p className="eyebrow">{b("progress", { current: position, total })}</p>
       </div>
       <div
         className="h-2.5 overflow-hidden rounded-full bg-line"
         role="progressbar"
-        aria-label={t("progress", { current: position, total })}
+        aria-label={b.text("progress", { current: position, total })}
         aria-valuemin={1}
         aria-valuemax={total}
         aria-valuenow={position}
       >
-        <div className="h-full rounded-full bg-teal" style={{ width: `${(position / total) * 100}%` }} />
+        <div className="h-full rounded-full bg-brand" style={{ inlineSize: `${(position / total) * 100}%` }} />
       </div>
 
       <div className="flex flex-col items-center gap-3 text-center">
-        <Avatar state={avatarState} label={ta(avatarState)} getLevel={getLevel} size={128} />
-        <h1 ref={heading} tabIndex={-1} className="font-display text-3xl leading-tight font-semibold">
-          {t(`${k}.question`)}
+        <Avatar state={avatarState} label={ta(avatarState)} getLevel={getLevel} size={120} />
+        <h1 ref={heading} tabIndex={-1} className="font-display text-2xl leading-tight font-semibold">
+          {b(`${k}.question`)}
         </h1>
-        {(q === "household" || q === "gender" || q === "country_of_origin" || q === "disability" || q === "languages_spoken") && (
-          <p className="text-muted">{t(`${k}.hint`)}</p>
-        )}
+        {q === "household" && <p className="text-muted">{b("household.hint")}</p>}
         {speaker.available && (
           <button
             type="button"
             className="btn btn-secondary !min-h-11"
             onClick={() => {
               unlockAudio();
-              recorder.cancel();
-              setVoice({ status: "idle" });
-              void speaker.speak(spokenQuestion(q));
+              listener.cancel();
+              void speaker.speak(spokenQuestion(q, draft));
             }}
           >
             <RotateCcw aria-hidden className="size-5" />
-            {t("repeat")}
+            {b("repeat")}
           </button>
         )}
-        {speaker.failed && info.tts && <p className="text-sm text-muted">{t("ttsFailed")}</p>}
       </div>
 
-      {info.stt && renderVoicePanel()}
+      {canSpeak && (
+        <SpeakPanel
+          state={listener.state}
+          onSpeak={() => void listen()}
+          onCancel={listener.cancel}
+          getLevel={listener.getLevel}
+          heard={heard}
+          problem={problem}
+        />
+      )}
 
-      <section
-        ref={tapArea}
-        tabIndex={-1}
-        aria-labelledby="tap-title"
-        className="flex flex-col gap-3 rounded-card outline-offset-4"
-      >
-        <h2 id="tap-title" className={info.stt ? "eyebrow" : "sr-only"}>
-          {t("orTap")}
+      <section aria-labelledby="tap-title" className="flex flex-col gap-3">
+        <h2 id="tap-title" className="eyebrow">
+          {q === "first_name" || q === "city" || q === "country_of_origin" ? b("orType") : b("orTap")}
         </h2>
         {renderTapAnswer()}
       </section>
 
       {optional && (
-        <div className="flex flex-col items-center gap-1">
-          <button type="button" className="btn btn-quiet" onClick={skip}>
-            {t("skip")}
-          </button>
-          <p className="text-sm text-muted">{t("optional")}</p>
-        </div>
+        <button type="button" className="btn btn-quiet self-center" onClick={() => answer(draft)}>
+          {b("skip")}
+        </button>
+      )}
+
+      {canSpeak && (
+        <label className="flex items-center justify-between gap-3 rounded-card border border-line bg-surface p-3 text-start text-sm">
+          <span className="font-bold">{b("autoListen")}</span>
+          <input
+            type="checkbox"
+            className="size-6 accent-brand"
+            checked={settings.autoListen}
+            onChange={(e) => update({ autoListen: e.target.checked })}
+          />
+        </label>
       )}
     </main>
   );
 
   // ---------- pieces: plain render functions (not components), so inputs keep focus between renders ----------
 
-  function renderVoicePanel() {
-    if (!canSpeakAnswers && voice.status === "idle") {
-      if (recorder.state === "denied") return <p className="card bg-amber-light text-amber-ink">{t("micDenied")}</p>;
-      if (recorder.state === "unsupported" || !micReady) return null;
-    }
-    if (voice.status === "recording") {
-      return (
-        <div className="flex flex-col items-center gap-3">
-          <LevelMeter getLevel={recorder.getLevel} />
-          <button
-            type="button"
-            className="btn btn-primary min-h-16 px-8 text-lg"
-            onClick={recorder.stop}
-            disabled={recorder.state !== "recording"}
-          >
-            <Square aria-hidden className="size-5" />
-            {t("stopSpeaking")}
-          </button>
-        </div>
-      );
-    }
-    if (voice.status === "sending") {
-      return (
-        <p role="status" className="flex items-center justify-center gap-2 text-lg font-bold">
-          <Loader2 aria-hidden className={`size-6 text-teal ${still ? "" : "animate-spin"}`} />
-          {t("understanding")}
-        </p>
-      );
-    }
-    if (voice.status === "confirm") {
-      const r = voice.result;
-      return (
-        <div className="card flex flex-col gap-3" role="group" aria-labelledby="confirm-text">
-          <p id="confirm-text" role="status" className="text-xl font-bold" dir="auto">
-            {r.confirmation}
-          </p>
-          {r.heard && (
-            <p className="text-sm text-muted" dir="auto">
-              {t("heard", { text: r.heard })}
-            </p>
-          )}
-          <div className="flex flex-col gap-2">
-            {r.understood && (
-              <button type="button" className="btn btn-primary min-h-14 text-lg" onClick={() => confirmVoice(r)}>
-                <Check aria-hidden className="size-6" />
-                {t("yes")}
-              </button>
-            )}
-            <button type="button" className="btn btn-secondary min-h-14 text-lg" onClick={() => void listen()}>
-              <Mic aria-hidden className="size-6" />
-              {t("tryAgain")}
-            </button>
-            <button type="button" className="btn btn-secondary min-h-14 text-lg" onClick={tapInstead}>
-              <Keyboard aria-hidden className="size-6" />
-              {t("tapInstead")}
-            </button>
-          </div>
-        </div>
-      );
-    }
+  function textQuestion(label: string, value: string, set: (v: string) => void, submit: () => void, autoComplete: string, max: number) {
     return (
-      <div className="flex flex-col items-center gap-2">
-        {voice.status === "problem" && (
-          <p role="alert" className="card w-full bg-amber-light text-amber-ink">
-            {voice.message}
-          </p>
-        )}
-        <button
-          type="button"
-          onClick={() => void listen()}
-          className="flex min-h-20 w-full items-center justify-center gap-3 rounded-full bg-teal px-8 text-xl font-bold text-white hover:bg-teal-hover"
-        >
-          <Mic aria-hidden className="size-8" />
-          {t("speak")}
-        </button>
-        <p className="text-sm text-muted">{t("micPermission")}</p>
-      </div>
+      <>
+        <TextAnswer label={b(label)} value={value} onChange={set} onSubmit={submit} autoComplete={autoComplete} maxLength={max} />
+        {nextButton(submit)}
+      </>
     );
   }
 
   function renderTapAnswer() {
-    const next = (d: Draft) => advance(markAnswered(d, q));
     switch (q) {
       case "first_name":
-        return (
-          <>
-            <TextAnswer
-              label={t("firstName.label")}
-              hint={t("firstName.hint")}
-              value={nameInput}
-              onChange={setNameInput}
-              onSubmit={() => next({ ...draft, first_name: nameInput.trim() || null })}
-              autoComplete="given-name"
-              maxLength={40}
-            />
-            {nextButton(() => next({ ...draft, first_name: nameInput.trim() || null }))}
-          </>
-        );
+        return textQuestion("firstName.label", nameInput, setNameInput, () => answer({ ...draft, first_name: nameInput.trim() || null }), "given-name", 40);
       case "city":
-        return (
-          <>
-            <ChoiceCards
-              choices={[
-                { id: "ottawa", label: t("city.ottawa"), icon: Building2 },
-                { id: "other", label: t("city.other"), icon: MapPin },
-              ]}
-              value={draft.city}
-              onChoose={(id) => {
-                if (id === "ottawa") next({ ...draft, city: "ottawa", city_name: null, province: "ontario" });
-                else setDraft({ ...draft, city: "other", province: draft.city === "ottawa" ? null : draft.province });
-              }}
-            />
-            {draft.city === "other" && (
-              <>
-                <TextAnswer
-                  label={t("city.nameLabel")}
-                  value={cityInput}
-                  onChange={setCityInput}
-                  onSubmit={() => cityInput.trim() && next({ ...draft, city_name: cityInput.trim() })}
-                  autoComplete="address-level2"
-                  maxLength={80}
-                />
-                {nextButton(() => next({ ...draft, city_name: cityInput.trim() }), !cityInput.trim())}
-              </>
-            )}
-          </>
+        return textQuestion("city.label", cityInput, setCityInput, () => answer({ ...draft, city_name: cityInput.trim() || null }), "address-level2", 80);
+      case "country_of_origin":
+        return textQuestion(
+          "country.label",
+          countryInput,
+          setCountryInput,
+          () => {
+            const c = countryInput.trim() ? extractCountry(countryInput, locale) : null;
+            answer({ ...draft, country_of_origin: c?.code ?? null, country_text: countryInput.trim() || null });
+          },
+          "country-name",
+          60,
         );
-      case "province":
-        return (
-          <ChoiceCards
-            choices={[
-              { id: "ontario", label: t("province.ontario"), icon: MapPin },
-              { id: "other", label: t("province.other"), icon: Globe2 },
-            ]}
-            value={draft.province}
-            onChoose={(id) => next({ ...draft, province: id as Draft["province"] })}
-          />
-        );
-      case "country_of_origin": {
-        const common = COMMON_COUNTRIES.map((c) => ({ id: c, label: countryName(c, locale) }));
-        const all = ALL_COUNTRIES.map((c) => ({ id: c, label: countryName(c, locale) })).sort((a, b) =>
-          a.label.localeCompare(b.label, info.intl),
-        );
-        const showOther =
-          otherCountry || (draft.country_of_origin !== null && !(COMMON_COUNTRIES as readonly string[]).includes(draft.country_of_origin));
-        return (
-          <>
-            <ChoiceCards
-              columns={2}
-              choices={[...common, { id: "__other", label: t("country.other"), icon: Globe2 }]}
-              value={showOther ? "__other" : draft.country_of_origin}
-              onChoose={(id) => {
-                if (id === "__other") setOtherCountry(true);
-                else next({ ...draft, country_of_origin: id });
-              }}
-            />
-            {showOther && (
-              <div className="flex flex-col gap-2">
-                <label htmlFor="country-select" className="label text-lg">
-                  {t("country.selectLabel")}
-                </label>
-                <select
-                  id="country-select"
-                  className="field min-h-14 text-lg"
-                  value={draft.country_of_origin ?? ""}
-                  onChange={(e) => setDraft({ ...draft, country_of_origin: e.target.value || null })}
-                >
-                  <option value="">{t("country.choose")}</option>
-                  {all.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
-                {nextButton(() => next(draft), !draft.country_of_origin)}
-              </div>
-            )}
-          </>
-        );
-      }
       case "gender":
         return (
           <ChoiceCards
-            choices={(["woman", "man", "another", "prefer_not_to_say"] as const).map((g) => ({
-              id: g,
-              label: t(`gender.${g}`),
-            }))}
+            choices={GENDERS.map((g) => ({ id: g, label: b(`gender.${g}`) }))}
             value={draft.gender}
-            onChoose={(id) => next({ ...draft, gender: id as Draft["gender"] })}
+            onChoose={(id) => answer({ ...draft, gender: id as Gender })}
           />
         );
       case "self_age":
         return (
           <ChoiceCards
             choices={[
-              { id: "senior", label: t("selfAge.yes"), icon: User },
-              { id: "adult", label: t("selfAge.no"), icon: UserRound },
+              { id: "senior", label: bc("yes"), icon: User },
+              { id: "adult", label: bc("no"), icon: UserRound },
             ]}
             value={draft.self_age_group}
-            onChoose={(id) => next({ ...draft, self_age_group: id as Draft["self_age_group"] })}
+            onChoose={(id) => answer({ ...draft, self_age_group: id as Draft["self_age_group"] })}
           />
         );
       case "household": {
-        const set = (group: keyof Draft["others"], n: number) =>
-          setDraft({ ...draft, others: { ...draft.others, [group]: n } });
+        const set = (group: keyof Draft["others"], n: number) => setDraft({ ...draft, others: { ...draft.others, [group]: n } });
         return (
           <>
-            {draft.children_age_unknown > 0 && (
-              <p role="status" className="card bg-amber-light font-bold text-amber-ink">
-                {t("household.agesNeeded", { count: draft.children_age_unknown })}
-              </p>
-            )}
             {HOUSEHOLD_GROUPS.map(({ id, icon }) => (
               <Stepper
                 key={id}
-                label={t(`household.${id}`)}
+                label={b(`household.${id}`)}
                 icon={icon}
                 value={draft.others[id]}
                 onChange={(n) => set(id, n)}
@@ -811,142 +638,88 @@ export function Onboarding() {
                 moreLabel={t("household.more", { group: t(`household.${id}`) })}
               />
             ))}
-            <p aria-live="polite" className="text-center text-lg font-bold">
-              {t("household.total", { count: familySize(draft) })}
-            </p>
-            {nextButton(() => next({ ...draft, children_age_unknown: 0 }))}
+            {nextButton(() => answer(draft))}
             <button
               type="button"
               className="btn btn-secondary min-h-14 text-lg"
-              onClick={() =>
-                next({ ...draft, others: { adults: 0, seniors: 0, children_0_5: 0, children_6_17: 0 }, children_age_unknown: 0 })
-              }
+              onClick={() => answer({ ...draft, others: { adults: 0, seniors: 0, children_0_5: 0, children_6_17: 0 } })}
             >
               <User aria-hidden className="size-5" />
-              {t("household.alone")}
+              {b("household.alone")}
             </button>
           </>
         );
       }
-      case "disability": {
-        const present = groupsPresent(draft);
-        const groups = (["adult", "senior", "child"] as const).filter((g) => present[g]);
-        const picked = draft.disability && typeof draft.disability === "object" ? draft.disability : null;
-        const values = [
-          ...groups.filter((g) => picked?.[g]),
-          ...(draft.disability === "none" ? ["none"] : []),
-          ...(draft.disability === "prefer_not" ? ["prefer_not"] : []),
-        ];
-        const toggle = (id: string) => {
-          if (id === "none" || id === "prefer_not") {
-            setDraft({ ...draft, disability: draft.disability === id ? null : (id as "none" | "prefer_not") });
-            return;
-          }
-          const base = picked ?? { adult: false, senior: false, child: false };
-          const updated = { ...base, [id]: !base[id as "adult"] };
-          setDraft({ ...draft, disability: updated.adult || updated.senior || updated.child ? updated : null });
-        };
-        const choices: Choice[] = [
-          ...groups.map((g) => ({ id: g, label: t(`disability.${g}`) })),
-          { id: "none", label: t("disability.none") },
-          { id: "prefer_not", label: t("disability.prefer_not") },
-        ];
+      case "disability":
         return (
-          <>
-            <Chips choices={choices} values={values} onToggle={toggle} />
-            {nextButton(() => next(draft), draft.disability === null)}
-          </>
+          <ChoiceCards
+            choices={[
+              { id: "yes", label: bc("yes") },
+              { id: "no", label: bc("no") },
+            ]}
+            value={draft.disability === null ? null : draft.disability ? "yes" : "no"}
+            onChoose={(id) => answer({ ...draft, disability: id === "yes" })}
+          />
         );
-      }
-      case "languages_spoken": {
-        const choices: Choice[] = OTHER_LANGUAGES.filter((l) => l.code !== locale).map((l) => ({
-          id: l.code,
-          label: l.nativeName === languageName(l.code, locale) ? l.nativeName : `${l.nativeName} · ${languageName(l.code, locale)}`,
-        }));
-        return (
-          <>
-            <Chips
-              choices={choices}
-              values={draft.other_languages}
-              onToggle={(id) =>
-                setDraft({
-                  ...draft,
-                  other_languages: draft.other_languages.includes(id)
-                    ? draft.other_languages.filter((l) => l !== id)
-                    : [...draft.other_languages, id].slice(0, 10),
-                })
-              }
-            />
-            {nextButton(() => next(draft))}
-          </>
-        );
-      }
     }
   }
 
-  function nextButton(onClick: () => void, disabled = false) {
+  function nextButton(onClick: () => void) {
     return (
-      <button type="button" className="btn btn-primary min-h-14 text-lg" onClick={onClick} disabled={disabled}>
-        {t("next")}
+      <button type="button" className="btn btn-primary min-h-14 text-lg" onClick={onClick}>
+        {b("next")}
         <ArrowRight aria-hidden className="size-6 rtl:-scale-x-100" />
       </button>
     );
   }
 
   function renderSummary() {
-    const ts = (key: string, values?: Record<string, string | number>) => t(`summary.${key}`, values);
     const tot = totals(draft);
-    const household = [
-      tot.adults ? ts("adults", { count: tot.adults }) : null,
-      tot.seniors ? ts("seniors", { count: tot.seniors }) : null,
-      tot.children_0_5 ? ts("children_0_5", { count: tot.children_0_5 }) : null,
-      tot.children_6_17 ? ts("children_6_17", { count: tot.children_6_17 }) : null,
-    ].filter(Boolean).join(", ");
-    const dis = draft.disability;
-    const disability =
-      dis === null
-        ? ts("notGiven")
-        : dis === "none"
-          ? t("disability.none")
-          : dis === "prefer_not"
-            ? t("disability.prefer_not")
-            : (["adult", "senior", "child"] as const).filter((g) => dis[g]).map((g) => t(`disability.${g}`)).join(", ");
-    const rows: { q: OnboardingQuestion; label: string; value: string }[] = [
-      { q: "first_name", label: ts("name"), value: draft.first_name || ts("notGiven") },
-      { q: "city", label: ts("city"), value: draft.city === "ottawa" ? t("city.ottawa") : draft.city_name || ts("notGiven") },
-      ...(draft.city === "other"
-        ? [{ q: "province" as const, label: ts("province"), value: draft.province === "ontario" ? ts("ontario") : draft.province === "other" ? ts("otherProvince") : ts("notGiven") }]
-        : []),
-      { q: "country_of_origin", label: ts("country"), value: draft.country_of_origin ? countryName(draft.country_of_origin, locale) : ts("notGiven") },
-      { q: "gender", label: ts("gender"), value: draft.gender ? t(`gender.${draft.gender}`) : ts("notGiven") },
-      { q: "self_age", label: ts("age"), value: draft.self_age_group === "senior" ? ts("ageSenior") : ts("ageAdult") },
-      { q: "household", label: t("household.total", { count: familySize(draft) }), value: household },
-      { q: "disability", label: ts("disability"), value: disability },
-      {
-        q: "languages_spoken",
-        label: ts("languages"),
-        value: draft.other_languages.length ? draft.other_languages.map((l) => languageName(l, locale)).join(", ") : t("languages.none"),
-      },
+    const kids = tot.children_0_5 + tot.children_6_17;
+    const household = (
+      <span className="flex flex-col">
+        {tot.adults > 0 && b("summary.adults", { count: tot.adults })}
+        {tot.seniors > 0 && b("summary.seniors", { count: tot.seniors })}
+        {kids > 0 && b("summary.children", { count: kids })}
+      </span>
+    );
+    const yesNoText = (v: boolean | null) => (v === null ? bc("notGiven") : v ? bc("yes") : bc("no"));
+    const country = draft.country_text || (draft.country_of_origin ? countryName(draft.country_of_origin, locale) : null);
+    const rows: { q: OnboardingQuestion; label: string; value: React.ReactNode }[] = [
+      { q: "first_name", label: "firstName.label", value: draft.first_name || bc("notGiven") },
+      { q: "city", label: "city.label", value: draft.city_name || bc("notGiven") },
+      { q: "country_of_origin", label: "country.label", value: country || bc("notGiven") },
+      { q: "gender", label: "gender.label", value: draft.gender ? b(`gender.${draft.gender}`) : bc("notGiven") },
+      { q: "self_age", label: "selfAge.label", value: yesNoText(draft.self_age_group === null ? null : draft.self_age_group === "senior") },
+      { q: "household", label: "household.label", value: household },
+      { q: "disability", label: "disability.label", value: yesNoText(draft.disability) },
     ];
-    const ready = REQUIRED.filter((r) => questions.includes(r)).every((r) => isAnswered(draft, r));
+    const ready = REQUIRED.every((r) => isAnswered(draft, r));
     return (
       <main id="main" className="mx-auto flex max-w-xl flex-col gap-5 px-5 pt-4 pb-12">
-        <button type="button" className="btn btn-quiet self-start !px-0" onClick={() => { setIndex(questions.length - 1); setPhase("question"); }}>
+        <button
+          type="button"
+          className="btn btn-quiet self-start !px-0"
+          onClick={() => {
+            setIndex(QUESTIONS.length - 1);
+            setPhase("question");
+          }}
+        >
           <ArrowLeft aria-hidden className="size-5 rtl:-scale-x-100" />
-          {t("back")}
+          {b("back")}
         </button>
         <div className="flex items-center gap-4">
-          <Avatar state="idle" label={ta("idle")} size={88} />
+          <Avatar state="idle" label={ta("idle")} size={88} bare />
           <div>
-            <h1 className="font-display text-3xl font-semibold">{ts("title")}</h1>
-            <p className="text-muted">{ts("intro")}</p>
+            <h1 className="font-display text-3xl font-semibold">{b("summary.title")}</h1>
+            <p className="text-muted">{b("summary.intro")}</p>
           </div>
         </div>
         <dl className="card flex flex-col divide-y divide-line !p-0">
           {rows.map((row) => (
             <div key={row.q} className="flex items-center justify-between gap-3 px-4 py-3">
               <div className="min-w-0">
-                <dt className="text-sm font-bold text-muted">{row.label}</dt>
+                <dt className="text-sm font-bold text-muted">{b(row.label)}</dt>
                 <dd className="text-lg font-bold break-words" dir="auto">
                   {row.value}
                 </dd>
@@ -954,22 +727,22 @@ export function Onboarding() {
               <button
                 type="button"
                 className="btn btn-secondary !min-h-11 shrink-0"
-                aria-label={ts("changeLabel", { item: row.label })}
+                aria-label={`${b.text("summary.change")}: ${b.text(row.label)}`}
                 onClick={() => {
                   setToSummary(true);
-                  setIndex(questions.indexOf(row.q));
+                  setIndex(QUESTIONS.indexOf(row.q));
                   setPhase("question");
                 }}
               >
-                {ts("change")}
+                {b("summary.change")}
               </button>
             </div>
           ))}
         </dl>
         <div className="card flex items-start justify-between gap-4">
           <label htmlFor="consent" className="flex flex-col gap-1">
-            <span className="text-lg font-bold">{ts("consentTitle")}</span>
-            <span className="text-muted">{ts("consentBody")}</span>
+            <span className="text-lg font-bold">{b("summary.consentTitle")}</span>
+            <span className="text-muted">{b.local("summary.consentBody")}</span>
           </label>
           <button
             id="consent"
@@ -978,7 +751,7 @@ export function Onboarding() {
             aria-checked={draft.analytics_consent}
             onClick={() => setDraft({ ...draft, analytics_consent: !draft.analytics_consent })}
             className={`relative mt-1 inline-flex h-9 w-16 shrink-0 items-center rounded-full border-2 ${
-              draft.analytics_consent ? "border-teal bg-teal" : "border-muted bg-surface"
+              draft.analytics_consent ? "border-brand bg-brand" : "border-muted bg-surface"
             }`}
           >
             <span className={`absolute size-6 rounded-full ${draft.analytics_consent ? "end-1 bg-white" : "start-1 bg-muted"}`} />
@@ -987,7 +760,7 @@ export function Onboarding() {
         {error && <ErrorNote code={error} onRetry={() => void create()} />}
         <button type="button" className="btn btn-primary min-h-16 text-xl" onClick={() => void create()} disabled={saving || !ready}>
           {saving ? <Loader2 aria-hidden className="size-6 animate-spin" /> : <Check aria-hidden className="size-6" />}
-          {saving ? ts("creating") : ts("create")}
+          {saving ? b("summary.creating") : b("summary.create")}
         </button>
       </main>
     );

@@ -22,7 +22,7 @@ function Side({ side, big }: { side: CardSide; big: boolean }) {
           <ul className="flex flex-col gap-1.5">
             {side.documents.map((d) => (
               <li key={d} className={`flex gap-2 ${big ? "text-2xl" : "text-lg"}`}>
-                <Check aria-hidden className="mt-1.5 size-5 shrink-0 text-teal" />
+                <Check aria-hidden className="mt-1.5 size-5 shrink-0 text-brand" />
                 {d}
               </li>
             ))}
@@ -91,12 +91,12 @@ export default function StaffCardPage({ params }: { params: Promise<{ stepId: st
 
         {card && (
           <>
-            <section className="rounded-card border-4 border-teal bg-surface p-6" aria-label={t("forStaff")}>
+            <section className="rounded-card border-4 border-brand bg-surface p-6" aria-label={t("forStaff")}>
               <p className="eyebrow mb-3">{t("forStaff")}</p>
               <Side side={card.official} big={scale === 2} />
             </section>
             {!sameLanguage && (
-              <section className="rounded-card bg-teal-light p-6" aria-label={t("forYou")}>
+              <section className="rounded-card bg-brand-light p-6" aria-label={t("forYou")}>
                 <p className="eyebrow mb-3">{t("forYou")}</p>
                 <Side side={card.native} big={scale === 2} />
               </section>

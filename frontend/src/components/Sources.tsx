@@ -14,7 +14,7 @@ export function SourceLink({ title, url, lastChecked }: { title: string; url: st
   })();
   return (
     <div className="flex flex-col gap-0.5">
-      <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1.5 font-bold text-teal underline underline-offset-2">
+      <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1.5 font-bold text-brand underline underline-offset-2">
         <span dir="auto">{title}</span>
         <ExternalLink aria-hidden className="mt-1 size-4 shrink-0" />
         <span className="sr-only">{t("opensNewTab")}</span>

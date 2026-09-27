@@ -26,7 +26,7 @@ function Stat({ label, value, note }: { label: string; value: string; note?: Rea
 function TableToggle({ children }: { children: React.ReactNode }) {
   return (
     <details className="mt-2 text-sm">
-      <summary className="inline-flex min-h-11 cursor-pointer items-center font-bold text-teal">Show as table</summary>
+      <summary className="inline-flex min-h-11 cursor-pointer items-center font-bold text-brand">Show as table</summary>
       <div className="overflow-x-auto">{children}</div>
     </details>
   );
@@ -226,7 +226,7 @@ export default async function InsightsPage() {
                   {confusing.sources.map((s) => (
                     <tr key={s.url} className="border-t border-line align-top">
                       <td className="py-2 pe-3">
-                        <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1 font-bold text-teal underline">
+                        <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1 font-bold text-brand underline">
                           {s.title}
                           <ExternalLink aria-hidden className="mt-1 size-3.5 shrink-0" />
                         </a>

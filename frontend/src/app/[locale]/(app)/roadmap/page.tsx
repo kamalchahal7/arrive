@@ -120,7 +120,7 @@ export default function RoadmapPage() {
             aria-valuenow={roadmap.done}
             aria-label={t("progress", { done: roadmap.done, total: roadmap.total })}
           >
-            <div className="h-full rounded-full bg-teal" style={{ width: `${pct}%` }} />
+            <div className="h-full rounded-full bg-brand" style={{ width: `${pct}%` }} />
           </div>
           <p className="text-muted">{t("progress", { done: roadmap.done, total: roadmap.total })}</p>
         </div>
@@ -139,7 +139,7 @@ export default function RoadmapPage() {
       {error && roadmap && <ErrorNote code={error} />}
 
       {now ? (
-        <section aria-labelledby="now-title" className="flex flex-col gap-4 rounded-card bg-teal p-5 text-white">
+        <section aria-labelledby="now-title" className="flex flex-col gap-4 rounded-card bg-brand p-5 text-white">
           <p className="flex items-center gap-2 text-sm font-bold tracking-wide uppercase">
             <Sparkles aria-hidden className="size-4" />
             {t("doNow")}
@@ -162,7 +162,7 @@ export default function RoadmapPage() {
             ))}
           </div>
           <div className="flex flex-wrap gap-2">
-            <button type="button" className="btn bg-white text-teal hover:bg-teal-light" onClick={() => setOpen(now)}>
+            <button type="button" className="btn bg-white text-brand hover:bg-brand-light" onClick={() => setOpen(now)}>
               {t("open")}
               <ChevronRight aria-hidden className="size-5 rtl:-scale-x-100" />
             </button>
@@ -171,7 +171,7 @@ export default function RoadmapPage() {
         </section>
       ) : (
         <p className="card flex items-center gap-2 text-lg font-bold">
-          <CheckCircle2 aria-hidden className="size-6 text-teal" />
+          <CheckCircle2 aria-hidden className="size-6 text-brand" />
           {t("allDone")}
         </p>
       )}
@@ -187,7 +187,7 @@ export default function RoadmapPage() {
                 <button
                   type="button"
                   onClick={() => setOpen(s)}
-                  className="card flex w-full items-center gap-3 !p-4 text-start hover:border-teal"
+                  className="card flex w-full items-center gap-3 !p-4 text-start hover:border-brand"
                 >
                   <CircleDashed aria-hidden className="size-6 shrink-0 text-muted" />
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
@@ -200,7 +200,7 @@ export default function RoadmapPage() {
                     {s.unlocks.length > 0 && (
                       <span className="simple-hide flex flex-wrap gap-1">
                         {s.unlocks.map((u) => (
-                          <span key={u.id} className="rounded-full bg-teal-light px-2 py-0.5 text-xs font-bold text-teal">
+                          <span key={u.id} className="rounded-full bg-brand-light px-2 py-0.5 text-xs font-bold text-brand">
                             {t("unlocks", { title: u.title })}
                           </span>
                         ))}
@@ -233,7 +233,7 @@ export default function RoadmapPage() {
               {finished.map((s) => (
                 <li key={s.id}>
                   <button type="button" onClick={() => setOpen(s)} className="flex min-h-11 w-full items-center gap-3 rounded-xl px-2 text-start text-muted hover:bg-surface">
-                    <CheckCircle2 aria-hidden className="size-5 shrink-0 text-teal" />
+                    <CheckCircle2 aria-hidden className="size-5 shrink-0 text-brand" />
                     <span className={s.status === "done" ? "line-through" : ""}>{s.title}</span>
                   </button>
                 </li>

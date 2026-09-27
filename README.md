@@ -206,15 +206,16 @@ Updates: `git pull && docker compose up -d --build`. Logs: `docker compose logs 
 
 ## Demo script (about 5 minutes)
 
-1. **Language screen** (`/`): six big buttons in each language's own script. Pick **العربية**.
-2. **Voice onboarding as Amira**: the avatar reads each question; answer by voice ("I came with my husband and three
-   children aged 2, 7 and 12") and confirm, or tap. Summary with consent (off by default), then the Arrive ID.
-3. **Home**: "Hello, Amira", progress, checklist by phase with the current phase open; tick a step. Programs for the
-   family, More help, Ask the avatar.
-4. **Health card step**: map, address, phone, documents to tick, steps, official source. **Show my card**: English and
-   French for the clerk, Arabic below, QR code. Scan it with a second phone: the same card, nothing sent to the server.
-5. **Ask the avatar**: "What should I do next?" → the agent reads the next steps from the real checklist.
-6. **Tigrinya** (`/ti`): text mode with a clear note, all tap answers.
+1. **Language screen** (`/`): English, French, Arabic, Hindi, Mandarin, Spanish. Pick **العربية**.
+2. **Voice onboarding as Amira**: Aba greets her automatically (male voice) and asks seven questions. Tap to speak
+   ("I have two adults and one child"): the answer is transcribed by the same ElevenLabs agent as Ask Aba, understood
+   on the phone (src/lib/understand.ts) and filled in. Every label shows English + Arabic. Summary, then the Arrive ID.
+3. **Home**: "Hello, Amira", checklist by phase (Day 1–3 ... Months 4–6), "Government-run programs" (title only),
+   and "Ask Aba".
+4. **SIN step**: location card, Open Google Maps, documents, steps. Step 2 has the ID button: a large QR code. Scan it
+   with a second phone: the English page for staff (/en/for-staff), nothing sent to the server.
+5. **Ask Aba**: "Where do I get my health card?" → Aba answers by name, with the Ottawa address and phone.
+6. **Hindi or Mandarin** (`/hi`, `/zh`): the same flow, voice included.
 7. **End session**: five faces and "what is missing?" by voice.
 8. **Needs dashboard** (`/insights`, analyst): program interest by language (suppressed under 5), checklist
    bottlenecks, survey satisfaction and themes; the worker inbox (`/worker`) for handoffs.

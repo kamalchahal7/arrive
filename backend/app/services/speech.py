@@ -1,11 +1,8 @@
-"""Speech support per language, and ElevenLabs speech-to-text (Scribe) for voice onboarding answers.
+"""Speech support per language, and ElevenLabs speech-to-text (Scribe) for the survey's spoken answer.
 
-Keep SPEECH in step with frontend/src/config/languages.ts. Support comes from the ElevenLabs docs checked on
-2026-09-26 (elevenlabs.io/docs/overview/capabilities/speech-to-text and elevenlabs.io/docs/models):
-- Speech-to-text lists Arabic (ara), French (fra), English (eng), Pashto (pus) and Persian (fas). It does NOT list
-  Dari or Tigrinya. Dari is not sent to the Persian model until a Dari speaker has tested it [VERIFY].
-- eleven_multilingual_v2 speaks Arabic, French and English, not Pashto, Persian, Dari or Tigrinya. eleven_v3 adds
-  Pashto and Persian. So Pashto read-aloud needs ELEVENLABS_TTS_MODEL_EXTENDED.
+Keep SPEECH in step with frontend/src/config/languages.ts: English, French, Arabic, Hindi, Mandarin and Spanish.
+All six are in the ElevenLabs speech-to-text list and are spoken by eleven_multilingual_v2. Onboarding answers are
+transcribed in the browser by the ElevenLabs agent (Aba), not here.
 
 Audio is processed in memory only: it is never written to disk, the database or the logs, and neither is the text.
 """
@@ -38,9 +35,9 @@ SPEECH: dict[str, Speech] = {
     "en": Speech("eng", "default"),
     "fr": Speech("fra", "default"),
     "ar": Speech("ara", "default"),
-    "ps": Speech("pus", "extended"),
-    "prs": Speech(None, None),  # Dari: not in either list; Persian (fas) is [VERIFY with a Dari speaker]
-    "ti": Speech(None, None),  # Tigrinya: not in either list
+    "hi": Speech("hin", "default"),
+    "zh": Speech("cmn", "default"),
+    "es": Speech("spa", "default"),
 }
 
 class SpeechError(Exception):
@@ -48,9 +45,8 @@ class SpeechError(Exception):
 
 
 def speech_for(language: str) -> Speech:
-    # Languages outside the redesign list (the older app's fa, es, uk...) keep the default read-aloud model and
-    # have no speech-to-text.
-    return SPEECH.get(language, Speech(None, "default"))
+    # Only the six app languages have speech.
+    return SPEECH.get(language, Speech(None, None))
 
 
 def tts_model_for(language: str) -> str | None:

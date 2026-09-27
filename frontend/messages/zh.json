@@ -1,0 +1,266 @@
+{
+  "_review": "Drafted by Claude (2026-09-27). Needs review by a native speaker.",
+  "Metadata": {
+    "title": "Arrive",
+    "description": "在渥太华的第一步，用您的语言，由Aba陪伴。"
+  },
+  "Common": {
+    "skipToContent": "跳到主要内容",
+    "appName": "Arrive",
+    "back": "返回",
+    "next": "下一步",
+    "loading": "加载中…",
+    "retry": "再试一次",
+    "listen": "收听",
+    "stopListening": "停止",
+    "loadingAudio": "正在获取音频…",
+    "source": "官方来源",
+    "opensNewTab": "（在新标签页打开）",
+    "language": "语言",
+    "backHome": "返回我的清单",
+    "yes": "是",
+    "no": "否",
+    "notGiven": "未填写"
+  },
+  "Errors": {
+    "offline": "您好像没有联网。请检查网络后再试。",
+    "rate_limited": "请求太多。请等一分钟后再试。",
+    "ai_unavailable": "Aba现在无法使用。请再试一次。",
+    "db_unavailable": "Arrive现在出了点问题。请稍后再试。",
+    "profile_not_found": "找不到您保存的回答。我们重新开始吧。",
+    "invalid_input": "有些地方不对。请检查您的回答。",
+    "invalid_household": "请检查您家里的人数。",
+    "voice_not_configured": "语音现在无法使用。您可以打字。",
+    "voice_session_failed": "无法启动Aba的语音。您可以打字。",
+    "tts_failed": "现在无法收听。",
+    "item_not_found": "找不到这个页面。",
+    "internal_error": "抱歉，出了点问题。请再试一次。"
+  },
+  "Language": {
+    "title": "选择您的语言",
+    "saved": "您的清单已保存在这部手机上。"
+  },
+  "Avatar": {
+    "idle": "准备好了",
+    "speaking": "正在说话…",
+    "listening": "正在听…",
+    "thinking": "正在思考…"
+  },
+  "Speak": {
+    "speak": "点击说话",
+    "connecting": "正在准备…",
+    "listening": "正在听…请说话",
+    "cancel": "停止",
+    "heard": "我听到的是：“{text}”",
+    "notHeard": "我没有听到您的声音。请再试一次，或输入您的回答。",
+    "micDenied": "麦克风被禁用了。请输入您的回答。",
+    "failed": "语音现在不能使用。请输入您的回答。"
+  },
+  "Onboarding": {
+    "introTitle": "您好，我是Aba。",
+    "introBody": "我会问您几个问题，为您制作在加拿大头几步的清单。",
+    "introHow": "您可以说话回答，也可以点击回答。",
+    "start": "开始",
+    "haveId": "我已经有Arrive编号",
+    "autoListen": "每个问题之后自动开始听",
+    "progress": "第{current}题，共{total}题",
+    "back": "返回",
+    "repeat": "重复",
+    "skip": "跳过",
+    "next": "下一步",
+    "orType": "或者输入您的回答",
+    "orTap": "或者点击您的回答",
+    "addressed": "{name}，{question}",
+    "niceToMeet": "很高兴认识您，{name}。",
+    "firstName": {
+      "question": "我该怎么称呼您？",
+      "label": "姓名"
+    },
+    "city": {
+      "question": "您被安置在哪个城市？",
+      "label": "城市"
+    },
+    "country": {
+      "question": "您来自哪个国家？",
+      "label": "原籍国"
+    },
+    "gender": {
+      "question": "您的性别是什么？",
+      "label": "性别",
+      "spoken": "您可以说：男，女，其他性别，或者不想说。",
+      "man": "男",
+      "woman": "女",
+      "another": "其他性别",
+      "prefer_not_to_say": "不想说"
+    },
+    "selfAge": {
+      "question": "您是否65岁或以上？",
+      "label": "65岁或以上"
+    },
+    "household": {
+      "question": "谁和您一起来？",
+      "label": "家庭",
+      "hint": "不要把自己算进去。",
+      "spoken": "例如，您可以说：两个大人和一个孩子。",
+      "adults": "成年人（18至64岁）",
+      "seniors": "老年人（65岁或以上）",
+      "children_0_5": "儿童（0至5岁）",
+      "children_6_17": "儿童（6至17岁）",
+      "fewer": "减少一位：{group}",
+      "more": "增加一位：{group}",
+      "alone": "我一个人来的"
+    },
+    "disability": {
+      "question": "您家里有没有人有残障或长期健康问题？",
+      "label": "残障或长期健康问题"
+    },
+    "summary": {
+      "title": "这些对吗？",
+      "intro": "请检查您的回答。点击“修改”来更改。",
+      "change": "修改",
+      "adults": "{count}位成年人",
+      "seniors": "{count}位老年人",
+      "children": "{count}个孩子",
+      "consentTitle": "帮助改善新移民服务",
+      "consentBody": "匿名分享您使用Arrive的情况。您的姓名绝不会被分享。您可以拒绝。",
+      "create": "制作我的清单",
+      "creating": "正在制作您的清单…"
+    },
+    "done": {
+      "title": "您的清单已经准备好了",
+      "idLabel": "您的Arrive编号",
+      "idNote": "请保存您的编号：把它写下来或拍照。您可以用它在另一部手机上打开清单。",
+      "go": "去我的清单"
+    },
+    "restore": {
+      "title": "打开我的清单",
+      "intro": "请输入您制作清单时得到的Arrive编号。",
+      "label": "您的Arrive编号",
+      "open": "打开我的清单",
+      "invalid": "这看起来不像Arrive编号。编号以ARV开头。",
+      "notFound": "找不到这个编号。请检查后再试。",
+      "startOver": "改为制作新清单"
+    }
+  },
+  "Home": {
+    "hello": "您好，{name}",
+    "helloNoName": "您好",
+    "progress": "已完成{done}项，共{total}项",
+    "noProfile": "回答几个问题来制作您的清单。",
+    "start": "开始",
+    "checklistTitle": "您的清单",
+    "allDone": "您已完成所有步骤。做得好！",
+    "now": "现在",
+    "phaseProgress": "{done}/{total}",
+    "markDone": "完成：{title}",
+    "askAba": "问Aba",
+    "idButton": "我的证件",
+    "endSession": "结束使用"
+  },
+  "Phases": {
+    "day1_3": "第1–3天",
+    "week1": "第1周",
+    "weeks2_4": "第2–4周",
+    "months2_3": "第2–3个月",
+    "months4_6": "第4–6个月"
+  },
+  "Programs": {
+    "title": "政府项目",
+    "none": "暂时没有可显示的项目。",
+    "who": {
+      "everyone": "渥太华的所有人",
+      "kids": "有孩子的家庭",
+      "kids_0_5": "有6岁以下孩子的家庭",
+      "kids_6_17": "有6至17岁孩子的家庭",
+      "seniors": "65岁或以上的老年人",
+      "disability": "有残障或长期健康问题的人"
+    }
+  },
+  "Apply": {
+    "call_visit": "打电话给他们，或在开放时间前往。",
+    "phone": "拨打下面的号码。请求提供您语言的翻译。",
+    "online_city": "在网上申请，或到渥太华市任何一个娱乐中心申请。",
+    "registry": "在渥太华市儿童托管登记处网上登记，或拨打3-1-1。",
+    "doctor": "请您的医生或医护人员和您一起申请。",
+    "lhin": "拨打310-2222，申请居家护理评估。",
+    "register_ottawa": "在registerottawa.ca网上登记，或拨打下面的号码。",
+    "school": "在孩子的学校询问，或致电OCISO。",
+    "app": "在手机上下载ConnectHear应用程序。",
+    "ow_odsp": "询问您的Ontario Works或ODSP工作人员，或前往OC Transpo客户服务处。",
+    "odsp": "到ODSP办公室索取申请表。由您的医生填写医疗表格。"
+  },
+  "Item": {
+    "back": "返回我的清单",
+    "done": "已完成",
+    "markDone": "标记为完成",
+    "address": "地址",
+    "phone": "电话",
+    "call": "拨打",
+    "hours": "开放时间",
+    "openMaps": "打开谷歌地图",
+    "documents": "需要带的证件",
+    "documentsHint": "点击您已准备好的每一份证件。",
+    "steps": "步骤",
+    "step1": "找前台工作人员",
+    "step2": "点击您的证件按钮",
+    "step3": "出示给工作人员看",
+    "idButton": "我的证件",
+    "eligibility": "谁可以申请",
+    "howToApply": "如何申请",
+    "where": "去哪里",
+    "interested": "我感兴趣",
+    "interestedDone": "谢谢，我们已记录您的兴趣。"
+  },
+  "StaffCard": {
+    "forStaff": "给工作人员",
+    "sharing": "您的信息正在被分享。",
+    "invalid": "无法读取这张卡。"
+  },
+  "IdCard": {
+    "title": "我的身份卡",
+    "back": "返回我的清单",
+    "none": "这部手机上还没有您的Arrive编号。",
+    "start": "制作我的清单",
+    "id": "Arrive编号",
+    "language": "语言"
+  },
+  "Assistant": {
+    "title": "问Aba",
+    "back": "返回我的清单",
+    "intro": "问我关于您的清单或渥太华服务的问题。",
+    "greeting": "您好，{name}，我是Aba。您想了解什么？",
+    "greetingNoName": "您好，我是Aba。您想了解什么？",
+    "type": "输入您的问题",
+    "send": "发送"
+  },
+  "Voice": {
+    "start": "点击和Aba说话",
+    "stop": "结束对话",
+    "idle": "准备好了。",
+    "connecting": "正在连接…",
+    "listening": "正在听…请说话。",
+    "thinking": "正在思考…",
+    "speaking": "正在说话…",
+    "ended": "对话已结束。",
+    "denied": "麦克风被禁用了。您可以输入您的问题。",
+    "transcript": "对话",
+    "you": "您",
+    "aba": "Aba"
+  },
+  "End": {
+    "title": "结束使用",
+    "back": "返回我的清单",
+    "helped": "Arrive今天帮到您了吗？",
+    "face1": "完全没有",
+    "face2": "有一点",
+    "face3": "一般",
+    "face4": "很有帮助",
+    "face5": "非常有帮助",
+    "notUnderstood": "抱歉，我没听懂。请点击一个表情。",
+    "missing": "还缺少什么吗？或者您希望Arrive还能做什么？",
+    "missingHint": "可选。请不要写您的名字或任何号码。",
+    "send": "发送",
+    "thanks": "谢谢！",
+    "saved": "您的清单已保存在这部手机上。您的编号是："
+  }
+}

@@ -100,8 +100,8 @@ export default function LettersPage() {
             {t("upload")}
           </button>
           <p className="text-sm text-muted">{t("fileTypes")}</p>
-          <p className="flex items-start gap-2 rounded-card bg-teal-light p-4">
-            <ShieldCheck aria-hidden className="mt-0.5 size-6 shrink-0 text-teal" />
+          <p className="flex items-start gap-2 rounded-card bg-brand-light p-4">
+            <ShieldCheck aria-hidden className="mt-0.5 size-6 shrink-0 text-brand" />
             {t("privacy")}
           </p>
         </section>
@@ -109,7 +109,7 @@ export default function LettersPage() {
 
       {state === "reading" && (
         <p role="status" className="flex items-center gap-2 text-lg font-bold">
-          <Loader2 aria-hidden className="size-6 animate-spin text-teal" />
+          <Loader2 aria-hidden className="size-6 animate-spin text-brand" />
           {t("reading")}
         </p>
       )}
@@ -140,7 +140,7 @@ export default function LettersPage() {
 
           <div className={`card flex flex-col gap-2 ${result.action_needed ? "border-amber-ink/30 bg-amber-light text-amber-ink" : ""}`}>
             <h2 className="flex items-center gap-2 text-lg font-bold">
-              {result.action_needed ? <AlertTriangle aria-hidden className="size-6" /> : <CircleCheck aria-hidden className="size-6 text-teal" />}
+              {result.action_needed ? <AlertTriangle aria-hidden className="size-6" /> : <CircleCheck aria-hidden className="size-6 text-brand" />}
               {t("needAction")}
             </h2>
             <p className="font-bold">{result.action_needed ? t("actionYes") : t("actionNo")}</p>

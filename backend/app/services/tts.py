@@ -49,15 +49,39 @@ async def _store(pool: asyncpg.Pool | None, key: str, audio: bytes) -> None:
         logger.warning("tts cache write failed: %s", type(exc).__name__)
 
 
+_aba_voice: str | None = None
+
+
+async def aba_voice_id() -> str:
+    """Aba's voice: the voice of the ElevenLabs agent (Ask Aba), so read-aloud and the chat sound the same.
+
+    Read once from the agent's config; ELEVENLABS_VOICE_ID_DEFAULT is the fallback if the agent can't be read.
+    """
+    global _aba_voice
+    s = get_settings()
+    if _aba_voice is None and s.elevenlabs_api_key and s.elevenlabs_agent_id:
+        try:
+            async with httpx.AsyncClient(timeout=httpx.Timeout(10.0)) as client:
+                res = await client.get(
+                    f"{API}/convai/agents/{s.elevenlabs_agent_id}", headers={"xi-api-key": s.elevenlabs_api_key}
+                )
+            if res.status_code == 200:
+                _aba_voice = ((res.json().get("conversation_config") or {}).get("tts") or {}).get("voice_id") or ""
+        except httpx.HTTPError as exc:
+            logger.warning("agent voice lookup failed: %s", type(exc).__name__)
+    return _aba_voice or s.elevenlabs_voice_id_default
+
+
 async def synthesize(pool: asyncpg.Pool | None, text: str, language: str = "en") -> bytes:
     s = get_settings()
     if speech_for(language).tts is None:
         raise TTSError("tts_unsupported_language")
     model = tts_model_for(language)
-    if not (s.elevenlabs_api_key and s.elevenlabs_voice_id_default and model):
+    voice = await aba_voice_id()
+    if not (s.elevenlabs_api_key and voice and model):
         raise TTSError("tts_not_configured")
     text = " ".join(text.split())[:MAX_CHARS]
-    key = cache_key(text, s.elevenlabs_voice_id_default, model)
+    key = cache_key(text, voice, model)
     cached = await _cached(pool, key)
     if cached:
         return cached
@@ -66,7 +90,7 @@ async def synthesize(pool: asyncpg.Pool | None, text: str, language: str = "en")
     try:
         async with httpx.AsyncClient(timeout=httpx.Timeout(45.0)) as client:
             res = await client.post(
-                f"{API}/text-to-speech/{s.elevenlabs_voice_id_default}",
+                f"{API}/text-to-speech/{voice}",
                 params={"output_format": "mp3_44100_64"},  # small files for slow connections
                 headers={"xi-api-key": s.elevenlabs_api_key, "Accept": "audio/mpeg"},
                 json={"text": text, "model_id": model},

@@ -78,8 +78,8 @@ export default function HelpPage() {
   if (sent) {
     return (
       <main id="main" className="mx-auto flex max-w-xl flex-col gap-4 px-5 py-6">
-        <div role="status" className="card flex flex-col gap-3 border-teal bg-teal-light">
-          <h1 className="flex items-center gap-2 font-display text-2xl font-semibold text-teal">
+        <div role="status" className="card flex flex-col gap-3 border-brand bg-brand-light">
+          <h1 className="flex items-center gap-2 font-display text-2xl font-semibold text-brand">
             <CheckCircle2 aria-hidden className="size-7" />
             {t("successTitle")}
           </h1>
@@ -129,10 +129,10 @@ export default function HelpPage() {
               <label
                 key={id}
                 className={`flex min-h-14 cursor-pointer items-center gap-3 rounded-card border-2 px-4 font-bold ${
-                  method === id ? "border-teal bg-teal-light text-teal" : "border-line bg-surface"
+                  method === id ? "border-brand bg-brand-light text-brand" : "border-line bg-surface"
                 }`}
               >
-                <input type="radio" name="method" value={id} checked={method === id} onChange={() => setMethod(id)} className="size-5 accent-teal" />
+                <input type="radio" name="method" value={id} checked={method === id} onChange={() => setMethod(id)} className="size-5 accent-brand" />
                 <Icon aria-hidden className="size-5" />
                 {t(id)}
               </label>
@@ -168,7 +168,7 @@ export default function HelpPage() {
         </div>
 
         <label className="flex cursor-pointer items-start gap-3 rounded-card border-2 border-line bg-surface p-4">
-          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 size-6 shrink-0 accent-teal" required />
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 size-6 shrink-0 accent-brand" required />
           <span>{t("consent")}</span>
         </label>
 

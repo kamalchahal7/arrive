@@ -24,7 +24,7 @@ function Toggle({ id, label, hint, checked, onChange }: { id: string; label: str
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-9 w-16 shrink-0 items-center rounded-full border-2 ${checked ? "border-teal bg-teal" : "border-muted bg-surface"}`}
+        className={`relative inline-flex h-9 w-16 shrink-0 items-center rounded-full border-2 ${checked ? "border-brand bg-brand" : "border-muted bg-surface"}`}
       >
         <span className={`absolute size-6 rounded-full ${checked ? "end-1 bg-white" : "start-1 bg-muted"}`} />
       </button>
@@ -90,7 +90,7 @@ export default function SettingsPage() {
               aria-checked={settings.textSize === s}
               onClick={() => update({ textSize: s })}
               className={`flex min-h-16 flex-col items-center justify-center rounded-xl border-2 font-bold ${
-                settings.textSize === s ? "border-teal bg-teal-light text-teal" : "border-line bg-surface"
+                settings.textSize === s ? "border-brand bg-brand-light text-brand" : "border-line bg-surface"
               }`}
             >
               <span aria-hidden style={{ fontSize: `${0.9 + s * 0.25}rem` }}>
@@ -123,7 +123,7 @@ export default function SettingsPage() {
         </h2>
         <p className="text-muted">{t("deleteBody")}</p>
         {deleted ? (
-          <p role="status" className="font-bold text-teal">
+          <p role="status" className="font-bold text-brand">
             {t("deleted")}
           </p>
         ) : confirm ? (

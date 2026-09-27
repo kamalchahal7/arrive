@@ -191,9 +191,9 @@ def test_every_question_has_a_schema_and_meaning() -> None:
 
 def test_speech_table_matches_the_docs() -> None:
     assert {k: v.stt_code for k, v in speech.SPEECH.items()} == {
-        "en": "eng", "fr": "fra", "ar": "ara", "ps": "pus", "prs": None, "ti": None,
+        "en": "eng", "fr": "fra", "ar": "ara", "hi": "hin", "zh": "cmn", "es": "spa",
     }
-    assert speech.SPEECH["ps"].tts == "extended" and speech.SPEECH["ti"].tts is None
+    assert all(v.tts == "default" for v in speech.SPEECH.values())
 
 
 def test_sniff_audio() -> None:
@@ -210,8 +210,8 @@ async def test_tts_picks_the_model_by_language(monkeypatch: pytest.MonkeyPatch) 
     get_settings.cache_clear()
     try:
         assert speech.tts_model_for("ar") == "default-model"
-        assert speech.tts_model_for("ps") is None  # no extended model configured: no Pashto read-aloud
-        assert speech.tts_model_for("es") == "default-model"  # older app languages keep the default
+        assert speech.tts_model_for("zh") == "default-model"
+        assert speech.tts_model_for("ps") is None  # not an app language
         with pytest.raises(tts.TTSError, match="tts_unsupported_language"):
             await tts.synthesize(None, "ሰላም", "ti")
     finally:

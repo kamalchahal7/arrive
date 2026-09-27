@@ -1,17 +1,19 @@
 "use client";
 
+// The older pages' voice panel (Ask, Is it real?). It starts the same Aba session as Ask Aba (lib/aba.ts).
+
 import { ConversationProvider, useConversation } from "@elevenlabs/react";
 import { Ear, Loader2, Mic, MicOff, PhoneOff, Sparkles, Volume2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
-import { api, errorCode } from "@/lib/api";
+import { sessionOptions } from "@/lib/aba";
+import { errorCode } from "@/lib/api";
 import { track } from "@/lib/events";
 import { getProfileId } from "@/lib/storage";
 
 type Phase = "idle" | "permission" | "connecting" | "listening" | "thinking" | "speaking" | "ended" | "denied" | "error";
 type Line = { role: "user" | "agent"; text: string };
-type Session = { agent_id: string; conversation_token?: string; signed_url?: string };
 
 const PHASE_ICON = {
   idle: Mic,
@@ -92,15 +94,7 @@ function Panel({ big, onPhase, levelSource }: PanelProps) {
     setPhase("connecting");
     setLines([]);
     try {
-      const session = await api<Session>("/voice/session");
-      const dynamicVariables = { channel: "voice_web", language: locale, profile_id: getProfileId() || "" };
-      if (session.conversation_token) {
-        conversation.startSession({ conversationToken: session.conversation_token, connectionType: "webrtc", dynamicVariables });
-      } else if (session.signed_url) {
-        conversation.startSession({ signedUrl: session.signed_url, connectionType: "websocket", dynamicVariables });
-      } else {
-        throw new Error("no session");
-      }
+      conversation.startSession(await sessionOptions("chat", locale, { profileId: getProfileId() }));
     } catch (err) {
       setError(te(errorCode(err) === "offline" ? "offline" : "voice_session_failed"));
       setPhase("error");
@@ -126,7 +120,7 @@ function Panel({ big, onPhase, levelSource }: PanelProps) {
       {phase === "permission" ? (
         <div className="card flex w-full flex-col gap-3" role="dialog" aria-labelledby="mic-title">
           <h2 id="mic-title" className="flex items-center gap-2 text-lg font-bold">
-            <Mic aria-hidden className="size-6 text-teal" />
+            <Mic aria-hidden className="size-6 text-brand" />
             {t("micTitle")}
           </h2>
           <p>{t("micBody")}</p>
@@ -145,7 +139,7 @@ function Panel({ big, onPhase, levelSource }: PanelProps) {
           onClick={onMain}
           aria-pressed={active}
           className={`flex items-center justify-center gap-3 rounded-full font-bold text-white ${
-            active ? "bg-danger-ink" : "bg-teal hover:bg-teal-hover"
+            active ? "bg-danger-ink" : "bg-brand hover:bg-brand-hover"
           } ${big ? "min-h-20 w-full px-8 text-xl" : "min-h-16 px-6 text-lg"}`}
         >
           {active ? <PhoneOff aria-hidden className="size-7" /> : <Mic aria-hidden className="size-7" />}
@@ -154,7 +148,7 @@ function Panel({ big, onPhase, levelSource }: PanelProps) {
       )}
 
       <p aria-live="polite" className="flex items-center gap-2 font-bold text-ink">
-        <Icon aria-hidden className={`size-5 text-teal ${phase === "connecting" ? "animate-spin" : ""}`} />
+        <Icon aria-hidden className={`size-5 text-brand ${phase === "connecting" ? "animate-spin" : ""}`} />
         {statusText}
       </p>
 
@@ -186,7 +180,7 @@ function Panel({ big, onPhase, levelSource }: PanelProps) {
                 key={i}
                 dir="auto"
                 className={`rounded-2xl px-4 py-2 ${
-                  line.role === "user" ? "self-end bg-teal text-white" : "self-start border border-line bg-surface"
+                  line.role === "user" ? "self-end bg-brand text-white" : "self-start border border-line bg-surface"
                 }`}
               >
                 {line.text}

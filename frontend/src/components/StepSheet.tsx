@@ -81,7 +81,7 @@ export function StepSheet({
                 <ul className="flex flex-col gap-1.5">
                   {step.documents.map((d) => (
                     <li key={d} className="flex gap-2">
-                      <Check aria-hidden className="mt-1 size-4 shrink-0 text-teal" />
+                      <Check aria-hidden className="mt-1 size-4 shrink-0 text-brand" />
                       {d}
                     </li>
                   ))}

@@ -5,9 +5,9 @@
 
 import { Check, Minus, Plus } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { useId } from "react";
+import { type ReactNode, useId } from "react";
 
-export type Choice = { id: string; label: string; icon?: LucideIcon; lang?: string };
+export type Choice = { id: string; label: ReactNode; icon?: LucideIcon; lang?: string };
 
 export function ChoiceCards({
   choices,
@@ -31,11 +31,11 @@ export function ChoiceCards({
               aria-pressed={selected}
               onClick={() => onChoose(id)}
               className={`flex min-h-16 w-full items-center gap-3 rounded-card border-2 px-4 py-3 text-start text-lg font-bold ${
-                selected ? "border-teal bg-teal-light text-teal" : "border-line bg-surface hover:border-teal"
+                selected ? "border-brand bg-brand-light text-brand" : "border-line bg-surface hover:border-brand"
               }`}
             >
               {Icon && (
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-teal-light text-teal">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-light text-brand">
                   <Icon aria-hidden className="size-6" />
                 </span>
               )}
@@ -71,7 +71,7 @@ export function Chips({
               aria-pressed={selected}
               onClick={() => onToggle(id)}
               className={`flex min-h-14 items-center gap-2 rounded-full border-2 px-4 py-2 text-lg font-bold ${
-                selected ? "border-teal bg-teal text-white" : "border-line bg-surface hover:border-teal"
+                selected ? "border-brand bg-brand text-white" : "border-line bg-surface hover:border-brand"
               }`}
             >
               {selected ? <Check aria-hidden className="size-5" /> : Icon ? <Icon aria-hidden className="size-5" /> : null}
@@ -93,7 +93,7 @@ export function Stepper({
   icon: Icon,
   max = 20,
 }: {
-  label: string;
+  label: ReactNode;
   value: number;
   onChange: (n: number) => void;
   fewerLabel: string;
@@ -106,7 +106,7 @@ export function Stepper({
     <div className="flex items-center justify-between gap-3 rounded-card border-2 border-line bg-surface p-3">
       <span id={id} className="flex items-center gap-3 text-lg font-bold">
         {Icon && (
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-teal-light text-teal">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-light text-brand">
             <Icon aria-hidden className="size-6" />
           </span>
         )}
@@ -115,7 +115,7 @@ export function Stepper({
       <span className="flex items-center gap-2" role="group" aria-labelledby={id}>
         <button
           type="button"
-          className="flex size-14 items-center justify-center rounded-full border-2 border-teal text-teal disabled:border-line disabled:text-muted"
+          className="flex size-14 items-center justify-center rounded-full border-2 border-brand text-brand disabled:border-line disabled:text-muted"
           onClick={() => onChange(Math.max(0, value - 1))}
           disabled={value <= 0}
           aria-label={fewerLabel}
@@ -127,7 +127,7 @@ export function Stepper({
         </output>
         <button
           type="button"
-          className="flex size-14 items-center justify-center rounded-full bg-teal text-white disabled:bg-line"
+          className="flex size-14 items-center justify-center rounded-full bg-brand text-white disabled:bg-line"
           onClick={() => onChange(Math.min(max, value + 1))}
           disabled={value >= max}
           aria-label={moreLabel}
@@ -148,8 +148,8 @@ export function TextAnswer({
   autoComplete,
   maxLength,
 }: {
-  label: string;
-  hint?: string;
+  label: ReactNode;
+  hint?: ReactNode;
   value: string;
   onChange: (v: string) => void;
   onSubmit: () => void;
