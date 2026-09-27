@@ -232,7 +232,8 @@
     "checkLabel": "{title}, for {person}",
     "savedLocally": "Saved on this phone. It will be sent when you are back online.",
     "askAvatar": "Ask the avatar",
-    "idButton": "My ID"
+    "idButton": "My ID",
+    "endSession": "End session"
   },
   "Programs": {
     "title": "Programs for your family",
@@ -249,7 +250,30 @@
       "federal": "Canada",
       "ontario": "Ontario",
       "ottawa": "Ottawa"
-    }
+    },
+    "seeAll": "See all programs",
+    "back": "Back to my checklist",
+    "filter": "Show programs for",
+    "all": "All"
+  },
+  "End": {
+    "title": "End session",
+    "back": "Back to my checklist",
+    "helped": "Did Arrive help you today?",
+    "face1": "Not at all",
+    "face2": "A little",
+    "face3": "Some",
+    "face4": "A lot",
+    "face5": "Very much",
+    "sayIt": "Say it instead",
+    "stop": "I'm done speaking",
+    "notUnderstood": "Sorry, I did not understand. Please tap a face.",
+    "missing": "Is anything missing, or is there something you would like Arrive to do?",
+    "missingHint": "Optional. Please do not write your name or numbers.",
+    "recorded": "Recorded. Say it again",
+    "send": "Send",
+    "thanks": "Thank you!",
+    "saved": "Your checklist is saved on this phone. Your ID is:"
   },
   "MoreHelp": {
     "title": "More help",
@@ -290,7 +314,9 @@
     "mapTitle": "Map of {place}",
     "showMap": "Show the map",
     "openMaps": "Open in Google Maps",
-    "opensNewTab": "(opens in a new tab)"
+    "opensNewTab": "(opens in a new tab)",
+    "interested": "I'm interested",
+    "interestedDone": "Thank you. We noted your interest."
   },
   "IdCard": {
     "title": "My ID card",
@@ -496,12 +522,14 @@
     "autoListen": "Start listening by myself after each onboarding question",
     "language": "Language",
     "deleteTitle": "Delete my data",
-    "deleteBody": "This deletes your answers and roadmap from Arrive and from this phone.",
+    "deleteBody": "This deletes your profile, checklist and answers from Arrive and from this phone.",
     "deleteButton": "Delete my data",
     "deleteConfirm": "Are you sure? This cannot be undone.",
     "deleteYes": "Yes, delete",
     "deleted": "Your data was deleted.",
-    "saved": "Saved"
+    "saved": "Saved",
+    "consent": "Share anonymous usage information",
+    "consentHint": "Helps improve services for newcomers. Your name is never shared."
   },
   "Trust": {
     "title": "How Arrive works",

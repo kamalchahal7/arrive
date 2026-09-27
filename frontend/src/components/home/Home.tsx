@@ -3,12 +3,13 @@
 // Home screen (docs/REDESIGN.md section 6): greeting and progress, the checklist by phase (current phase open),
 // programs for the family, a "More help" menu, and the floating "Ask the avatar" button.
 
-import { Check, ChevronDown, ChevronRight, CloudOff, MessageCircleQuestion, Sparkles } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, CloudOff, LogOut, MessageCircleQuestion, Sparkles } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { ErrorNote } from "@/components/Notices";
 import { Link } from "@/i18n/navigation";
 import { api, errorCode } from "@/lib/api";
+import { track } from "@/lib/events";
 import { cacheChecklist, cachedChecklist, flush, pending, saveChange, withStatus } from "@/lib/progress";
 import { cacheProfile, getCachedProfile, getProfileId } from "@/lib/storage";
 import type { Checklist, ChecklistRow, Profile, Programs } from "@/lib/types";
@@ -97,6 +98,7 @@ export function Home() {
     const next = withStatus(checklist, change);
     setChecklist(next);
     cacheChecklist(locale, next);
+    if (change.status === "done") track("item_done", locale, row.item_id);
     setUnsynced(!(await saveChange(profileId, change)));
   };
 
@@ -263,10 +265,19 @@ export function Home() {
               ))}
             </ul>
           )}
+          {programs && programs.programs.length > 0 && (
+            <Link href="/programs" className="btn btn-quiet self-start !px-0">
+              {tp("seeAll")}
+            </Link>
+          )}
         </section>
 
         <div className="flex flex-wrap items-start justify-between gap-3">
           <MoreHelp />
+          <Link href="/end" className="btn btn-secondary min-h-14">
+            <LogOut aria-hidden className="size-5 rtl:-scale-x-100" />
+            {t("endSession")}
+          </Link>
         </div>
       </main>
 

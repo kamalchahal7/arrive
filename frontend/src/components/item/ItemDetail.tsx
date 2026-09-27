@@ -4,7 +4,7 @@
 // map, address and phone, documents, steps, staff card, source.
 
 import {
-  ArrowLeft, Building2, Check, CheckCircle2, Circle, Clock, Copy, ExternalLink, FileText, IdCard, Info, MapPin, Phone,
+  ArrowLeft, Building2, Check, Heart, CheckCircle2, Circle, Clock, Copy, ExternalLink, FileText, IdCard, Info, MapPin, Phone,
   TriangleAlert,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -16,6 +16,7 @@ import { intlLocale } from "@/config/languages";
 import { Link, useRouter } from "@/i18n/navigation";
 import { api, errorCode } from "@/lib/api";
 import { CARD_LIFETIME_DAYS, encodeCard } from "@/lib/cardPayload";
+import { track } from "@/lib/events";
 import { cacheChecklist, cachedChecklist, saveChange, withStatus } from "@/lib/progress";
 import { getCachedProfile, getProfileId } from "@/lib/storage";
 import type { ItemDetail as Detail, Place, Profile } from "@/lib/types";
@@ -77,6 +78,7 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
   const [copied, setCopied] = useState(false);
   const [haveDocs, setHaveDocs] = useState<number[]>([]);
   const [cardError, setCardError] = useState<string | null>(null);
+  const [interested, setInterested] = useState(false);
   const cacheKey = `${locale}|${itemId}`;
   const docsKey = `arrive.docs.${itemId}`;
 
@@ -87,6 +89,7 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
       setDetail(d);
       setOffline(false);
       writeCache(cacheKey, d);
+      track(d.kind === "program" ? "view_program" : "view_item", locale, d.id);
     } catch (err) {
       const cached = readCache(cacheKey);
       if (cached) {
@@ -104,12 +107,13 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
     setProfileIdState(pid);
     try {
       setHaveDocs(JSON.parse(localStorage.getItem(docsKey) || "[]") as number[]);
+      setInterested(localStorage.getItem(`arrive.interest.${itemId}`) === "1");
     } catch {
       setHaveDocs([]);
     }
     /* eslint-enable react-hooks/set-state-in-effect */
     void load(pid);
-  }, [docsKey, load]);
+  }, [docsKey, itemId, load]);
 
   const toggleRow = async (personKey: string, done: boolean) => {
     if (!detail || !profileId) return;
@@ -118,7 +122,19 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
     setDetail({ ...detail, rows: detail.rows.map((r) => (r.person_key === personKey ? { ...r, status } : r)) });
     const cached = cachedChecklist(locale);
     if (cached) cacheChecklist(locale, withStatus(cached, change));
+    if (status === "done") track("item_done", locale, detail.id);
     await saveChange(profileId, change);
+  };
+
+  const markInterest = () => {
+    if (!detail) return;
+    setInterested(true);
+    track("program_interest", locale, detail.id);
+    try {
+      localStorage.setItem(`arrive.interest.${detail.id}`, "1");
+    } catch {
+      /* storage unavailable */
+    }
   };
 
   const toggleDoc = (i: number) => {
@@ -158,6 +174,7 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
       } catch {
         /* the card still works; it just has no Back link */
       }
+      track("staff_card_opened", locale, detail.id);
       router.push(`/card#${payload}`);
     } catch (err) {
       setCardError(errorCode(err));
@@ -350,6 +367,19 @@ export function ItemDetail({ itemId, googleKey }: { itemId: string; googleKey: s
             ))}
           </ul>
         </section>
+      )}
+
+      {detail.kind === "program" && (
+        <button
+          type="button"
+          className={`btn min-h-14 text-lg ${interested ? "btn-secondary" : "btn-primary"}`}
+          aria-pressed={interested}
+          onClick={markInterest}
+          disabled={interested}
+        >
+          <Heart aria-hidden className="size-6" fill={interested ? "currentColor" : "none"} />
+          {interested ? t("interestedDone") : t("interested")}
+        </button>
       )}
 
       {/* 5. Documents to bring */}

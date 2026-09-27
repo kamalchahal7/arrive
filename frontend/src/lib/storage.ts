@@ -97,6 +97,14 @@ export function saveDraft(draft: unknown): void {
 
 export function clearAll(): void {
   for (const key of [PROFILE_KEY, SETTINGS_KEY, ROADMAP_KEY, PROFILE_CACHE_KEY]) write(key, null);
+  // Checklist, programs, item pages, ticked documents and interests saved on this phone.
+  try {
+    for (const key of Object.keys(window.localStorage)) {
+      if (/^arrive\.(checklist|pendingProgress|programs|itemCache|docs\.|interest\.)/.test(key)) write(key, null);
+    }
+  } catch {
+    /* storage unavailable */
+  }
   saveDraft(null);
 }
 

@@ -233,7 +233,8 @@
     "checkLabel": "{title}, pour {person}",
     "savedLocally": "Enregistré sur ce téléphone. Ce sera envoyé quand vous serez de nouveau en ligne.",
     "askAvatar": "Demander à l'assistant",
-    "idButton": "Mon ID"
+    "idButton": "Mon ID",
+    "endSession": "Terminer la session"
   },
   "Programs": {
     "title": "Programmes pour votre famille",
@@ -250,7 +251,30 @@
       "federal": "Canada",
       "ontario": "Ontario",
       "ottawa": "Ottawa"
-    }
+    },
+    "seeAll": "Voir tous les programmes",
+    "back": "Retour à ma liste",
+    "filter": "Montrer les programmes pour",
+    "all": "Tous"
+  },
+  "End": {
+    "title": "Terminer la session",
+    "back": "Retour à ma liste",
+    "helped": "Arrive vous a-t-il aidé aujourd'hui?",
+    "face1": "Pas du tout",
+    "face2": "Un peu",
+    "face3": "Moyennement",
+    "face4": "Beaucoup",
+    "face5": "Énormément",
+    "sayIt": "Le dire plutôt",
+    "stop": "J'ai fini de parler",
+    "notUnderstood": "Désolé, je n'ai pas compris. Touchez un visage.",
+    "missing": "Manque-t-il quelque chose, ou aimeriez-vous qu'Arrive fasse autre chose?",
+    "missingHint": "Facultatif. N'écrivez pas votre nom ni de numéros.",
+    "recorded": "Enregistré. Le redire",
+    "send": "Envoyer",
+    "thanks": "Merci!",
+    "saved": "Votre liste est enregistrée sur ce téléphone. Votre identifiant est :"
   },
   "MoreHelp": {
     "title": "Plus d'aide",
@@ -291,7 +315,9 @@
     "mapTitle": "Carte de {place}",
     "showMap": "Afficher la carte",
     "openMaps": "Ouvrir dans Google Maps",
-    "opensNewTab": "(s'ouvre dans un nouvel onglet)"
+    "opensNewTab": "(s'ouvre dans un nouvel onglet)",
+    "interested": "Ça m'intéresse",
+    "interestedDone": "Merci. Nous avons noté votre intérêt."
   },
   "IdCard": {
     "title": "Ma carte d'identification",
@@ -497,12 +523,14 @@
     "autoListen": "Commencer à écouter tout seul après chaque question d'accueil",
     "language": "Langue",
     "deleteTitle": "Supprimer mes données",
-    "deleteBody": "Cela supprime vos réponses et vos étapes d'Arrive et de ce téléphone.",
+    "deleteBody": "Cela supprime votre profil, votre liste et vos réponses d'Arrive et de ce téléphone.",
     "deleteButton": "Supprimer mes données",
     "deleteConfirm": "Êtes-vous sûr? Cette action est définitive.",
     "deleteYes": "Oui, supprimer",
     "deleted": "Vos données ont été supprimées.",
-    "saved": "Enregistré"
+    "saved": "Enregistré",
+    "consent": "Partager des informations d'utilisation anonymes",
+    "consentHint": "Cela aide à améliorer les services aux nouveaux arrivants. Votre nom n'est jamais partagé."
   },
   "Trust": {
     "title": "Comment Arrive fonctionne",
