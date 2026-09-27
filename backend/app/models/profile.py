@@ -2,7 +2,7 @@ import uuid
 from datetime import date, datetime
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.models.common import Lang
 
@@ -11,6 +11,8 @@ Status = Literal[
     "unknown",
 ]
 Need = Annotated[str, Field(max_length=40, pattern=r"^[a-z_]+$")]
+Count = Annotated[int, Field(ge=0, le=20)]
+Gender = Literal["woman", "man", "another", "prefer_not_to_say"]
 
 
 class ProfileIn(BaseModel):
@@ -23,6 +25,25 @@ class ProfileIn(BaseModel):
     languages: list[Lang] | None = Field(default=None, max_length=10)
     preferred_language: Lang | None = None
     needs: list[Need] | None = Field(default=None, max_length=12)
+    # Household profile (docs/REDESIGN.md section 4). The person themself is one of the adults or seniors.
+    city_name: str | None = Field(default=None, max_length=80)
+    country_of_origin: str | None = Field(default=None, pattern=r"^[A-Za-z]{2}$")
+    gender: Gender | None = None
+    self_age_group: Literal["adult", "senior"] | None = None
+    adults: Count | None = None
+    seniors: Count | None = None
+    children_0_5: Count | None = None
+    children_6_17: Count | None = None
+    disability_adult: bool | None = None
+    disability_senior: bool | None = None
+    disability_child: bool | None = None
+    other_languages: list[Lang] | None = Field(default=None, max_length=10)
+    analytics_consent: bool | None = None
+
+    @field_validator("country_of_origin")
+    @classmethod
+    def upper_country(cls, v: str | None) -> str | None:
+        return v.upper() if v else v
 
 
 class ProfileOut(BaseModel):
@@ -37,6 +58,20 @@ class ProfileOut(BaseModel):
     preferred_language: str
     needs: list[str]
     created_at: datetime
+    public_id: str | None = None
+    city_name: str | None = None
+    country_of_origin: str | None = None
+    gender: str | None = None
+    self_age_group: str = "adult"
+    adults: int = 1
+    seniors: int = 0
+    children_0_5: int = 0
+    children_6_17: int = 0
+    disability_adult: bool | None = None
+    disability_senior: bool | None = None
+    disability_child: bool | None = None
+    other_languages: list[str] = []
+    analytics_consent: bool = False
 
 
 class StepSource(BaseModel):

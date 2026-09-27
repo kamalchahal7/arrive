@@ -32,7 +32,7 @@ def topic_label(topic_id: str, language: str = "en") -> str:
 LANGUAGE_NAMES = {
     "en": "English", "fr": "French", "ar": "Arabic", "fa": "Farsi (Persian)", "es": "Spanish",
     "uk": "Ukrainian", "ti": "Tigrinya", "zh": "Chinese (Simplified)", "pa": "Punjabi", "ur": "Urdu",
-    "so": "Somali", "ps": "Pashto", "tr": "Turkish", "ru": "Russian", "pt": "Portuguese", "hi": "Hindi",
+    "so": "Somali", "ps": "Pashto", "prs": "Dari (Afghan Persian)", "tr": "Turkish", "ru": "Russian", "pt": "Portuguese", "hi": "Hindi",
     "tl": "Tagalog", "am": "Amharic", "sw": "Swahili", "ku": "Kurdish",
 }
 

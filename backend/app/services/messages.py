@@ -53,31 +53,94 @@ MESSAGES: dict[str, dict[str, str]] = {
         "fr": "Désolé, un problème est survenu. Réessayez ou parlez à une personne.",
         "ar": "عذرًا، حدث خطأ. حاول مرة أخرى أو تحدث إلى شخص.",
     },
+    # ---- Household checklist (docs/REDESIGN.md section 5). {n} is a number filled in by the app. ----
+    "person_you": {"en": "You", "fr": "Vous", "ar": "أنت"},
+    "person_adult": {"en": "Adult {n}", "fr": "Adulte {n}", "ar": "البالغ {n}"},
+    "person_senior": {"en": "Senior {n}", "fr": "Aîné {n}", "ar": "المسنّ {n}"},
+    "person_child": {"en": "Child {n}", "fr": "Enfant {n}", "ar": "الطفل {n}"},
+    "person_household": {"en": "Your family", "fr": "Votre famille", "ar": "عائلتك"},
+    "group_adult": {
+        "en": "An adult in your family with a disability",
+        "fr": "Un adulte de votre famille ayant un handicap",
+        "ar": "شخص بالغ في عائلتك لديه إعاقة",
+    },
+    "group_senior": {
+        "en": "A senior in your family with a disability",
+        "fr": "Un aîné de votre famille ayant un handicap",
+        "ar": "شخص مسنّ في عائلتك لديه إعاقة",
+    },
+    "group_child": {
+        "en": "A child in your family with a disability",
+        "fr": "Un enfant de votre famille ayant un handicap",
+        "ar": "طفل في عائلتك لديه إعاقة",
+    },
+    "phase_first_3_days": {"en": "First 3 days", "fr": "3 premiers jours", "ar": "الأيام الثلاثة الأولى"},
+    "phase_first_2_weeks": {"en": "First 2 weeks", "fr": "2 premières semaines", "ar": "الأسبوعان الأولان"},
+    "phase_first_month": {"en": "First month", "fr": "Premier mois", "ar": "الشهر الأول"},
+    "phase_first_3_months": {"en": "First 3 months", "fr": "3 premiers mois", "ar": "الأشهر الثلاثة الأولى"},
+    "phase_first_year": {"en": "First year", "fr": "Première année", "ar": "السنة الأولى"},
+    "note_outside_ottawa": {
+        "en": "Local offices for your city are not available yet.",
+        "fr": "Les bureaux locaux de votre ville ne sont pas encore disponibles.",
+        "ar": "مكاتب مدينتك المحلية غير متوفرة بعد.",
+    },
+    "note_outside_ontario": {
+        "en": "For now, Arrive only shows federal steps for your province. Provincial steps are not available yet.",
+        "fr": "Pour l'instant, Arrive montre seulement les étapes fédérales pour votre province. Les étapes provinciales ne sont pas encore disponibles.",
+        "ar": "حاليًا، يعرض Arrive الخطوات الفيدرالية فقط لمقاطعتك. خطوات المقاطعة غير متوفرة بعد.",
+    },
 }
 # [VERIFY: 911 interpreter availability statement against an official Ottawa/Ontario page]
 
 _cache: dict[tuple[str, str], str] = {}
 
 
-class _Translation(BaseModel):
-    text: str
+def _fill(text: str, values: dict[str, object]) -> str:
+    for k, v in values.items():
+        text = text.replace("{" + k + "}", str(v))
+    return text
 
 
-async def message(key: str, language: str) -> str:
-    table = MESSAGES[key]
-    if language in table:
-        return table[language]
-    if (key, language) in _cache:
-        return _cache[(key, language)]
+async def message(key: str, language: str, **values: object) -> str:
+    return _fill((await messages([key], language))[key], values)
+
+
+class _Batch(BaseModel):
+    texts: list[str]
+
+
+async def messages(keys: list[str], language: str) -> dict[str, str]:
+    """Several fixed messages at once. Languages without a written version (e.g. Dari, Pashto, Tigrinya) are
+    translated in ONE Gemini call and cached; on any failure the English text is used."""
+    out: dict[str, str] = {}
+    missing: list[str] = []
+    for key in dict.fromkeys(keys):
+        table = MESSAGES[key]
+        if language in table:
+            out[key] = table[language]
+        elif (key, language) in _cache:
+            out[key] = _cache[(key, language)]
+        else:
+            missing.append(key)
+    if not missing:
+        return out
+    sources = [MESSAGES[k]["en"] for k in missing]
     try:
         res = await gemini.get_gemini().generate_json(
             "translate_message",
-            f"Translate into {language_name(language)}. Keep '911' as is. Plain words, grade 6 level.\n\n{table['en']}",
-            _Translation,
+            f"Translate each text into {language_name(language)}. Return exactly {len(sources)} texts in the same "
+            "order. Keep '911' and anything in {curly braces} exactly as is. Plain words, grade 6 level.\n\n"
+            + "\n".join(f"{i + 1}. {t}" for i, t in enumerate(sources)),
+            _Batch,
             temperature=0,
         )
-        _cache[(key, language)] = res.text
-        return res.text
+        if len(res.texts) != len(sources):
+            raise ValueError("count mismatch")
+        for key, text in zip(missing, res.texts, strict=True):
+            _cache[(key, language)] = text.strip()
+            out[key] = text.strip()
     except Exception:
-        logger.warning("could not translate message %s to %s", key, language)
-        return table["en"]
+        logger.warning("could not translate %d messages to %s", len(missing), language)
+        for key in missing:
+            out[key] = MESSAGES[key]["en"]
+    return out
