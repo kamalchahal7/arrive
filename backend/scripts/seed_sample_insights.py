@@ -112,7 +112,59 @@ def build_rows(source_ids_by_topic: dict[str, list[int]], confusing_source: int 
     return rows
 
 
+# Redesign analytics (docs/REDESIGN.md section 9): sample session events and survey answers.
+SAMPLE_LANGUAGES = {"ar": 40, "prs": 25, "ps": 15, "ti": 12, "en": 5, "fr": 3}
+SAMPLE_COUNTRIES = {"ar": "SY", "prs": "AF", "ps": "AF", "ti": "ER", "en": "SD", "fr": "CD"}
+SAMPLE_PROGRAMS = {"linc": 30, "canada_child_benefit": 22, "healthy_smiles": 14, "earlyon": 10, "equipass": 9,
+                   "odb": 6, "cdcp": 8, "child_care_subsidy": 7}
+SAMPLE_ITEMS = {"sin": 0.8, "health_card": 0.75, "bank_account": 0.7, "school_registration": 0.55, "housing": 0.35,
+                "ccb": 0.5, "language_assessment": 0.45, "tax_return": 0.2, "family_doctor": 0.25}
+SAMPLE_MISSING = [
+    "Help finding a family doctor who speaks my language", "Help finding a family doctor who speaks my language",
+    "Reminders for appointments", "Reminders for appointments", "Reminders for appointments",
+    "More information about jobs", "More information about jobs", "Show where the mosque and halal food are",
+    "Explain winter clothing help", "Explain winter clothing help", "Translate letters from the school",
+]
+
+
+def build_events(rng: random.Random) -> tuple[list[tuple], list[tuple]]:
+    now = datetime.now(timezone.utc)
+    events: list[tuple] = []
+    surveys: list[tuple] = []
+    households = ["family_children", "family_children", "single_adult", "family_children_seniors", "adults_only"]
+    for person in range(160):
+        lang = pick(SAMPLE_LANGUAGES, rng)
+        ref = f"sample{person:04d}"
+        session = uuid.uuid4().hex
+        start = now - timedelta(days=rng.randint(1, 80), hours=rng.randint(0, 23))
+        consent = rng.random() < 0.6
+        country = SAMPLE_COUNTRIES[lang] if consent else None
+        house = rng.choice(households)
+        row = lambda t, event, target: (t, session, ref, event, target, lang, country, house, "ottawa", True)  # noqa: E731
+        for item, done_rate in SAMPLE_ITEMS.items():
+            if rng.random() < 0.7:
+                t = start + timedelta(hours=rng.randint(1, 72))
+                events.append(row(t, "view_item", item))
+                if rng.random() < done_rate:
+                    events.append(row(t + timedelta(days=rng.randint(1, 20)), "item_done", item))
+        for program, weight in SAMPLE_PROGRAMS.items():
+            if rng.random() < weight / 40:
+                t = start + timedelta(hours=rng.randint(1, 200))
+                events.append(row(t, "view_program", program))
+                if rng.random() < 0.6:
+                    events.append(row(t, "program_interest", program))
+        if rng.random() < 0.5:
+            missing = rng.choice(SAMPLE_MISSING) if rng.random() < 0.5 else None
+            surveys.append((start + timedelta(hours=2), session, ref, rng.choice([3, 4, 4, 5, 5, 2]), missing, lang, True))
+    return [e for e in events if e[0] < now], surveys
+
+
 async def refresh(conn: asyncpg.Connection) -> None:
+    for view in ("program_interest_weekly", "item_activity_weekly"):
+        try:
+            await conn.execute(f"CALL refresh_continuous_aggregate('{view}', NULL, NULL)")
+        except asyncpg.UndefinedTableError:
+            pass  # migration 006 not applied yet
     for view in ("request_log_daily", "request_log_weekly"):
         await conn.execute(f"CALL refresh_continuous_aggregate('{view}', NULL, NULL)")
 
@@ -127,6 +179,8 @@ async def main() -> None:
         await conn.execute("DELETE FROM request_log WHERE is_sample")
         await conn.execute("DELETE FROM handoffs WHERE is_sample")
         await conn.execute("DELETE FROM app_cache WHERE key LIKE 'gaps:%'")
+        await conn.execute("DELETE FROM session_events WHERE is_sample")
+        await conn.execute("DELETE FROM survey_responses WHERE is_sample")
         if args.clear:
             await refresh(conn)
             print("Sample data removed.")
@@ -162,8 +216,19 @@ async def main() -> None:
                 h["preferred_time"],
                 h["urgency"], deadline,
             )
+        sample_events, sample_surveys = build_events(random.Random(7))
+        await conn.copy_records_to_table(
+            "session_events", records=sample_events,
+            columns=["time", "session_id", "profile_ref", "event", "target_id", "language", "country_of_origin",
+                     "household_type", "city", "is_sample"],
+        )
+        await conn.copy_records_to_table(
+            "survey_responses", records=sample_surveys,
+            columns=["time", "session_id", "profile_ref", "satisfaction", "missing_features", "language", "is_sample"],
+        )
         await refresh(conn)
-        print(f"Inserted {len(rows)} sample request_log rows and {len(SAMPLE_HANDOFFS)} sample handoffs.")
+        print(f"Inserted {len(rows)} sample request_log rows, {len(SAMPLE_HANDOFFS)} sample handoffs, "
+              f"{len(sample_events)} session events and {len(sample_surveys)} survey answers.")
     finally:
         await conn.close()
 

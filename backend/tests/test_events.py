@@ -7,6 +7,7 @@ import pytest
 from app.config import get_settings
 from app.services import events
 from tests.conftest import RecordingPool
+from tests.test_checklist_api import data  # noqa: F401  (fixture used below)
 
 PROFILE = {"id": uuid.uuid4(), "public_id": "ARV-7K3P-9QXM-2D4F", "country_of_origin": "SY", "city": "ottawa",
            "adults": 2, "seniors": 0, "children_0_5": 1, "children_6_17": 0, "analytics_consent": False}
@@ -57,3 +58,29 @@ async def test_delete_unlinks_events() -> None:
     pool = RecordingPool()
     await events.unlink_profile(pool, PROFILE)
     assert all("SET profile_ref = NULL" in sql for sql, _ in pool.queries) and len(pool.queries) == 2
+
+
+# ---- agent tools for the household checklist ----
+
+def _tool_client(pool):
+    from fastapi.testclient import TestClient
+
+    from app.deps import require_db
+    from app.main import create_app
+
+    app = create_app()
+    app.dependency_overrides[require_db] = lambda: pool
+    return TestClient(app)
+
+
+def test_agent_get_checklist_and_mark_done(data, monkeypatch) -> None:
+    from tests.test_checklist_api import PID, pool_for, profile_row
+
+    pool = pool_for(profile_row())
+    c = _tool_client(pool)
+    h = {"X-Arrive-Secret": "test-secret"}
+    res = c.post("/api/voice/tools/get-checklist", json={"profile_id": PID, "language": "en"}, headers=h)
+    assert res.status_code == 200 and "0 of" in res.json()["text"] and "Next: 1." in res.json()["text"]
+    res = c.post("/api/voice/tools/mark-item-done", json={"profile_id": PID, "item_id": "sin", "confirmed": False}, headers=h)
+    assert "confirm" in res.json()["text"]
+    assert not any("checklist_progress (profile_id" in sql for sql, _ in pool.queries)
