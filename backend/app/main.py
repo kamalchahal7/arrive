@@ -16,7 +16,7 @@ from app.db.pool import close_pool, ensure_pool, get_pool, open_pool
 from app.errors import AppError
 from app.ratelimit import limiter
 from app.routers import (
-    admin, ask, checklist, handoffs, health, insights, media, profile, roadmap, sources, staff_card, voice,
+    admin, ask, checklist, handoffs, health, insights, media, onboarding, profile, roadmap, sources, staff_card, voice,
 )
 from app.services.gemini import GeminiError
 from app.services.pii import PIIUnavailable
@@ -111,7 +111,7 @@ def create_app() -> FastAPI:
 
     for r in (
         health.router, ask.router, profile.router, roadmap.router, staff_card.router, media.router, sources.router,
-        checklist.router,
+        checklist.router, onboarding.router,
         handoffs.router, handoffs.worker, insights.router, voice.router, voice.tools, admin.router,
     ):
         app.include_router(r, prefix="/api")

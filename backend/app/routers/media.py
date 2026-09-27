@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
-from app.deps import require_db
+from app.deps import db_pool, require_db
 from app.errors import AppError
 from app.models.common import Lang, ProfileRef, dedupe_sources
 from app.ratelimit import PUBLIC, STRICT, limiter
@@ -24,12 +24,13 @@ class TTSIn(BaseModel):
 
 
 @router.post("/tts", response_class=Response)
-@limiter.limit(STRICT)
-async def tts(request: Request, body: TTSIn, pool: asyncpg.Pool = Depends(require_db)) -> Response:
+@limiter.limit("30/minute")  # onboarding reads each question and confirmation aloud
+async def tts(request: Request, body: TTSIn, pool: asyncpg.Pool | None = Depends(db_pool)) -> Response:
     try:
-        audio = await synthesize(pool, body.text)
+        audio = await synthesize(pool, body.text, body.language)
     except TTSError as exc:
-        raise AppError(str(exc), 503) from exc
+        # A language with no read-aloud is not an outage: 422 tells the app to stay in text mode.
+        raise AppError(str(exc), 422 if str(exc) == "tts_unsupported_language" else 503) from exc
     return Response(audio, media_type="audio/mpeg", headers={"Cache-Control": "private, max-age=86400"})
 
 
