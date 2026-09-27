@@ -23,7 +23,7 @@ The web app starts every session with:
 |---|---|---|
 | `channel` | `voice_web` | passed to every tool (logged as the channel) |
 | `language` | `ar` | the app's current UI language, a hint for the first reply |
-| `profile_id` | uuid or empty | lets `get_roadmap` and `ask_official_sources` personalize; empty for people without a profile |
+| `profile_id` | `ARV-7K3P-9QXM-2D4F` or empty | the person's readable Arrive ID; lets `get_checklist`, `mark_item_done` and `ask_official_sources` use their household checklist. Empty without a profile |
 
 Add them under **Agent → Dynamic variables** with these defaults: `channel = voice_web`, `language = en`,
 `profile_id = ` (empty).
@@ -31,7 +31,8 @@ Add them under **Agent → Dynamic variables** with these defaults: `channel = v
 ## 3. Language
 
 - **Default language:** English.
-- **Additional languages:** French, Arabic (add Farsi, Spanish, Ukrainian, Tigrinya if your plan's models support them).
+- **Additional languages:** French, Arabic, Pashto (the app's languages with ElevenLabs speech support; Dari and Tigrinya
+  have none yet, so the app offers typed questions for them). Check the agent's language list in the dashboard.
 - **Language detection:** enable the *language detection* system tool so the agent switches to the language the person
   speaks.
 - **Voice:** a multilingual voice (the same `ELEVENLABS_VOICE_ID_DEFAULT` used for read-aloud works).
@@ -39,8 +40,8 @@ Add them under **Agent → Dynamic variables** with these defaults: `channel = v
 
 ## 4. First message
 
-> Hello, I'm Arrive. I can explain official government information for newcomers in Canada, in your language.
-> What would you like to know? You can speak in any language.
+> Hello, I'm the Arrive helper. I can tell you what to do next on your checklist, and explain official government
+> information in your language. What would you like to know?
 
 (Enable "translate first message" if available so it is spoken in the detected language.)
 
@@ -65,7 +66,10 @@ Rules you must always follow:
    call 911 right away, before anything else.
 4. Scams. If someone describes a call, text, email or letter asking for money, gift cards, crypto or personal
    information, or threatening arrest or deportation, call check_scam.
-5. Their steps. If someone asks what to do next or where to start, call get_roadmap.
+5. Their checklist. If someone asks what to do next or where to start, call get_checklist and read the next one or
+   two steps. For where to go, what to bring or how to do a step, call get_item_details with the item id from
+   get_checklist. Only call mark_item_done after the person clearly says the step is finished and says yes when you
+   ask "Shall I mark it as done?"; then call it with confirmed true.
 6. Keep answers short: two or three short sentences, plain words, grade 6 level. No lists, no web addresses.
    Mention the official source briefly ("This is from the Government of Ontario website").
 7. Confirm understanding. After answering, ask if it was clear or if they want to know more.
@@ -82,7 +86,7 @@ Session info: channel={{channel}}, app language={{language}}, profile={{profile_
 
 ## 6. Server tools (webhooks)
 
-Create four **webhook** tools. For each:
+Create seven **webhook** tools (`get_roadmap` is optional since the redesign). For each:
 
 - **Method:** `POST`
 - **URL:** `https://<DOMAIN>/api/voice/tools/<path>` (for local testing, a tunnel URL to `http://localhost:8000`)
@@ -104,7 +108,38 @@ settlement worker.*
 | `channel` | string | no | Dynamic variable `{{channel}}` |
 | `profile_id` | string | no | Dynamic variable `{{profile_id}}` |
 
-### `get_roadmap` → `/api/voice/tools/roadmap`
+### `get_checklist` → `/api/voice/tools/get-checklist`
+
+Description: *The person's household checklist: how many steps are done and the next three steps, each with its
+item id in brackets. Use when they ask what to do next. Never read the item ids aloud.*
+
+| Body param | Type | Required | Value / description |
+|---|---|---|---|
+| `profile_id` | string | yes | `{{profile_id}}` |
+| `language` | string | no | ISO code of the language the person is speaking |
+
+### `get_item_details` → `/api/voice/tools/get-item-details`
+
+Description: *Where to go, what documents to bring and the steps for one checklist item or program. Use the item id
+from get_checklist.*
+
+| Body param | Type | Required | Value / description |
+|---|---|---|---|
+| `item_id` | string | yes | e.g. `health_card` |
+| `language` | string | no | ISO code |
+
+### `mark_item_done` → `/api/voice/tools/mark-item-done`
+
+Description: *Mark a checklist step as done. ONLY after the person clearly confirms. Set confirmed to true only then.*
+
+| Body param | Type | Required | Value / description |
+|---|---|---|---|
+| `profile_id` | string | yes | `{{profile_id}}` |
+| `item_id` | string | yes | from get_checklist |
+| `person_key` | string | no | only if the person said which family member (`self`, `child-1`, ...); empty marks every row |
+| `confirmed` | boolean | yes | true only after a clear yes |
+
+### `get_roadmap` → `/api/voice/tools/roadmap` (older roadmap; optional)
 
 Description: *Get the person's next steps as a newcomer (from human-written, official-source steps). Use when they
 ask what to do next or where to start.*

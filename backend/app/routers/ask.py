@@ -16,7 +16,7 @@ router = APIRouter(tags=["ask"])
 @router.post("/ask", response_model=AskResponse)
 @limiter.limit(PUBLIC)
 async def ask_endpoint(request: Request, body: AskRequest, pool: asyncpg.Pool = Depends(require_db)) -> AskResponse:
-    r = await ask(pool, body.question, ui_language=body.language, profile_id=str(body.profile_id or ""), channel="web")
+    r = await ask(pool, body.question, ui_language=body.language, profile_id=body.profile_id, channel="web")
     return AskResponse(
         request_id=r.request_id,
         status=r.status,

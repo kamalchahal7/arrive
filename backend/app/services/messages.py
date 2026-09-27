@@ -53,6 +53,17 @@ MESSAGES: dict[str, dict[str, str]] = {
         "fr": "Désolé, un problème est survenu. Réessayez ou parlez à une personne.",
         "ar": "عذرًا، حدث خطأ. حاول مرة أخرى أو تحدث إلى شخص.",
     },
+    "handoff_unavailable": {
+        "en": "I can't send your contact details right now. Please use Talk to a person in the app, or visit a settlement agency.",
+        "fr": "Je ne peux pas envoyer vos coordonnées pour le moment. Utilisez « Parler à une personne » dans l'application, ou allez dans un organisme d'aide à l'établissement.",
+        "ar": "لا أستطيع إرسال بيانات التواصل الخاصة بك الآن. استخدم خيار «تحدث إلى شخص» في التطبيق، أو زر إحدى وكالات خدمات التوطين.",
+    },
+    # ---- Voice onboarding (docs/REDESIGN.md section 4) ----
+    "onboarding_not_understood": {
+        "en": "Sorry, I did not understand. You can try again, or tap your answer on the screen.",
+        "fr": "Désolé, je n'ai pas compris. Vous pouvez réessayer, ou toucher votre réponse à l'écran.",
+        "ar": "عذرًا، لم أفهم. يمكنك المحاولة مرة أخرى، أو لمس إجابتك على الشاشة.",
+    },
     # ---- Household checklist (docs/REDESIGN.md section 5). {n} is a number filled in by the app. ----
     "person_you": {"en": "You", "fr": "Vous", "ar": "أنت"},
     "person_adult": {"en": "Adult {n}", "fr": "Adulte {n}", "ar": "البالغ {n}"},

@@ -2,12 +2,13 @@
 
 import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useSettings } from "@/components/SettingsProvider";
 import { Link } from "@/i18n/navigation";
 import { api } from "@/lib/api";
-import { clearAll, getProfileId } from "@/lib/storage";
+import { cacheProfile, clearAll, getCachedProfile, getProfileId } from "@/lib/storage";
+import type { Profile } from "@/lib/types";
 import type { A11ySettings } from "@/lib/storage";
 
 function Toggle({ id, label, hint, checked, onChange }: { id: string; label: string; hint?: string; checked: boolean; onChange: (v: boolean) => void }) {
@@ -38,6 +39,23 @@ export default function SettingsPage() {
   const { settings, update } = useSettings();
   const [confirm, setConfirm] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [consent, setConsent] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the profile lives in localStorage
+    if (getProfileId()) setConsent(Boolean(getCachedProfile<Profile>()?.analytics_consent));
+  }, []);
+
+  const changeConsent = async (value: boolean) => {
+    const id = getProfileId();
+    if (!id) return;
+    setConsent(value);
+    try {
+      cacheProfile(await api<Profile>(`/profile/${id}`, { method: "PATCH", body: { analytics_consent: value } }));
+    } catch {
+      setConsent(!value);
+    }
+  };
 
   const sizes: A11ySettings["textSize"][] = [1, 2, 3, 4];
 
@@ -89,6 +107,10 @@ export default function SettingsPage() {
         <Toggle id="simple" label={t("simpleMode")} hint={t("simpleModeHint")} checked={settings.simpleMode} onChange={(v) => update({ simpleMode: v })} />
         <Toggle id="autoread" label={t("autoRead")} checked={settings.autoRead} onChange={(v) => update({ autoRead: v })} />
         <Toggle id="motion" label={t("reduceMotion")} checked={settings.reduceMotion} onChange={(v) => update({ reduceMotion: v })} />
+        <Toggle id="autolisten" label={t("autoListen")} checked={settings.autoListen} onChange={(v) => update({ autoListen: v })} />
+        {consent !== null && (
+          <Toggle id="consent" label={t("consent")} hint={t("consentHint")} checked={consent} onChange={(v) => void changeConsent(v)} />
+        )}
       </section>
 
       <section className="card">

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { LANGUAGE_NAMES, routing } from "@/i18n/routing";
+import { track } from "@/lib/events";
 
 export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const t = useTranslations("Common");
@@ -21,7 +22,11 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
         className="field !min-h-11 !w-auto !py-1.5 font-bold"
         value={locale}
         disabled={pending}
-        onChange={(e) => startTransition(() => router.replace(pathname, { locale: e.target.value }))}
+        onChange={(e) => {
+          const next = e.target.value;
+          track("language_changed", next, next);
+          startTransition(() => router.replace(pathname, { locale: next }));
+        }}
       >
         {routing.locales.map((l) => (
           <option key={l} value={l} lang={l}>

@@ -3,13 +3,13 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from app.models.common import Lang, SourceRef
+from app.models.common import Lang, ProfileRef, SourceRef
 
 
 class AskRequest(BaseModel):
     question: str = Field(min_length=2, max_length=1000)
     language: Lang = "en"
-    profile_id: uuid.UUID | None = None
+    profile_id: ProfileRef | None = None
 
 
 class AskResponse(BaseModel):

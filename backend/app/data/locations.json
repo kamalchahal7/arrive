@@ -9,8 +9,8 @@
       "address": "885 Meadowlands Drive East, Unit 014B (also accessed via 1430 Prince of Wales Drive), Ottawa, Ontario K2C 3N2",
       "phone": null,
       "hours": "Monday to Friday, 8:30 am to 4:00 pm",
-      "lat": null,
-      "lon": null,
+      "lat": 45.3684315,
+      "lon": -75.702925,
       "map_query": "Ottawa West Service Canada Centre",
       "photo": null,
       "source_url": "https://offices.service.canada.ca/en/Office/3745",
@@ -18,7 +18,8 @@
       "verify_notes": [
         "[VERIFY: the office page lists no public phone number; Service Canada's general line was not checked]",
         "[VERIFY: the other Ottawa office is Ottawa East Service Canada Centre, Place d'Orleans Shopping Centre, 110 Place d'Orleans Drive, Suite 2040, Orleans, K1C 2L9, same hours (offices.service.canada.ca/en/Office/3545, added to sources); decide which one to show, or show both]",
-        "[VERIFY: holiday closures are listed on the page (for example, September 30 and October 12, 2026)]"
+        "[VERIFY: holiday closures are listed on the page (for example, September 30 and October 12, 2026)]",
+        "[VERIFY: map pin is OpenStreetMap's point for 1430 Prince of Wales Drive (the plaza entrance named on the office page), geocoded with Nominatim on 2026-09-27; 885 Meadowlands Drive East itself was not found]"
       ]
     },
     {
@@ -29,8 +30,8 @@
       "address": "110 Laurier Avenue West, Ottawa, Ontario K1P 1J1",
       "phone": null,
       "hours": null,
-      "lat": null,
-      "lon": null,
+      "lat": 45.4208154,
+      "lon": -75.6901177,
       "map_query": "ServiceOntario Ottawa City Hall",
       "photo": null,
       "source_url": "https://www.ontario.ca/locations/serviceontario/ottawa-city-hall-ottawa/",
@@ -38,7 +39,8 @@
       "verify_notes": [
         "[VERIFY: hours: the ontario.ca location page said 'We are currently unable to display the hours of operation due to some technical issues']",
         "[VERIFY: the page lists 'Apply for a health card' and 'Get an Ontario photo card' at this location. Other Ottawa ServiceOntario centres that list health cards include Carling and Woodroffe, Merivale and Slack, Bank and Alta Vista, Ogilvie and Eastvale, and St Joseph. The Elgin and Laurier location does NOT offer health cards]",
-        "[VERIFY: ServiceOntario phone numbers for health card questions (1-800-268-1154) are on ontario.ca/page/documents-needed-get-health-card, not on the location page]"
+        "[VERIFY: ServiceOntario phone numbers for health card questions (1-800-268-1154) are on ontario.ca/page/documents-needed-get-health-card, not on the location page]",
+        "[VERIFY: map pin is OpenStreetMap's 'Ottawa City Hall' at 110 Laurier Avenue West, geocoded with Nominatim on 2026-09-27]"
       ]
     },
     {
@@ -49,15 +51,16 @@
       "address": "219 Argyle Street, Ottawa, Ontario K2P 2H4",
       "phone": "613-232-9634",
       "hours": null,
-      "lat": null,
-      "lon": null,
+      "lat": 45.4114269,
+      "lon": -75.6909353,
       "map_query": "Catholic Centre for Immigrants Ottawa",
       "photo": null,
       "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/government-assisted-refugee-program/providers.html",
       "verified": false,
       "verify_notes": [
         "[VERIFY: IRCC's list writes '219 Argyle Street'; OC Transpo's refugee transit pass page writes '219 Argyle Avenue'. Confirm the street name]",
-        "[VERIFY: hours are not on the IRCC page]"
+        "[VERIFY: hours are not on the IRCC page]",
+        "[VERIFY: map pin is OpenStreetMap's point for 219 Argyle AVENUE (no 219 Argyle Street was found), geocoded with Nominatim on 2026-09-27. OpenStreetMap names the building 'Bruyere Centre for Immigrants': check whether the Catholic Centre for Immigrants changed its name before the demo]"
       ]
     },
     {
@@ -68,8 +71,8 @@
       "address": "Adult High School, 2nd floor, room 243, 300 Rochester Street, Ottawa, Ontario K1R 7N4 (enter from the parking lot)",
       "phone": "613-239-2416",
       "hours": null,
-      "lat": null,
-      "lon": null,
+      "lat": 45.4042228,
+      "lon": -75.7099289,
       "map_query": "OCDSB Family Reception Centre Ottawa",
       "photo": null,
       "source_url": "https://www.ocdsb.ca/family-community-support/family-reception-centre",
@@ -77,7 +80,8 @@
       "verify_notes": [
         "[VERIFY: email on the page: familyreceptioncentre@ocdsb.ca; hours are not on the page; appointments only]",
         "[VERIFY: serves students in grades 2-12; Kindergarten and Grade 1 register at their local school]",
-        "[VERIFY: the Ottawa Catholic School Board has its own Family Welcome Centre (ocsb.ca/our-schools/family-welcome-centre, not added); French boards not checked]"
+        "[VERIFY: the Ottawa Catholic School Board has its own Family Welcome Centre (ocsb.ca/our-schools/family-welcome-centre, not added); French boards not checked]",
+        "[VERIFY: map pin is OpenStreetMap's 'Adult High School', 300 Rochester Street, geocoded with Nominatim on 2026-09-27]"
       ]
     },
     {
@@ -146,15 +150,16 @@
       "address": "Rideau Centre, Level 3, Ottawa",
       "phone": "613-560-5000",
       "hours": "Monday to Saturday, 9:30 am to 9:00 pm; Sunday, 11:00 am to 6:00 pm",
-      "lat": null,
-      "lon": null,
+      "lat": 45.4253532,
+      "lon": -75.6917681,
       "map_query": "Rideau OC Transpo Customer Service Centre Ottawa",
       "photo": null,
       "source_url": "https://www.octranspo.com/en/contact-us/",
       "verified": false,
       "verify_notes": [
         "[VERIFY: the page says 'Level 3 of the Rideau Centre' but gives no street address]",
-        "[VERIFY: 613-560-5000 is OC Transpo's general help line on the contact page, not a direct line to the centre]"
+        "[VERIFY: 613-560-5000 is OC Transpo's general help line on the contact page, not a direct line to the centre]",
+        "[VERIFY: map pin is OpenStreetMap's point for the Rideau Centre (50 Rideau Street), geocoded with Nominatim on 2026-09-27; the service centre is on level 3 inside]"
       ]
     },
     {

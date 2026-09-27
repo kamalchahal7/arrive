@@ -9,7 +9,7 @@ Do not remove a marker, or set a template to `reviewed: true`, until its row her
 | 1 | French UI strings (draft translation) | `frontend/messages/fr.json` | native speaker | | |
 | 2 | Arabic UI strings (draft translation) | `frontend/messages/ar.json` | native speaker | | |
 | 3 | Topic labels in fr/ar | `backend/app/data/topics.json` | native speaker | | |
-| 4 | Welcome greetings in Arabic, Farsi, Spanish, Ukrainian | `frontend/src/app/[locale]/page.tsx` | native speakers | | |
+| 4 | ~~Welcome greetings in Arabic, Farsi, Spanish, Ukrainian~~ (removed in redesign R2: the welcome page became the language screen) | `frontend/src/app/[locale]/page.tsx` | native speakers | | |
 | 5 | Backend fixed messages in fr/ar (not found, case-specific, emergency, scam verdicts, disclaimer) | `backend/app/services/messages.py` | native speaker | | |
 | 6 | 911 message says interpreters are available: confirm with an official Ottawa/Ontario page | `backend/app/services/messages.py` | team | | |
 | 7 | Staff card fixed phrases in French | `backend/app/services/staff_card.py` | native speaker | | |
@@ -314,3 +314,29 @@ Each note below comes from `verify_notes` in `backend/app/data/`.
 - [ ] **location drivetest_ottawa**: [VERIFY: drivetest.ca blocked automated fetching (HTTP 403, Cloudflare). Team to find the Ottawa centre(s) on drivetest.ca/find-a-drivetest-centre by hand; a non-official search result mentions Walkley Road, not confirmed]
 - [ ] **location free_tax_clinic_ottawa**: [VERIFY: clinics change every year and are listed in the CRA's online tax clinic directory (a search tool, not readable as a page). Team to pick an Ottawa clinic in tax season, or keep this as a generic pointer]
 - [ ] **location free_tax_clinic_ottawa**: [VERIFY: the Ontario Child Benefit page says most clinics run from February to April, but some are open all year]
+
+## Redesign R2: voice onboarding, languages, encryption
+
+| # | Item | Where | Who should check | Checked by | Date |
+|---|---|---|---|---|---|
+| 29 | Dari has no speech: ElevenLabs lists Persian (fas) but not Dari for speech-to-text and read-aloud (docs checked 2026-09-26), so Dari is text-only. A Dari speaker should test whether the Persian models are good enough before switching them on | `backend/app/services/speech.py`, `frontend/src/config/languages.ts` | Dari speaker, team | | |
+| 30 | Pashto read-aloud needs `ELEVENLABS_TTS_MODEL_EXTENDED` (eleven_v3 worked in a live test on 2026-09-26; eleven_multilingual_v2 has no Pashto). A Pashto speaker should check the voice and Scribe's transcription (one letter was wrong in the test) | `backend/.env` | Pashto speaker | | |
+| 31 | Tigrinya has no ElevenLabs speech-to-text or read-aloud, so it is text-only; Gemini understood a typed Tigrinya answer in a live test | `speech.py`, `languages.ts` | Tigrinya speaker | | |
+| 32 | UI strings in Dari, Pashto and Tigrinya are Gemini drafts (French and Arabic new strings are human drafts, see rows 1-2) | `frontend/messages/prs.json`, `ps.json`, `ti.json` | native speakers | | |
+| 33 | Onboarding confirmations ("You arrived with 2 children... Is that right?") are written by Gemini at runtime in the person's language. Spot-check each language (Arabic used feminine forms after "my husband") | `backend/app/prompts/onboarding_answer.md` | native speakers | | |
+| 34 | The 11 countries shown as buttons (Afghanistan, Syria, Eritrea, Sudan, Somalia, Iraq, DR Congo, Ethiopia, Yemen, South Sudan, Myanmar) should match recent government-assisted refugee arrivals in Ottawa | `frontend/src/config/countries.ts` | team | | |
+| 35 | The list of other languages people can pick (28 languages) should match the languages interpreters are asked for in Ottawa | `frontend/src/config/languages.ts` (`OTHER_LANGUAGES`) | team | | |
+| 36 | Speech-to-text retention: ElevenLabs keeps logs unless `enable_logging=false`, which is for enterprise plans only (`ELEVENLABS_ZERO_RETENTION`). Check the account's retention settings (see row 18) | ElevenLabs dashboard | team | | |
+| 37 | Onboarding privacy text says the voice is "turned into text and then deleted": true for Arrive (nothing stored), but depends on row 36 for ElevenLabs | `frontend/messages/*.json` (`Onboarding.micPermission`) | team | | |
+
+## Redesign R3: home, item pages, staff card
+
+| # | Item | Where | Who should check | Checked by | Date |
+|---|---|---|---|---|---|
+| 38 | Staff card English and French sentences and the task phrases for sin, health_card, bank_account, school_registration, housing (French is a draft; "carte Santé" wording) | `frontend/src/config/staffCard.ts` | team, French speaker | | |
+| 39 | Staff card says "I recently arrived in Canada as a refugee": confirm the team is comfortable with the word for every user (the MVP is GARs only) | `staffCard.ts`, `messages/*.json` (`StaffCard.arrived`) | team | | |
+| 40 | Map pins for 5 offices were geocoded from the official addresses with OpenStreetMap Nominatim on 2026-09-27; check each pin (Service Canada uses the 1430 Prince of Wales Drive plaza entrance) | `backend/app/data/locations.json` (`lat`, `lon`) | team | | |
+| 41 | OpenStreetMap names the building at 219 Argyle Avenue "Bruyere Centre for Immigrants": check whether the Catholic Centre for Immigrants (RAP provider) changed its name, and whether it is Argyle Street or Avenue | `locations.json` (`rap_provider_ottawa`) | team | | |
+| 42 | Location photos: none yet; add only the team's own photos (or photos with rights) as `frontend/public/locations/<file>` and set `photo` in locations.json | `frontend/public/locations/` | team | | |
+| 43 | Embedded maps load tiles from openstreetmap.org (or Google when `GOOGLE_MAPS_EMBED_KEY` is set), which sees the viewer's IP address; mention this on the "How Arrive works" page | `frontend/src/components/item/PlaceMap.tsx` | team | | |
+

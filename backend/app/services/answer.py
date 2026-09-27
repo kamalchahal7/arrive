@@ -41,10 +41,12 @@ def situation_text(profile: dict | None) -> str:
         f"province: {profile.get('province') or 'unknown'}",
         f"city: {profile.get('city') or 'unknown'}",
     ]
-    if profile.get("has_children"):
+    if profile.get("has_children") or (profile.get("children_0_5") or 0) + (profile.get("children_6_17") or 0) > 0:
         parts.append("has children")
-    if profile.get("has_seniors"):
+    if profile.get("has_seniors") or (profile.get("seniors") or 0) > (1 if profile.get("self_age_group") == "senior" else 0):
         parts.append("lives with seniors")
+    if profile.get("self_age_group") == "senior":
+        parts.append("is 65 or older")
     return ", ".join(parts)
 
 

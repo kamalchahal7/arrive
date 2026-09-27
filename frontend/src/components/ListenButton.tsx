@@ -3,6 +3,7 @@
 import { Loader2, Square, Volume2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { languageInfo } from "@/config/languages";
 import { api, errorCode } from "@/lib/api";
 
 type State = "idle" | "loading" | "playing";
@@ -38,6 +39,7 @@ export function ListenButton({
   };
 
   const play = async () => {
+    if (!languageInfo(language).tts) return;
     if (state === "playing") return stop();
     current?.stop();
     setError(null);
@@ -68,6 +70,8 @@ export function ListenButton({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // No read-aloud button for a language no voice model speaks (for example Tigrinya).
+  if (!languageInfo(language).tts) return null;
   const Icon = state === "loading" ? Loader2 : state === "playing" ? Square : Volume2;
   return (
     <span className="inline-flex flex-col items-start gap-1">

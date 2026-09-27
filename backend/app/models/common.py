@@ -7,6 +7,8 @@ from app.services.retrieval import Passage
 
 Channel = Literal["web", "voice_web"]
 Lang = Annotated[str, Field(min_length=2, max_length=8, pattern=r"^[a-zA-Z-]+$")]
+# A readable profile ID (ARV-XXXX-XXXX-XXXX, services/public_id.py) or, for older profiles, the internal uuid.
+ProfileRef = Annotated[str, Field(min_length=12, max_length=40, pattern=r"^[A-Za-z0-9 _.-]+$")]
 
 
 class SourceRef(BaseModel):

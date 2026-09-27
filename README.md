@@ -3,13 +3,14 @@
 **The immigrant's best friend.** Official government information, explained for newcomers in their own language,
 by text or voice, with a real person when they need one, and anonymized needs data that helps government serve them better.
 
-Built for the Hack the Hill Civic Technology Challenge. Full specification: [docs/SPEC.md](docs/SPEC.md).
+Built for the Hack the Hill Civic Technology Challenge. Specification: [docs/SPEC.md](docs/SPEC.md), with the redesign in
+[docs/REDESIGN.md](docs/REDESIGN.md) (voice onboarding, household checklist, programs, staff cards), which overrides it.
 Project rules for AI-assisted work: [CLAUDE.md](CLAUDE.md). Unverified facts to check: [docs/VERIFY.md](docs/VERIFY.md).
 Voice agent setup: [docs/ELEVENLABS_AGENT.md](docs/ELEVENLABS_AGENT.md).
 
 | People served | Institutions | Interaction improved |
 |---|---|---|
-| Newcomers to Canada, starting with refugee families, sponsored seniors and international students in Ottawa | IRCC, CRA, Service Canada, ServiceOntario, City of Ottawa, settlement agencies | Getting official information in your language, knowing what to do next, reaching a real person, and showing institutions what newcomers struggle with |
+| Government-Assisted Refugees arriving in Ottawa as permanent residents, with their families (English, French, Arabic, Dari, Pashto, Tigrinya) | IRCC, CRA, Service Canada, ServiceOntario, City of Ottawa, settlement agencies | Getting official information in your language, knowing what to do next, reaching a real person, and showing institutions what newcomers struggle with |
 
 ## How it works
 
@@ -24,8 +25,8 @@ Daily: APScheduler ──► re-ingest official pages ──► change detection
 | Part | Tech | Sponsor use |
 |---|---|---|
 | Answers | Gemini (`google-genai`): classification, grounded answers with validated citations, letter photos (vision), translation, handoff summaries, needs brief, embeddings | Gemini |
-| Voice | ElevenLabs agent in the web app with 4 server tools; ElevenLabs multilingual read-aloud | ElevenLabs |
-| Data | Tiger Cloud: pgvector search, `request_log` and `source_snapshots` hypertables, daily/weekly continuous aggregates with real-time aggregation, retention policy | Tiger Data |
+| Voice | Voice onboarding with ElevenLabs Scribe speech-to-text and read-aloud; the ElevenLabs agent with checklist tools | ElevenLabs |
+| Data | Tiger Cloud: pgvector search, `request_log`, `source_snapshots` and `session_events` hypertables, continuous aggregates (requests, program interest, checklist activity) with real-time aggregation, retention policy | Tiger Data |
 | Staff auth | Auth0: roles `settlement_worker`, `gov_analyst`, `admin` in a namespaced claim, RS256 JWT checks in the API, MFA for staff | Auth0 |
 | Hosting | Docker Compose + Caddy on Vultr | Vultr |
 | Domain | GoDaddy Registry domain with automatic HTTPS | GoDaddy Registry |
@@ -57,10 +58,24 @@ python -m venv .venv
 .venv/bin/pip install -r requirements-dev.txt      # Windows: .venv\Scripts\pip
 python -m app.db.migrate                           # create tables, hypertables, continuous aggregates, policies
 python ../ingestion/ingest.py                      # fetch, chunk and embed the official pages (~2 minutes)
-python -m scripts.seed_sample_insights             # optional: 8 weeks of SAMPLE dashboard data + 4 sample handoffs
+python -m scripts.seed_sample_insights             # optional: SAMPLE dashboard data, handoffs, session events, survey
 uvicorn app.main:app --reload                      # http://localhost:8000/api/health  (docs: /api/docs)
-pytest                                             # 79 tests, all external services mocked
+pytest                                             # ~280 tests, all external services mocked
 ```
+
+New in the redesign (`backend/.env`, see `backend/.env.example`):
+
+| Variable | What it is |
+|---|---|
+| `PII_ENCRYPTION_KEY` | Fernet key for first names and handoff contacts. `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` |
+| `ANALYTICS_SALT` | long random string; session events store a salted hash of the profile |
+| `ELEVENLABS_STT_MODEL` | Scribe speech-to-text model for voice onboarding (for example `scribe_v2`) |
+| `ELEVENLABS_TTS_MODEL_EXTENDED` | optional second TTS model for languages the default model lacks; Pashto needs one (for example `eleven_v3`) |
+| `ELEVENLABS_ZERO_RETENTION` | `true` only on an ElevenLabs enterprise plan |
+
+The frontend has one optional runtime variable, `GOOGLE_MAPS_EMBED_KEY` (Google maps on item pages; OpenStreetMap
+otherwise). UI strings for Dari, Pashto and Tigrinya are drafts: `python -m scripts.draft_ui_translations prs ps ti`
+fills new keys with Gemini, and `npm run lint` checks that every locale has the same keys.
 
 Other ingestion commands: `python ingest.py --check-urls` (fetch and parse every source, no database) and
 `python ingest.py --only ontario.ca` (one subset). Remove sample data with `python -m scripts.seed_sample_insights --clear`.
@@ -180,24 +195,26 @@ Updates: `git pull && docker compose up -d --build`. Logs: `docker compose logs 
   description written by Gemini and then scrubbed by regexes (`backend/app/services/privacy.py`).
 - Letter photos are read into memory, sent to Gemini and discarded. Never written to disk or the database.
 - Insights suppress any group smaller than `INSIGHTS_MIN_GROUP_SIZE` (5): it shows as `"<5"`.
-- Handoffs are only created with explicit consent; they hold what the person chose to send.
-  `contact_value` is stored in plain text for the MVP (TODO: encrypt at rest).
-- Newcomers need no account; the profile is an anonymous uuid on their device and can be deleted in Settings.
+- Handoffs are only created with explicit consent. `contact_value` and profile first names are encrypted at rest
+  with Fernet (`PII_ENCRYPTION_KEY`); without a key they are never stored in plain text.
+- Newcomers need no account; the profile is a random readable ID (`ARV-XXXX-XXXX-XXXX`) kept on their phone. Voice
+  answers are transcribed in memory; audio and transcripts are never stored, only the confirmed values.
+- `session_events` hold fixed event names, a salted hash of the profile (`ANALYTICS_SALT`), language, a coarse
+  household type and city; country of origin only with consent (off by default). Deleting a profile unlinks them.
+- Staff cards put all their data in the URL fragment (after `#`), which browsers never send to a server, so
+  scanning the QR code stores or logs nothing.
 
-## Demo script (about 4 minutes)
+## Demo script (about 5 minutes)
 
-1. **Welcome, in Arabic** (`/ar`): right-to-left layout, big language buttons, "no account needed" line.
-2. **Onboarding as Amira**: permanent resident, arrived less than a month ago, Ottawa, children yes, seniors no. Read-aloud on each question.
-3. **Roadmap**: "Week 3 in Canada", progress bar, *Do this now* card with "Unlocks …" badges. Open a step: what to bring,
-   where, official source with "last checked". Tap **Show this to staff**: bilingual card, make text bigger.
-4. **Ask** (in Arabic): "كيف أحصل على بطاقة صحية؟" → grounded answer with ontario.ca source, Listen, "Was this clear?".
-   Then a case-specific question ("Should I sponsor my brother now or wait?") → handoff card, not advice.
-5. **Voice**: press Start speaking, ask in Arabic; status Listening → Thinking → Speaking with live transcript.
-6. **Letters**: upload a sample letter (team-made, in `docs/demo/`) → sender, "Do I need to do something?", deadline →
-   Add deadline to my roadmap.
-7. **Is it real?**: "Someone called saying I owe CRA money and must pay with gift cards" → likely scam, reasons,
-   "The government will never…", report to the Canadian Anti-Fraud Centre.
-8. **Worker inbox** (`/worker`, sign in as the worker): sample handoffs sorted by urgency; the handoff just created appears.
-9. **Needs dashboard** (`/insights`, sign in as the analyst): Sample data badge, housing spike, language demand,
-   knowledge gaps, "<5" small groups, **Generate needs brief**.
-10. Sign in with the analyst on `/worker` → friendly access-denied page (roles enforced in the UI and the API).
+1. **Language screen** (`/`): six big buttons in each language's own script. Pick **العربية**.
+2. **Voice onboarding as Amira**: the avatar reads each question; answer by voice ("I came with my husband and three
+   children aged 2, 7 and 12") and confirm, or tap. Summary with consent (off by default), then the Arrive ID.
+3. **Home**: "Hello, Amira", progress, checklist by phase with the current phase open; tick a step. Programs for the
+   family, More help, Ask the avatar.
+4. **Health card step**: map, address, phone, documents to tick, steps, official source. **Show my card**: English and
+   French for the clerk, Arabic below, QR code. Scan it with a second phone: the same card, nothing sent to the server.
+5. **Ask the avatar**: "What should I do next?" → the agent reads the next steps from the real checklist.
+6. **Tigrinya** (`/ti`): text mode with a clear note, all tap answers.
+7. **End session**: five faces and "what is missing?" by voice.
+8. **Needs dashboard** (`/insights`, analyst): program interest by language (suppressed under 5), checklist
+   bottlenecks, survey satisfaction and themes; the worker inbox (`/worker`) for handoffs.

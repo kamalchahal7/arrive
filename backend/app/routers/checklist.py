@@ -48,9 +48,10 @@ def _checklist_record(item: dict[str, Any]) -> dict[str, Any]:
     return {**item, "notes": [n["note"] for n in item.get("conditional_notes") or []]}
 
 
-def label_for(person: engine.Person, words: dict[str, str]) -> str:
+def label_for(person: engine.Person, words: dict[str, str], first_name: str | None = None) -> str:
     if person.kind == "self":
-        return words["person_you"]  # the first name replaces this once onboarding stores it (R2)
+        # The main user's first name, if they gave one (docs/REDESIGN.md 5.1). Other people stay numbered.
+        return first_name or words["person_you"]
     if person.kind == "household":
         return words["person_household"]
     if person.kind == "group":
@@ -90,7 +91,7 @@ async def get_checklist(
             total=len(rows),
             items=[
                 ChecklistRowOut(
-                    item_id=r.item_id, person_key=r.person.key, person_label=label_for(r.person, words),
+                    item_id=r.item_id, person_key=r.person.key, person_label=label_for(r.person, words, profile.get("first_name")),
                     title=texts[r.item_id]["title"], summary=texts[r.item_id]["summary"], essential=r.essential,
                     in_person=r.in_person, status=r.status, completed_at=r.completed_at,  # type: ignore[arg-type]
                 )
@@ -200,7 +201,7 @@ async def get_item(
         # Same rules as the checklist itself, so a detail page never shows rows the checklist doesn't.
         built = engine.build_checklist(household, await _progress(pool, profile["id"]))
         rows = [
-            PersonRowOut(person_key=r.person.key, person_label=label_for(r.person, words), status=r.status)  # type: ignore[arg-type]
+            PersonRowOut(person_key=r.person.key, person_label=label_for(r.person, words, profile.get("first_name")), status=r.status)  # type: ignore[arg-type]
             for r in built.rows
             if r.item_id == item_id
         ]

@@ -5,7 +5,7 @@ from app.deps import require_db
 from app.errors import AppError
 from app.models.profile import ProfileIn, ProfileOut
 from app.ratelimit import PUBLIC, limiter
-from app.services import profiles
+from app.services import events, profiles
 
 router = APIRouter(tags=["profile"])
 
@@ -50,4 +50,5 @@ async def delete(request: Request, profile_id: str = ProfileRef, pool: asyncpg.P
     # Deletes the profile and, by cascade, its checklist progress, roadmap steps and reminders.
     row = await profiles.get_profile(pool, profile_id)
     if row:
+        await events.unlink_profile(pool, row)  # anonymous counts stay, the link to the person goes
         await profiles.delete_profile(pool, row)
