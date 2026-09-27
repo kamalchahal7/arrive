@@ -1,0 +1,198 @@
+{
+  "_review": "Draft. Addresses, phones and hours are filled only where an official page fetched on 2026-09-26 states them. Check every location by hand before the demo.",
+  "locations": [
+    {
+      "id": "service_canada_ottawa",
+      "name": "Ottawa West Service Canada Centre",
+      "institution": "Service Canada",
+      "city": "ottawa",
+      "address": "885 Meadowlands Drive East, Unit 014B (also accessed via 1430 Prince of Wales Drive), Ottawa, Ontario K2C 3N2",
+      "phone": null,
+      "hours": "Monday to Friday, 8:30 am to 4:00 pm",
+      "lat": null,
+      "lon": null,
+      "map_query": "Ottawa West Service Canada Centre",
+      "photo": null,
+      "source_url": "https://offices.service.canada.ca/en/Office/3745",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: the office page lists no public phone number; Service Canada's general line was not checked]",
+        "[VERIFY: the other Ottawa office is Ottawa East Service Canada Centre, Place d'Orleans Shopping Centre, 110 Place d'Orleans Drive, Suite 2040, Orleans, K1C 2L9, same hours (offices.service.canada.ca/en/Office/3545, added to sources); decide which one to show, or show both]",
+        "[VERIFY: holiday closures are listed on the page (for example, September 30 and October 12, 2026)]"
+      ]
+    },
+    {
+      "id": "serviceontario_ottawa",
+      "name": "ServiceOntario - Ottawa City Hall",
+      "institution": "ServiceOntario",
+      "city": "ottawa",
+      "address": "110 Laurier Avenue West, Ottawa, Ontario K1P 1J1",
+      "phone": null,
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "ServiceOntario Ottawa City Hall",
+      "photo": null,
+      "source_url": "https://www.ontario.ca/locations/serviceontario/ottawa-city-hall-ottawa/",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: hours: the ontario.ca location page said 'We are currently unable to display the hours of operation due to some technical issues']",
+        "[VERIFY: the page lists 'Apply for a health card' and 'Get an Ontario photo card' at this location. Other Ottawa ServiceOntario centres that list health cards include Carling and Woodroffe, Merivale and Slack, Bank and Alta Vista, Ogilvie and Eastvale, and St Joseph. The Elgin and Laurier location does NOT offer health cards]",
+        "[VERIFY: ServiceOntario phone numbers for health card questions (1-800-268-1154) are on ontario.ca/page/documents-needed-get-health-card, not on the location page]"
+      ]
+    },
+    {
+      "id": "rap_provider_ottawa",
+      "name": "Catholic Centre for Immigrants",
+      "institution": "Resettlement Assistance Program (RAP) service provider",
+      "city": "ottawa",
+      "address": "219 Argyle Street, Ottawa, Ontario K2P 2H4",
+      "phone": "613-232-9634",
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "Catholic Centre for Immigrants Ottawa",
+      "photo": null,
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/government-assisted-refugee-program/providers.html",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: IRCC's list writes '219 Argyle Street'; OC Transpo's refugee transit pass page writes '219 Argyle Avenue'. Confirm the street name]",
+        "[VERIFY: hours are not on the IRCC page]"
+      ]
+    },
+    {
+      "id": "school_board_reception",
+      "name": "OCDSB Family Reception Centre",
+      "institution": "Ottawa-Carleton District School Board",
+      "city": "ottawa",
+      "address": "Adult High School, 2nd floor, room 243, 300 Rochester Street, Ottawa, Ontario K1R 7N4 (enter from the parking lot)",
+      "phone": "613-239-2416",
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "OCDSB Family Reception Centre Ottawa",
+      "photo": null,
+      "source_url": "https://www.ocdsb.ca/family-community-support/family-reception-centre",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: email on the page: familyreceptioncentre@ocdsb.ca; hours are not on the page; appointments only]",
+        "[VERIFY: serves students in grades 2-12; Kindergarten and Grade 1 register at their local school]",
+        "[VERIFY: the Ottawa Catholic School Board has its own Family Welcome Centre (ocsb.ca/our-schools/family-welcome-centre, not added); French boards not checked]"
+      ]
+    },
+    {
+      "id": "ottawa_public_health",
+      "name": "Ottawa Public Health",
+      "institution": "Ottawa Public Health",
+      "city": "ottawa",
+      "address": null,
+      "phone": "613-580-6744",
+      "hours": "Phone line: Monday to Friday, 8:30 am to 4:30 pm (closed on statutory holidays)",
+      "lat": null,
+      "lon": null,
+      "map_query": "Ottawa Public Health Neighbourhood Health and Wellness Hub",
+      "photo": null,
+      "source_url": "https://www.ottawapublichealth.ca/about-us/contact-us/",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: the contact page gives '100 Constellation Drive, Ottawa, ON K2G 6J8' as a 'Write to us' mailing address, so it is not used as a walk-in address]",
+        "[VERIFY: in-person help for newcomers is at Neighbourhood Health and Wellness Hubs (drop-in); hub addresses are on OPH's 'Where to get children or youth vaccinated' page and were not copied here]",
+        "[VERIFY: the vaccine nurse line on the same number answers Monday to Friday, 9 am to 12 pm and 1 pm to 4 pm]"
+      ]
+    },
+    {
+      "id": "language_assessment_ottawa",
+      "name": "YMCA-YWCA Language Assessment and Referral Centre",
+      "institution": "Language assessment centre (LINC/CLIC)",
+      "city": "ottawa",
+      "address": null,
+      "phone": "Central: 613-238-5462; West: 613-688-2150",
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "YMCA-YWCA Language Assessment and Referral Centre Ottawa",
+      "photo": null,
+      "source_url": "https://www.ocdsb.ca/programs-learning/continuing-education/english-as-a-second-language-language-instruction-for-newcomers-to-canada/eligibility-for-linc-esl-classes",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: name and phone numbers come from the OCDSB LINC/ESL eligibility page, which writes 'YMCA/YWCA Language Assessment and Referral Centre'; the page also links to online booking]",
+        "[VERIFY: addresses and hours of the Central and West locations are not on the page]"
+      ]
+    },
+    {
+      "id": "ottawa_public_library",
+      "name": "Ottawa Public Library",
+      "institution": "Ottawa Public Library",
+      "city": "ottawa",
+      "address": null,
+      "phone": null,
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "Ottawa Public Library branch Ottawa",
+      "photo": null,
+      "source_url": null,
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: the library has 33 branches; no single branch is set. Team to pick a branch (or use OPL's 'Find a Branch' page) and add its address, phone and hours]",
+        "[VERIFY: OPL InfoService phone number was not on a fetched page]"
+      ]
+    },
+    {
+      "id": "oc_transpo_customer_service",
+      "name": "Rideau OC Transpo Customer Service Centre",
+      "institution": "OC Transpo",
+      "city": "ottawa",
+      "address": "Rideau Centre, Level 3, Ottawa",
+      "phone": "613-560-5000",
+      "hours": "Monday to Saturday, 9:30 am to 9:00 pm; Sunday, 11:00 am to 6:00 pm",
+      "lat": null,
+      "lon": null,
+      "map_query": "Rideau OC Transpo Customer Service Centre Ottawa",
+      "photo": null,
+      "source_url": "https://www.octranspo.com/en/contact-us/",
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: the page says 'Level 3 of the Rideau Centre' but gives no street address]",
+        "[VERIFY: 613-560-5000 is OC Transpo's general help line on the contact page, not a direct line to the centre]"
+      ]
+    },
+    {
+      "id": "drivetest_ottawa",
+      "name": "DriveTest Centre",
+      "institution": "DriveTest (Ontario Ministry of Transportation)",
+      "city": "ottawa",
+      "address": null,
+      "phone": null,
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "DriveTest Centre Ottawa",
+      "photo": null,
+      "source_url": null,
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: drivetest.ca blocked automated fetching (HTTP 403, Cloudflare). Team to find the Ottawa centre(s) on drivetest.ca/find-a-drivetest-centre by hand; a non-official search result mentions Walkley Road, not confirmed]"
+      ]
+    },
+    {
+      "id": "free_tax_clinic_ottawa",
+      "name": "Free tax clinic (Community Volunteer Income Tax Program)",
+      "institution": "Canada Revenue Agency - Community Volunteer Income Tax Program",
+      "city": "ottawa",
+      "address": null,
+      "phone": null,
+      "hours": null,
+      "lat": null,
+      "lon": null,
+      "map_query": "free tax clinic Ottawa",
+      "photo": null,
+      "source_url": null,
+      "verified": false,
+      "verify_notes": [
+        "[VERIFY: clinics change every year and are listed in the CRA's online tax clinic directory (a search tool, not readable as a page). Team to pick an Ottawa clinic in tax season, or keep this as a generic pointer]",
+        "[VERIFY: the Ontario Child Benefit page says most clinics run from February to April, but some are open all year]"
+      ]
+    }
+  ]
+}
