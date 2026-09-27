@@ -329,3 +329,14 @@ Each note below comes from `verify_notes` in `backend/app/data/`.
 | 36 | Speech-to-text retention: ElevenLabs keeps logs unless `enable_logging=false`, which is for enterprise plans only (`ELEVENLABS_ZERO_RETENTION`). Check the account's retention settings (see row 18) | ElevenLabs dashboard | team | | |
 | 37 | Onboarding privacy text says the voice is "turned into text and then deleted": true for Arrive (nothing stored), but depends on row 36 for ElevenLabs | `frontend/messages/*.json` (`Onboarding.micPermission`) | team | | |
 
+## Redesign R3: home, item pages, staff card
+
+| # | Item | Where | Who should check | Checked by | Date |
+|---|---|---|---|---|---|
+| 38 | Staff card English and French sentences and the task phrases for sin, health_card, bank_account, school_registration, housing (French is a draft; "carte Santé" wording) | `frontend/src/config/staffCard.ts` | team, French speaker | | |
+| 39 | Staff card says "I recently arrived in Canada as a refugee": confirm the team is comfortable with the word for every user (the MVP is GARs only) | `staffCard.ts`, `messages/*.json` (`StaffCard.arrived`) | team | | |
+| 40 | Map pins for 5 offices were geocoded from the official addresses with OpenStreetMap Nominatim on 2026-09-27; check each pin (Service Canada uses the 1430 Prince of Wales Drive plaza entrance) | `backend/app/data/locations.json` (`lat`, `lon`) | team | | |
+| 41 | OpenStreetMap names the building at 219 Argyle Avenue "Bruyere Centre for Immigrants": check whether the Catholic Centre for Immigrants (RAP provider) changed its name, and whether it is Argyle Street or Avenue | `locations.json` (`rap_provider_ottawa`) | team | | |
+| 42 | Location photos: none yet; add only the team's own photos (or photos with rights) as `frontend/public/locations/<file>` and set `photo` in locations.json | `frontend/public/locations/` | team | | |
+| 43 | Embedded maps load tiles from openstreetmap.org (or Google when `GOOGLE_MAPS_EMBED_KEY` is set), which sees the viewer's IP address; mention this on the "How Arrive works" page | `frontend/src/components/item/PlaceMap.tsx` | team | | |
+
