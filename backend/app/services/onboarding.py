@@ -20,7 +20,7 @@ logger = logging.getLogger("arrive.onboarding")
 
 QuestionKey = Literal[
     "first_name", "city", "province", "country_of_origin", "gender", "self_age", "household", "disability",
-    "languages_spoken",
+    "languages_spoken", "satisfaction",
 ]
 MAX_TEXT = 300
 MAX_COUNT = 20
@@ -92,6 +92,10 @@ class _Disability(_Answer):
     child: bool = Field(False, description="a child under 18 has one")
 
 
+class _Satisfaction(_Answer):
+    score: int | None = Field(None, description="1 = very unhappy ... 5 = very happy")
+
+
 class _Languages(_Answer):
     languages: list[SpokenLanguage] = Field(default_factory=list)
 
@@ -128,6 +132,10 @@ QUESTIONS: dict[str, Question] = {
         "Does anyone in your family have a disability or a long-term health condition?", _Disability,
         "Mark each group that has someone with a disability or long-term condition. The person answering is also part "
         "of the family. Use declined if they prefer not to say.",
+    ),
+    "satisfaction": Question(
+        "Did Arrive help you today? (1 = not at all, 5 = very much)", _Satisfaction,
+        "Map the answer to a score from 1 to 5.",
     ),
     "languages_spoken": Question(
         "Which other languages do you speak, besides {language}?", _Languages,
@@ -197,6 +205,8 @@ def to_value(key: str, a: _Answer, ui_language: str) -> tuple[dict[str, Any], bo
         if not (a.adult or a.senior or a.child):
             return ({}, False)
         return ({"disability_adult": a.adult, "disability_senior": a.senior, "disability_child": a.child}, True)
+    if isinstance(a, _Satisfaction):
+        return ({"satisfaction": a.score}, True) if a.score and 1 <= a.score <= 5 else ({}, False)
     if isinstance(a, _Languages):
         langs = [code for code in dict.fromkeys(a.languages) if code != ui_language]
         return ({"other_languages": langs}, True)

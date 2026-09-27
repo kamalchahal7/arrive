@@ -54,6 +54,8 @@ class Settings(BaseSettings):
     # Privacy
     # Fernet key(s) for first names and handoff contact details, comma-separated; the first one encrypts.
     pii_encryption_key: str = ""
+    # Salt for the hashed profile reference in session events (any long random string).
+    analytics_salt: str = ""
     insights_min_group_size: int = 5
     request_log_retention_days: int = 365
 
