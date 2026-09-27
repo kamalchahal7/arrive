@@ -59,11 +59,16 @@ python -m app.db.migrate                           # create tables, hypertables,
 python ../ingestion/ingest.py                      # fetch, chunk and embed the official pages (~2 minutes)
 python -m scripts.seed_sample_insights             # optional: 8 weeks of SAMPLE dashboard data + 4 sample handoffs
 uvicorn app.main:app --reload                      # http://localhost:8000/api/health  (docs: /api/docs)
-pytest                                             # 58 tests, all external services mocked
+pytest                                             # 79 tests, all external services mocked
 ```
 
 Other ingestion commands: `python ingest.py --check-urls` (fetch and parse every source, no database) and
 `python ingest.py --only ontario.ca` (one subset). Remove sample data with `python -m scripts.seed_sample_insights --clear`.
+
+TLS to the database follows the `sslmode` in `DATABASE_URL`, the same way as `psql`/libpq: `require` encrypts but
+does not verify the certificate (Tiger Cloud's default URL); `verify-ca` / `verify-full` verify it against the system
+trust store or the CA file in `DB_SSL_ROOT_CERT`. Migrations, ingestion, scripts and the API all use the same rules
+(`backend/app/db/tls.py`).
 
 The Tiger Cloud database listens on a non-standard port. Some venue or campus Wi-Fi networks block it; then
 `/api/health` returns `503 {"db": "unavailable"}` and migrations time out. Use a phone hotspot or another network.

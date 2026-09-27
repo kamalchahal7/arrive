@@ -12,8 +12,10 @@ ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore")
 
-    # Database (Tiger Cloud)
+    # Database (Tiger Cloud). TLS follows the DSN's sslmode (libpq rules, see app/db/tls.py).
     database_url: str = ""
+    # Optional CA certificate file for sslmode=verify-ca / verify-full.
+    db_ssl_root_cert: str = ""
 
     # Gemini. Model names always come from env, never hard-coded.
     gemini_api_key: str = ""

@@ -50,7 +50,7 @@ async def _startup_sync() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
-    await open_pool(settings.database_url)
+    await open_pool(settings)
     await _startup_sync()
     scheduler: AsyncIOScheduler | None = None
     if settings.scheduler_enabled:

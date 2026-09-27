@@ -154,15 +154,13 @@ async def ingest_one(conn: Any, client: httpx.AsyncClient, source: dict[str, Any
 
 async def run_ingestion(pool: Any = None, only: str | None = None) -> Report:
     """Ingest every source in sources.yaml. Uses the given asyncpg pool, or opens a connection."""
-    import asyncpg
-
-    from app.db.pool import ssl_context
+    from app.db.pool import connect
 
     if pool is not None:
         async with pool.acquire() as conn:
             return await _run(conn, only)
     settings = get_settings()
-    conn = await asyncpg.connect(settings.database_url, ssl=ssl_context(settings.database_url), timeout=30)
+    conn = await connect(settings)
     try:
         return await _run(conn, only)
     finally:
