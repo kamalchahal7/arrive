@@ -353,3 +353,313 @@ sources:
 # - url: [VERIFY: team to add Legal Aid Ontario page, e.g. on legalaid.on.ca, if an agency domain is acceptable]
 # study_permit: health insurance for international students (OHIP does not list study permit holders as eligible).
 # - url: [VERIFY: team to add an official page on health coverage for international students in Ontario]
+
+  # ========== Added 2026-09-26 for checklist_items.json, programs.json, locations.json ==========
+  # Each URL below was fetched on 2026-09-26 (HTTP 200, final URL after redirects) and its content matched the topic.
+
+  # ---------- Immigration status / RAP ----------
+  - url: https://www.canada.ca/en/immigration-refugees-citizenship/services/application/change-address.html
+    title: Change or update your email or mailing address - IRCC
+    jurisdiction: federal
+    language: en
+    topics: [immigration_status]
+    verified: false
+
+  # ---------- SIN / Service Canada ----------
+  - url: https://offices.service.canada.ca/en/Office/3745
+    title: Ottawa West Service Canada Centre and Passport Services - Find a Service Canada Office
+    jurisdiction: federal
+    language: en
+    topics: [sin, other]
+    verified: false
+  - url: https://offices.service.canada.ca/en/Office/3545
+    title: Ottawa East Service Canada Centre and Passport Services - Find a Service Canada Office
+    jurisdiction: federal
+    language: en
+    topics: [sin, other]
+    verified: false
+
+  # ---------- Health ----------
+  - url: https://www.ontario.ca/locations/serviceontario/ottawa-city-hall-ottawa/
+    title: ServiceOntario location - Ottawa City Hall (Ottawa)
+    jurisdiction: ontario
+    language: en
+    topics: [health_card, other]
+    verified: false
+  - url: https://www.ontario.ca/page/find-family-doctor-or-nurse-practitioner
+    title: Find a family doctor or nurse practitioner (Health Care Connect)
+    jurisdiction: ontario
+    language: en
+    topics: [health_card]
+    verified: false
+  - url: https://www.ontario.ca/page/get-coverage-prescription-drugs
+    title: Get coverage for prescription drugs (Ontario Drug Benefit)
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/assistive-devices-program
+    title: Assistive Devices Program
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ottawapublichealth.ca/clinics-education-and-supports/immunization-and-vaccines/updating-your-childs-immunization-record/
+    title: Updating Your Child's Immunization Record - Ottawa Public Health
+    jurisdiction: ottawa
+    language: en
+    topics: [school_registration, other]
+    verified: false
+  - url: https://www.ottawapublichealth.ca/clinics-education-and-supports/immunization-and-vaccines/routine-immunizations-for-children/where-to-get-children-or-youth-vaccinated/
+    title: Where to Get Children or Youth Vaccinated - Ottawa Public Health
+    jurisdiction: ottawa
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ottawapublichealth.ca/about-us/contact-us/
+    title: Contact Us - Ottawa Public Health
+    jurisdiction: ottawa
+    language: en
+    topics: [other]
+    verified: false
+
+  # ---------- Dental ----------
+  - url: https://www.canada.ca/en/services/benefits/dental/dental-care-plan/qualify.html
+    title: "Canadian Dental Care Plan: Do you qualify"
+    jurisdiction: federal
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/dental/dental-care-plan/apply.html
+    title: "Canadian Dental Care Plan: Apply"
+    jurisdiction: federal
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/dental-care-seniors
+    title: Dental care for seniors (Ontario Seniors Dental Care Program)
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/get-dental-care
+    title: Teeth cleaning, check-ups and dental treatment for kids (Healthy Smiles Ontario)
+    jurisdiction: ontario
+    language: en
+    topics: [child_benefit, other]
+    verified: false
+  - url: https://www.ottawapublichealth.ca/clinics-education-and-supports/dental-health-services/
+    title: Dental Health Services - Ottawa Public Health
+    jurisdiction: ottawa
+    language: en
+    topics: [other]
+    verified: false
+
+  # ---------- Taxes and benefits ----------
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/community-volunteer-income-tax-program/need-a-hand-complete-your-tax-return.html
+    title: Get your taxes done at a free tax clinic (CVITP)
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+  - url: https://www.ontario.ca/page/ontario-trillium-benefit
+    title: Ontario Trillium Benefit
+    jurisdiction: ontario
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+  - url: https://www.oeb.ca/consumer-information-and-protection/bill-assistance-programs/ontario-electricity-support-program
+    title: Ontario Electricity Support Program - Ontario Energy Board
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/eligibility.html
+    title: "Old Age Security: Do you qualify"
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits, other]
+    verified: false
+
+  # ---------- Children and families ----------
+  - url: https://www.ontario.ca/page/ontario-child-benefit
+    title: Ontario Child Benefit
+    jurisdiction: ontario
+    language: en
+    topics: [child_benefit]
+    verified: false
+  - url: https://www.ontario.ca/page/find-earlyon-child-and-family-centre
+    title: Find an EarlyON child and family centre
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/child-care-subsidies
+    title: Financial support for child care (Ontario child care fee subsidy)
+    jurisdiction: ontario
+    language: en
+    topics: [child_benefit, other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/education/education-savings/estimating-amounts.html
+    title: How much money benefits could add to the RESP (Canada Learning Bond eligibility)
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit, other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/education/education-savings/opening-plan.html
+    title: Open a Registered Education Savings Plan and apply for benefits
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit, sin, other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/education/education-savings/canada-learning-bond.html
+    title: Canada Learning Bond - Automatic enrolment
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit, other]
+    verified: false
+
+  # ---------- Disability ----------
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/segments/tax-credits-deductions-persons-disabilities/disability-tax-credit/eligible-dtc.html
+    title: Who is eligible - Disability tax credit (DTC)
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/segments/tax-credits-deductions-persons-disabilities/disability-tax-credit/how-apply-dtc.html
+    title: How to apply - Disability tax credit (DTC)
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit/eligibility.html
+    title: "Canada Disability Benefit: Do you qualify"
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits, other]
+    verified: false
+  - url: https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit/apply.html
+    title: "Canada Disability Benefit: Apply"
+    jurisdiction: federal
+    language: en
+    topics: [taxes_benefits, other]
+    verified: false
+  - url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/child-disability-benefit.html
+    title: Child disability benefit (CDB)
+    jurisdiction: federal
+    language: en
+    topics: [child_benefit, taxes_benefits]
+    verified: false
+  - url: https://www.ontario.ca/page/ontario-disability-support-program
+    title: Ontario Disability Support Program (ODSP)
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/ontario-disability-support-program-eligibility-income-support
+    title: Ontario Disability Support Program eligibility for income support
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/special-services-home
+    title: Special Services at Home (SSAH)
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+  - url: https://www.ontario.ca/page/assistance-children-severe-disabilities-program
+    title: Assistance for Children with Severe Disabilities Program (ACSD)
+    jurisdiction: ontario
+    language: en
+    topics: [child_benefit, other]
+    verified: false
+  - url: https://www.octranspo.com/en/para-transpo/para-registration/
+    title: Para Transpo registration and eligibility - OC Transpo
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+
+  # ---------- School registration ----------
+  - url: https://www.ocdsb.ca/family-community-support/family-reception-centre
+    title: Family Reception Centre - Ottawa-Carleton District School Board
+    jurisdiction: ottawa
+    language: en
+    topics: [school_registration]
+    verified: false
+  - url: https://www.ocdsb.ca/our-schools/registration/kindergarten
+    title: Kindergarten registration - Ottawa-Carleton District School Board
+    jurisdiction: ottawa
+    language: en
+    topics: [school_registration]
+    verified: false
+
+  # ---------- Language classes ----------
+  - url: https://www.ocdsb.ca/programs-learning/continuing-education/english-as-a-second-language-language-instruction-for-newcomers-to-canada/eligibility-for-linc-esl-classes
+    title: Eligibility for LINC/ESL classes (language assessment referral) - OCDSB
+    jurisdiction: ottawa
+    language: en
+    topics: [language_classes]
+    verified: false
+
+  # ---------- Employment ----------
+  - url: https://www.ontario.ca/page/employment-ontario
+    title: Employment Ontario
+    jurisdiction: ontario
+    language: en
+    topics: [employment]
+    verified: false
+
+  # ---------- Driver's licence / ID ----------
+  - url: https://www.ontario.ca/page/drivers-licence
+    title: Driver's licence (ServiceOntario hub page, links to licence exchange for other countries)
+    jurisdiction: ontario
+    language: en
+    topics: [drivers_licence]
+    verified: false
+  - url: https://www.ontario.ca/page/ontario-photo-card
+    title: Ontario Photo Card
+    jurisdiction: ontario
+    language: en
+    topics: [other]
+    verified: false
+
+  # ---------- Transit ----------
+  - url: https://www.octranspo.com/en/contact-us/
+    title: Contact us - OC Transpo (Rideau Customer Service Centre hours)
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+  - url: https://www.octranspo.com/en/news/article/displaced-persons-and-refugees-transit-pass-program
+    title: Displaced Persons and Refugees Transit Pass Program - OC Transpo (not for GARs)
+    jurisdiction: ottawa
+    language: en
+    topics: [transit]
+    verified: false
+
+  # ---------- Other: library ----------
+  - url: https://collections.biblioottawalibrary.ca/en/blogs/new-canada-library-here-you
+    title: New to Canada? The Library Is Here for You! - Ottawa Public Library
+    jurisdiction: ottawa
+    language: en
+    topics: [other, language_classes]
+    verified: false
+  - url: https://collections.biblioottawalibrary.ca/en/newcomers-0
+    title: Newcomers - Ottawa Public Library
+    jurisdiction: ottawa
+    language: en
+    topics: [other]
+    verified: false
+
+# ---------- Not covered by a readable official URL (added 2026-09-26; team to check by hand) ----------
+# ottawa.ca (Incapsula bot wall) - URLs found by web search, content NOT read:
+# - [VERIFY] https://ottawa.ca/en/recreation-and-parks/register-courses-and-camps/registration-terms-and-cancellations/financial-support-ottawa-hand-hand  (recreation fee help, "Ottawa Hand in Hand")
+# - [VERIFY] https://ottawa.ca/en/family-and-social-services/housing-and-homelessness/subsidized-housing  (subsidized / rent-geared-to-income housing)
+# - [VERIFY] https://ottawa.ca/en/family-and-social-services/childrens-services/child-care-fee-subsidy/apply-child-care-fee-subsidy  (child care fee subsidy in Ottawa)
+# drivetest.ca (Cloudflare, HTTP 403) - content NOT read:
+# - [VERIFY] https://drivetest.ca/licences/exchanges-foreign-licences/  (foreign licence exchange, exemptions for refugees and protected persons)
+# - [VERIFY] https://drivetest.ca/find-a-drivetest-centre/find-a-drivetest-centre/  (DriveTest centres in Ottawa)
+# Not an official government domain, not used: housingregistry.ca (Social Housing Registry of Ottawa, non-profit)
+# JavaScript-only, not readable: https://ontarioelectricitysupport.ca/ (OESP application site; the OEB page is used instead)

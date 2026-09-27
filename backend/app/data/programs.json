@@ -1,0 +1,716 @@
+{
+  "_review": "Draft. Every program needs team review against its source before the demo. Amounts and income limits are kept out of user text where possible because they change often.",
+  "programs": [
+    {
+      "id": "linc",
+      "title": "Free English or French classes (LINC / CLIC)",
+      "summary": "The Government of Canada pays for English and French classes for newcomers. The classes are called LINC (English) and CLIC (French).",
+      "group": "everyone",
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "location_id": "language_assessment_ottawa",
+      "eligibility": [
+        "Permanent residents can take the classes at no cost.",
+        "Protected persons can also take the classes at no cost."
+      ],
+      "how_to_apply": [
+        "Visit an organization that helps newcomers and say you want language classes.",
+        "Get a formal language assessment to find your level.",
+        "Register for classes and start learning.",
+        "Classes can be online or in person, full-time or part-time, in the day, evening or on weekends."
+      ],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/language-skills/classes.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: in Ottawa, the OCDSB LINC/ESL page (added to sources) sends people to the YMCA/YWCA Language Assessment and Referral Centre for assessments]",
+        "[VERIFY: some locations offer child minding, transportation and classes for people with special needs, per the page; not confirmed for Ottawa]"
+      ]
+    },
+    {
+      "id": "settlement_program",
+      "title": "Settlement services",
+      "summary": "Free services funded by the Government of Canada help newcomers adjust to life in Canada. They can help with daily life, finding a job, language classes and connecting with the community.",
+      "group": "everyone",
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "Permanent residents, including resettled refugees, can use these services.",
+        "Protected persons with a positive decision from the Immigration and Refugee Board can also use them."
+      ],
+      "how_to_apply": [
+        "Use IRCC's online service finder. Enter your postal code or city.",
+        "Filter by the kind of help you need, such as language, jobs, or services for refugees, seniors or families.",
+        "Call or email before you go in person."
+      ],
+      "source_url": "https://ircc.canada.ca/english/newcomers/services/index.asp",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: agency names and addresses are not listed because the finder is a JavaScript tool; OC Transpo's refugee transit pass page lists some Ottawa agencies, but that is a transit page]",
+        "[VERIFY: new time limits from April 1, 2026 apply only to economic class permanent residents]"
+      ]
+    },
+    {
+      "id": "employment_ontario",
+      "title": "Employment Ontario job help",
+      "summary": "Employment Ontario gives free, one-on-one help from a counsellor to find a job. There are over 700 locations in Ontario.",
+      "group": "everyone",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "Help from an Employment Ontario counsellor is free."
+      ],
+      "how_to_apply": [
+        "Make an appointment with an employment counsellor online.",
+        "Or contact Employment Ontario by email, phone or live chat, Monday to Friday, 8:30 am to 5 pm.",
+        "A counsellor can help with your resume, interviews, skills training and job search."
+      ],
+      "source_url": "https://www.ontario.ca/page/employment-ontario",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page does not list who is eligible; confirm if any rules apply to newcomers]",
+        "[VERIFY: toll-free number on the page is 1-800-387-5656; not shown to users]",
+        "[VERIFY: OPL's newcomer blog says library branches host drop-ins by Employment Ontario agencies]"
+      ]
+    },
+    {
+      "id": "opl_newcomers",
+      "title": "Ottawa Public Library services for newcomers",
+      "summary": "The Ottawa Public Library helps newcomers settle in, with free resources, workshops, conversation groups and activities for children.",
+      "group": "everyone",
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "location_id": "ottawa_public_library",
+      "eligibility": [
+        "You can join Storytimes and conversation groups without a library card.",
+        "To get a library card, bring photo ID and proof of address to any of the 33 branches."
+      ],
+      "how_to_apply": [
+        "Visit your local library branch.",
+        "Use computers and printers, and borrow a Chromebook for up to 90 days.",
+        "Join free workshops about job searching, taxes, legal advice and more.",
+        "Join English or French conversation groups.",
+        "Find books in many languages, including Arabic, Persian and Ukrainian."
+      ],
+      "source_url": "https://collections.biblioottawalibrary.ca/en/blogs/new-canada-library-here-you",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: source is an OPL blog post dated 2025-06-09; the OPL 'Newcomers' collection page is collections.biblioottawalibrary.ca/en/newcomers-0 (added to sources)]",
+        "[VERIFY: whether library cards are free for Ottawa residents is not stated on the OPL card page]",
+        "[VERIFY: a web search result mentions a Library Settlement Program with settlement agencies; not confirmed on a fetched page]"
+      ]
+    },
+    {
+      "id": "recreation_fee_assistance",
+      "title": "Help paying for recreation programs (City of Ottawa)",
+      "summary": "The City of Ottawa has a fee support program to help residents with low income take part in City recreation and culture programs.",
+      "group": "everyone",
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "For City of Ottawa residents with low income."
+      ],
+      "how_to_apply": [
+        "Ask at a City of Ottawa recreation facility how to apply."
+      ],
+      "source_url": null,
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: ottawa.ca blocks automated fetching, so no page could be read. Team to open by hand: ottawa.ca/en/recreation-and-parks/register-courses-and-camps/registration-terms-and-cancellations/financial-support-ottawa-hand-hand (program appears to be called 'Ottawa Hand in Hand')]",
+        "[VERIFY: search snippets (not read on the page) say: up to $185 per year; proof of identity, residency and financial need; apply at a staffed recreation facility or Client Service Centre. Confirm all of this before use]"
+      ]
+    },
+    {
+      "id": "equipass",
+      "title": "EquiPass (low-income transit discount)",
+      "summary": "The EquiPass is a lower-cost OC Transpo monthly pass or single-ride fare for people with low income. It costs about half the regular price.",
+      "group": "everyone",
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "location_id": "oc_transpo_customer_service",
+      "eligibility": [
+        "For City of Ottawa residents whose family income is below the low-income limit set by the Government of Canada.",
+        "Adult government-assisted refugees who get RAP financial help cannot get the EquiPass. They can apply after about a year, when RAP support ends.",
+        "Government-assisted refugees under 18 can be eligible.",
+        "People who get ODSP should use the Community Pass instead."
+      ],
+      "how_to_apply": [
+        "Get an application form online, by mail, at the Rideau Centre OC Transpo Customer Service Centre, or at a City of Ottawa Client Service Centre.",
+        "Send it by fax or mail, or bring it to the Rideau Centre Customer Service Centre.",
+        "Include proof of income, like your CRA Notice of Assessment. Newcomers who have not filed taxes can use other documents.",
+        "You will hear back in about 30 business days. First-time applicants get a free Presto card with the discount."
+      ],
+      "source_url": "https://www.octranspo.com/en/fares/reduced-fares/equipass/",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: 2026 prices on the page: $58.25 monthly, $1.75 single ride]",
+        "[VERIFY: email equipass@ottawa.ca to ask which documents newcomers can use instead of a Notice of Assessment]",
+        "[VERIFY: the page calls RAP the 'Refugee Assistance Program']"
+      ]
+    },
+    {
+      "id": "social_housing_registry",
+      "title": "Apply for subsidized (rent-geared-to-income) housing in Ottawa",
+      "summary": "In Ottawa, there is a central waiting list for subsidized housing, where rent is based on income.",
+      "group": "everyone",
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "Ask your resettlement worker if your family should apply."
+      ],
+      "how_to_apply": [
+        "Ask your resettlement worker or a settlement agency for help with the application."
+      ],
+      "source_url": null,
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: no official page could be read. ottawa.ca blocks automated fetching; team to open ottawa.ca/en/family-and-social-services/housing-and-homelessness/subsidized-housing by hand. The Social Housing Registry of Ottawa (housingregistry.ca) is a non-profit site and was not used]",
+        "[VERIFY: search snippets (not read on an official page) mention the 'Application for Rent-Geared-to-Income Housing in Ottawa', proof of income for all household members 18+, and an office at 240 Catherine Street; confirm before use]",
+        "[VERIFY: 'central waiting list' wording is from search snippets; confirm]"
+      ]
+    },
+    {
+      "id": "cgeb",
+      "title": "Canada Groceries and Essentials Benefit (formerly the GST/HST credit)",
+      "summary": "A tax-free payment every 3 months to help people with low and modest income pay for groceries and other everyday needs. It used to be called the GST/HST credit.",
+      "group": "everyone",
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You must be a resident of Canada for income tax purposes.",
+        "New residents can apply for their first year before they file their first tax return."
+      ],
+      "how_to_apply": [
+        "No children: use the online Form RC151.",
+        "With children under 19: mail paper Form RC151, or Form RC66 if you can get the Canada Child Benefit, to your CRA tax centre. Add proof of birth for each child.",
+        "Only one application per household is needed.",
+        "After your first year, you do not need to apply. File your tax return every year, even with no income."
+      ],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit/get-benefit.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: renamed: the page says 'Previous name: GST/HST credit'. The old GST/HST credit page says 'No longer available'. All app copy should use the new name]",
+        "[VERIFY: 'tax-free quarterly payment for low- and modest-income individuals and families' comes from the CRA newcomers page (in sources)]",
+        "[VERIFY: file by April 30 each year to avoid a break in payments, per the page]"
+      ]
+    },
+    {
+      "id": "otb",
+      "title": "Ontario Trillium Benefit",
+      "summary": "A tax-free payment that helps Ontario residents with low to moderate income pay for energy costs and sales and property taxes.",
+      "group": "everyone",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You must be eligible for at least one of 3 credits: the Ontario Energy and Property Tax Credit, the Ontario Sales Tax Credit or the Northern Ontario Energy Credit.",
+        "Each credit has rules about where you lived and your age or family situation."
+      ],
+      "how_to_apply": [
+        "File your tax return every year, even if you have no income.",
+        "Fill out the ON-BEN Application Form that comes with your tax return package.",
+        "The CRA tells you if you can get the benefit.",
+        "A free tax clinic may be able to help you file."
+      ],
+      "source_url": "https://www.ontario.ca/page/ontario-trillium-benefit",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: eligibility is based on being an Ontario resident on December 31 of the tax year, so newcomers may only qualify from the year after they arrive; check each credit's rules on the page]",
+        "[VERIFY: the CRA newcomers page lists the Ontario Trillium Benefit as a provincial payment related to the Canada Groceries and Essentials Benefit]"
+      ]
+    },
+    {
+      "id": "oesp",
+      "title": "Ontario Electricity Support Program",
+      "summary": "A monthly credit on your electricity bill if your household income is low. The amount depends on how many people live in your home and your household income.",
+      "group": "everyone",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You must be the customer on an electricity bill, or live in a unit with its own meter.",
+        "Your household size and income must meet certain limits.",
+        "You must apply. It is not automatic."
+      ],
+      "how_to_apply": [
+        "Gather your electricity bill, the names and birthdates of everyone in your home, and the SIN or temporary tax number of everyone 18 and older.",
+        "Apply online at OESP.ca, by mail, or with help from an intake agency at no cost.",
+        "Sign the consent form so the CRA can check your income.",
+        "If you have not filed a tax return recently, apply through an intake agency. Bring proof of household income and call first to make an appointment."
+      ],
+      "source_url": "https://www.oeb.ca/consumer-information-and-protection/bill-assistance-programs/ontario-electricity-support-program",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: source is the Ontario Energy Board (OEB), which runs the program; ontarioelectricitysupport.ca is JavaScript-only and could not be read]",
+        "[VERIFY: electricity may be included in the rent for some RAP households; the credit only applies to the account holder]",
+        "[VERIFY: you get credits for 2 years before reapplying (5 years if 65+ or on CPP disability), per the page]"
+      ]
+    },
+    {
+      "id": "cdcp",
+      "title": "Canadian Dental Care Plan",
+      "summary": "The Canadian Dental Care Plan (CDCP) helps make dental care more affordable for Canadian residents who qualify.",
+      "group": "everyone",
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You have no private dental insurance.",
+        "You (and your spouse or partner) filed your tax return in Canada.",
+        "Your adjusted family net income is less than $90,000.",
+        "You (and your spouse or partner) are residents of Canada for tax purposes."
+      ],
+      "how_to_apply": [
+        "Have each person's SIN (if children have one), date of birth, full name and address ready.",
+        "Apply online with My Service Canada Account or on Canada.ca, or apply by phone.",
+        "Your spouse or partner must send their own application.",
+        "There is no fee to apply."
+      ],
+      "source_url": "https://www.canada.ca/en/services/benefits/dental/dental-care-plan/qualify.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: official name is 'Canadian Dental Care Plan' (task list said 'Canada Dental Care Plan')]",
+        "[VERIFY: application details come from the CDCP 'Apply' page (added to sources)]",
+        "[VERIFY: people covered by a government dental program may still qualify, and plans coordinate; the IFHP acts as first payer for urgent dental care, per the IFHP coverage page]"
+      ]
+    },
+    {
+      "id": "canada_child_benefit",
+      "title": "Canada Child Benefit",
+      "summary": "A tax-free monthly payment to help families with the cost of raising children under 18. The amount depends on family income and the number and ages of children.",
+      "group": "children",
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "location_id": null,
+      "eligibility": [
+        "You live with a child under 18 and are mainly responsible for their care.",
+        "You are a resident of Canada for tax purposes.",
+        "You or your spouse or partner is a permanent resident, a Canadian citizen, a protected person, or meets other status rules."
+      ],
+      "how_to_apply": [
+        "Newcomers fill out Form RC66 and Schedule RC66SCH.",
+        "Add proof of birth for each child.",
+        "Mail everything to your CRA tax centre.",
+        "The CRA also checks if you can get Ontario payments, like the Ontario Child Benefit."
+      ],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/who-apply.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: application steps come from the CCB 'How to apply' page (in sources)]",
+        "[VERIFY: 'tax-free monthly payment' comes from the CRA newcomers page]"
+      ]
+    },
+    {
+      "id": "ocb",
+      "title": "Ontario Child Benefit",
+      "summary": "A monthly payment from Ontario to help low- and moderate-income families with the cost of raising children.",
+      "group": "children",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "location_id": null,
+      "eligibility": [
+        "The amount depends on your family net income and the number of children under 18 in your care.",
+        "You must file your taxes every year, even if you have no income."
+      ],
+      "how_to_apply": [
+        "There is no separate application.",
+        "Apply for the Canada Child Benefit. The CRA checks for the Ontario Child Benefit at the same time."
+      ],
+      "source_url": "https://www.ontario.ca/page/ontario-child-benefit",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: maximum amount on the page: up to $1,760 per child per year; not shown to users]",
+        "[VERIFY: ontario.ca/page/child-care-subsidies says eligibility also needs the previous year's tax return filed and assessed; newcomers may get it first through the CCB newcomer application]"
+      ]
+    },
+    {
+      "id": "healthy_smiles",
+      "title": "Healthy Smiles Ontario (free dental care for children)",
+      "summary": "Free check-ups, cleaning, fillings and emergency dental care for children and youth 17 and under from low-income families.",
+      "group": "children",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "location_id": "ottawa_public_health",
+      "eligibility": [
+        "Children 17 and under who live in Ontario.",
+        "Your household income must be at or below the program's limit for your number of children.",
+        "Children in families on Ontario Works or ODSP, or getting Assistance for Children with Severe Disabilities, are enrolled automatically."
+      ],
+      "how_to_apply": [
+        "Apply online or by mail. You need each child's date of birth, an Ontario address and your SIN or temporary tax number.",
+        "If you do not have a SIN or did not file taxes last year, apply by mail with a guarantor form.",
+        "You can also get a form from your local public health unit or a ServiceOntario location.",
+        "When your child is enrolled, you get a dental card. Show it at every visit."
+      ],
+      "source_url": "https://www.ontario.ca/page/get-dental-care",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: income limits on the page (as of July 1, 2026) start at $29,065 family net income for 1 child; not shown to users]",
+        "[VERIFY: braces and teeth whitening are not covered, per the page]",
+        "[VERIFY: Ottawa Public Health's Dental Health Services page (added to sources) says OPH hygienists help families enrol]"
+      ]
+    },
+    {
+      "id": "earlyon",
+      "title": "EarlyON Child and Family Centres",
+      "summary": "Free programs for children from birth to 6 years old and their parents or caregivers. You can play and learn with your child, meet other families and get advice.",
+      "group": "children",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["has_children_0_5"]},
+      "location_id": null,
+      "eligibility": [
+        "Open to all families in Ontario with children from birth to 6 years old."
+      ],
+      "how_to_apply": [
+        "Use the map on the Ontario page to find an EarlyON Centre near you.",
+        "Many centres are open on weekdays, evenings and weekends, in person or online."
+      ],
+      "source_url": "https://www.ontario.ca/page/find-earlyon-child-and-family-centre",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: children aged 6 are included ('birth to 6 years old') but the app's has_children_6_17 fact is not used, so 6-year-olds only show if the family also has a child 0-5]",
+        "[VERIFY: Ottawa EarlyON locations are not listed; the OCSB register page also links to 'Extended Day Programs & EarlyON']"
+      ]
+    },
+    {
+      "id": "child_care_subsidy",
+      "title": "Child care fee subsidy",
+      "summary": "Families can apply for help paying for licensed child care. The amount you pay depends on your family income.",
+      "group": "children",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "location_id": null,
+      "eligibility": [
+        "Your child is under 13 years old (older in some cases for children with special needs).",
+        "Your child is in a licensed child care program, a children's recreation program, a camp, or a before- and after-school program run by a school board."
+      ],
+      "how_to_apply": [
+        "Contact your local municipal service manager for child care to apply."
+      ],
+      "source_url": "https://www.ontario.ca/page/child-care-subsidies",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: in Ottawa the service manager is expected to be the City of Ottawa (Children's Services); ottawa.ca blocks automated fetching. Team to open by hand: ottawa.ca/en/family-and-social-services/childrens-services/child-care-fee-subsidy/apply-child-care-fee-subsidy]",
+        "[VERIFY: search snippets (not read on the page) say Ottawa families must first secure a licensed child care space and apply through the Children's Services online portal]",
+        "[VERIFY: the amount is based on adjusted family net income from the CRA tax return; newcomers without a return may need other proof]"
+      ]
+    },
+    {
+      "id": "canada_learning_bond",
+      "title": "Canada Learning Bond",
+      "summary": "Money from the Government of Canada for a child's education after high school. It is put into a Registered Education Savings Plan (RESP). You do not have to add your own money.",
+      "group": "children",
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "location_id": null,
+      "eligibility": [
+        "The child was born on or after January 1, 2004, lives in Canada and has a SIN.",
+        "The child's family has a low income.",
+        "The primary caregiver has filed tax returns and can get the Canada Child Benefit."
+      ],
+      "how_to_apply": [
+        "Get a SIN for your child, and one for yourself if you do not have one.",
+        "Choose an RESP provider, such as a bank or credit union. You do not need a bank account to open an RESP.",
+        "Open the RESP and name your child as the beneficiary.",
+        "Ask the provider to apply for the Canada Learning Bond for you."
+      ],
+      "source_url": "https://www.canada.ca/en/services/benefits/education/education-savings/estimating-amounts.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: amounts on the page: $500 the first year, then $100 each eligible year up to age 15, up to $2,000; caregivers can ask for it until the day before the child turns 18]",
+        "[VERIFY: steps come from canada.ca/en/services/benefits/education/education-savings/opening-plan.html (added to sources)]",
+        "[VERIFY: from April 2028 the government plans automatic RESPs for some children born in 2024 or later (canada-learning-bond.html, added to sources)]"
+      ]
+    },
+    {
+      "id": "odb",
+      "title": "Ontario Drug Benefit for seniors",
+      "summary": "Helps people 65 and older pay for most of the cost of many prescription drugs.",
+      "group": "seniors",
+      "level": "ontario",
+      "applies_to": {"all": ["has_seniors"], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "People 65 and older who live in Ontario.",
+        "Prescriptions must be filled at a pharmacy in Ontario."
+      ],
+      "how_to_apply": [
+        "Most people join automatically on the first day of the month after they turn 65.",
+        "Bring your Ontario health card to the pharmacy.",
+        "If your income is low, apply to the Seniors Co-Payment Program to pay less."
+      ],
+      "source_url": "https://www.ontario.ca/page/get-coverage-prescription-drugs",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: how a senior who is already 65 on arrival is enrolled is not stated on the page]",
+        "[VERIFY: while on RAP income support, IFHP also covers prescriptions (IFHP eligibility page)]"
+      ]
+    },
+    {
+      "id": "osdcp",
+      "title": "Ontario Seniors Dental Care Program",
+      "summary": "Free, routine dental care for low-income seniors 65 and older, like check-ups, fillings and x-rays. Dentures are partly covered.",
+      "group": "seniors",
+      "level": "ontario",
+      "applies_to": {"all": ["has_seniors"], "any": []},
+      "location_id": "ottawa_public_health",
+      "eligibility": [
+        "You are 65 or older and live in Ontario.",
+        "Your income is below the program's limit.",
+        "You have no other dental benefits. Having the Canadian Dental Care Plan is allowed."
+      ],
+      "how_to_apply": [
+        "Apply online or by mail. You need your SIN or temporary tax number and to have filed taxes last year.",
+        "If you have no SIN or did not file taxes, apply by mail with a guarantor.",
+        "Your local public health unit can help you apply."
+      ],
+      "source_url": "https://www.ontario.ca/page/dental-care-seniors",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: income limits on the page: $25,480 single, $42,290 couple (updated July 31, 2026)]",
+        "[VERIFY: check whether IFHP coverage during RAP counts as 'another government dental program']"
+      ]
+    },
+    {
+      "id": "oas_gis",
+      "title": "Old Age Security pension and Guaranteed Income Supplement",
+      "summary": "Old Age Security (OAS) is a monthly pension for people 65 and older. The Guaranteed Income Supplement (GIS) is extra money for OAS pensioners with low income. There are rules about how long you have lived in Canada.",
+      "group": "seniors",
+      "level": "federal",
+      "applies_to": {"all": ["has_seniors"], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You must be 65 or older.",
+        "If you live in Canada, you must be a Canadian citizen or legal resident, and have lived in Canada for at least 10 years since age 18.",
+        "Most newcomers have not lived in Canada for 10 years yet, so they cannot get OAS right away.",
+        "To get the GIS, you must first get the OAS pension and have a low income.",
+        "If you lived in a country that has a social security agreement with Canada, that may help you qualify."
+      ],
+      "how_to_apply": [
+        "File a tax return every year. It is needed to get the OAS pension.",
+        "Ask Service Canada when you may be able to apply."
+      ],
+      "source_url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/eligibility.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: 'Most newcomers have not lived in Canada for 10 years yet' is Arrive's plain-language reading of the 10-year rule, not a sentence on the page]",
+        "[VERIFY: social security agreements: the page says you may qualify for OAS and a pension from the other country if that country has an agreement with Canada; check which countries]",
+        "[VERIFY: ODSP's eligibility page lists 'a person who is 65+ years old and not eligible for OAS' as a prescribed class; see the odsp entry]"
+      ]
+    },
+    {
+      "id": "disability_tax_credit",
+      "title": "Disability Tax Credit",
+      "summary": "A tax credit that can lower the income tax paid by a person with a disability or a family member who supports them. Being approved also opens the door to other disability benefits.",
+      "group": "disability",
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["disability_adult", "disability_senior", "disability_child"]},
+      "location_id": null,
+      "eligibility": [
+        "A medical practitioner must certify a severe and prolonged impairment.",
+        "The impairment has lasted, or is expected to last, at least 12 months.",
+        "It affects daily activities like walking, seeing, hearing, speaking, dressing, feeding or mental functions, all or almost all of the time."
+      ],
+      "how_to_apply": [
+        "Fill out Part A of the application online, by phone or on paper Form T2201.",
+        "Your medical practitioner fills out Part B.",
+        "Send it before you file your tax return to avoid delays."
+      ],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/segments/tax-credits-deductions-persons-disabilities/disability-tax-credit/eligible-dtc.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: steps come from the DTC 'How to apply' page (added to sources)]",
+        "[VERIFY: life-sustaining therapy and the combined effect of 2 or more significant limitations can also qualify, per the page]"
+      ]
+    },
+    {
+      "id": "canada_disability_benefit",
+      "title": "Canada Disability Benefit",
+      "summary": "Monthly money from the Government of Canada for people with disabilities who are 18 to 64 years old.",
+      "group": "disability",
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["disability_adult"]},
+      "location_id": null,
+      "eligibility": [
+        "You are 18 to 64 years old.",
+        "You have been approved for the Disability Tax Credit.",
+        "You are a resident of Canada for tax purposes, and you (and your spouse or partner) filed your federal tax return.",
+        "You are a permanent resident, Canadian citizen, protected person, or meet other status rules."
+      ],
+      "how_to_apply": [
+        "Apply online. You need your SIN, your mailing address and your status in Canada.",
+        "You can add your direct deposit information to get paid faster.",
+        "Someone you trust can help you apply."
+      ],
+      "source_url": "https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit/eligibility.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page says you must have filed your 2025 federal tax return to receive payments; newcomers who arrived in 2026 cannot meet this until they file]",
+        "[VERIFY: steps come from the CDB 'Apply' page (added to sources); the page showed a system maintenance notice on 2026-09-26]",
+        "[VERIFY: applies_to uses only disability_adult because the benefit is for ages 18-64; people 65+ may get limited back payments]",
+        "[VERIFY: ODSP and ACSD pages say the Canada Disability Benefit does not affect those payments]"
+      ]
+    },
+    {
+      "id": "child_disability_benefit",
+      "title": "Child Disability Benefit",
+      "summary": "A tax-free monthly payment for families who care for a child under 18 with a severe and prolonged impairment.",
+      "group": "disability",
+      "level": "federal",
+      "applies_to": {"all": ["disability_child"], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You can get the Canada Child Benefit.",
+        "Your child is approved for the Disability Tax Credit."
+      ],
+      "how_to_apply": [
+        "Apply for the Canada Child Benefit.",
+        "Have a medical practitioner certify your child's impairment on the Disability Tax Credit application (Form T2201).",
+        "If you already get the CCB for a child approved for the DTC, you get this benefit automatically.",
+        "File your taxes on time every year, even with no income."
+      ],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/child-disability-benefit.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: listed under 'Disability' as requested, but applies_to is disability_child because the benefit is only for children under 18; the team may prefer group disability_children]",
+        "[VERIFY: maximum on the page for July 2026-June 2027: $3,480 per child; not shown to users]"
+      ]
+    },
+    {
+      "id": "odsp",
+      "title": "Ontario Disability Support Program (ODSP)",
+      "summary": "ODSP gives money for living costs, like food and rent, and health benefits, like prescription drugs, to people with disabilities in financial need in Ontario.",
+      "group": "disability",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["disability_adult", "disability_senior"]},
+      "location_id": null,
+      "eligibility": [
+        "You are at least 18 years old and live in Ontario.",
+        "You are in financial need and your assets are under the program's limits.",
+        "You meet ODSP's definition of a person with a disability, or you are in a 'prescribed class'.",
+        "People 65 or older who cannot get Old Age Security are one of the prescribed classes. They do not have to go through the disability review."
+      ],
+      "how_to_apply": [
+        "Apply online (about 20 to 30 minutes), by phone, or in person by appointment at your local ODSP office.",
+        "Have your family's SINs, OHIP cards, birth certificates, immigration papers, tax returns and banking information ready.",
+        "A caseworker calls you within 15 business days to book an appointment.",
+        "If you are financially eligible, a health care professional fills out a Disability Determination Package."
+      ],
+      "source_url": "https://www.ontario.ca/page/ontario-disability-support-program",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: no fetched official page explains how ODSP relates to RAP income support; the ODSP eligibility page lists 'sponsorship support' as income that must be reported. Ask IRCC or the RAP provider when GARs should apply]",
+        "[VERIFY: eligibility and prescribed classes come from ontario.ca/page/ontario-disability-support-program-eligibility-income-support (added to sources)]",
+        "[VERIFY: consider also showing ODSP to seniors without a disability, because of the 'not eligible for OAS' prescribed class]",
+        "[VERIFY: single-person maximum on the page is $1,436 a month for basic needs and shelter (July 2026); not shown to users]"
+      ]
+    },
+    {
+      "id": "adp",
+      "title": "Assistive Devices Program",
+      "summary": "Ontario helps people with long-term physical disabilities pay for equipment and supplies, like wheelchairs, hearing aids and ostomy supplies.",
+      "group": "disability",
+      "level": "ontario",
+      "applies_to": {"all": [], "any": ["disability_adult", "disability_senior", "disability_child"]},
+      "location_id": null,
+      "eligibility": [
+        "You live in Ontario and have a valid Ontario health card.",
+        "You have a physical disability and need the equipment or supplies for 6 months or longer.",
+        "You meet the medical rules for the device.",
+        "Your income does not matter."
+      ],
+      "how_to_apply": [
+        "Find the page for your type of device on the Ontario page.",
+        "Follow the steps there to qualify, apply and find a registered vendor.",
+        "The program usually pays 75% of the approved price. You pay the rest. People on Ontario Works, ODSP or ACSD may get more."
+      ],
+      "source_url": "https://www.ontario.ca/page/assistive-devices-program",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: while on RAP, the IFHP covers some assistive devices with a 30% co-payment (IFHP coverage page); check which program applies first]",
+        "[VERIFY: repairs are not covered, per the page]"
+      ]
+    },
+    {
+      "id": "para_transpo",
+      "title": "Para Transpo",
+      "summary": "OC Transpo's shared-ride, book-ahead service for people who cannot use regular buses and the O-Train some or all of the time because of a disability.",
+      "group": "disability",
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": ["disability_adult", "disability_senior", "disability_child"]},
+      "location_id": null,
+      "eligibility": [
+        "For people who are unable to use buses and the O-Train some or all of the time.",
+        "There are 3 types of eligibility: unconditional, temporary and conditional."
+      ],
+      "how_to_apply": [
+        "Get the Para Transpo application form online, or call Lifemark Health Services to get it by mail.",
+        "You and a health care professional must fill out and sign the form.",
+        "Keep a copy. Drop it off, mail it or fax it to Lifemark.",
+        "You get a decision by mail within 14 days after a complete application is received."
+      ],
+      "source_url": "https://www.octranspo.com/en/para-transpo/para-registration/",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page shows two Lifemark addresses (2121 Carling Avenue Unit 12, and 105-2249 Carling Avenue); confirm which one takes applications]",
+        "[VERIFY: a web search snippet says eligibility is not based on age or income; not confirmed on the fetched page]"
+      ]
+    },
+    {
+      "id": "ssah",
+      "title": "Special Services at Home",
+      "summary": "Ontario pays families back for some costs of support for a child with a physical or developmental disability, like respite care and help with daily activities.",
+      "group": "disability_children",
+      "level": "ontario",
+      "applies_to": {"all": ["disability_child"], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "Your child is under 18 and lives at home.",
+        "Your child needs extra support, more than other children their age, because of a physical or developmental disability.",
+        "Your child lives in Ontario and is legally allowed to live in Canada. Refugees who are entitled to live in Canada qualify."
+      ],
+      "how_to_apply": [
+        "Apply online. You can save your application and finish it later, within 90 days.",
+        "Include documents from a regulated health professional about your child's needs.",
+        "Include proof that your child lives in Ontario, proof of their status in Canada, and proof of age.",
+        "Send one application for each child."
+      ],
+      "source_url": "https://www.ontario.ca/page/special-services-home",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: photocopies are accepted for documents, but originals may be requested, per the page]",
+        "[VERIFY: payment amounts not checked]"
+      ]
+    },
+    {
+      "id": "acsd",
+      "title": "Assistance for Children with Severe Disabilities",
+      "summary": "Monthly money from Ontario to help families with extra costs of caring for a child with a severe disability, like travel to appointments and respite.",
+      "group": "disability_children",
+      "level": "ontario",
+      "applies_to": {"all": ["disability_child"], "any": []},
+      "location_id": null,
+      "eligibility": [
+        "You are the parent or guardian of a child 17 or younger who lives at home and has a severe disability.",
+        "Your total household income is below the program's limit.",
+        "The amount depends on family size, how severe the disability is and the extra costs."
+      ],
+      "how_to_apply": [
+        "Apply online, or download a paper form and send it to your local ministry regional office.",
+        "Send one application for each child.",
+        "You have 90 days to finish the online application.",
+        "A community agency, health care professional or social worker can help you fill it out."
+      ],
+      "source_url": "https://www.ontario.ca/page/assistance-children-severe-disabilities-program",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: household income limit on the page is $77,640; monthly amounts $25 to $678 (July 2026); not shown to users]",
+        "[VERIFY: children in ACSD may also get coverage through ADP, OHIP+, Healthy Smiles Ontario, hearing aids and vision care, per the page]"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,882 @@
+{
+  "_review": "Draft. Every item needs team review against its source before the demo.",
+  "items": [
+    {
+      "id": "rap_orientation",
+      "title": "Meet your resettlement worker and complete RAP orientation",
+      "summary": "The Resettlement Assistance Program (RAP) helps government-assisted refugees with their most basic needs when they first arrive. Your RAP worker helps you learn about your new community and sign up for important programs.",
+      "phase": "first_3_days",
+      "priority": 10,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": "rap_provider_ottawa",
+      "documents": [],
+      "steps": [
+        "Meet the worker from your RAP service provider organization. In Ottawa, this is the Catholic Centre for Immigrants.",
+        "Ask for help learning about and adjusting to your new community.",
+        "Ask for help finding permanent housing.",
+        "Ask for help signing up for federal and provincial programs.",
+        "Ask for help with budgeting and setting up a bank account.",
+        "Ask about referrals to community programs and other programs for newcomers."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/government-assisted-refugee-program/providers.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the IRCC page lists RAP services but does not describe an 'orientation' session or any documents to bring; confirm with the Catholic Centre for Immigrants what the first meeting covers]",
+        "[VERIFY: 'information and orientation' appears on the same page under Settlement Program services, not under RAP]",
+        "[VERIFY: IRCC's RAP provider list shows Catholic Centre for Immigrants, Ottawa, 219 Argyle Street, K2P 2H4, 613-232-9634 (confirmed on the page, 2026-09-26)]"
+      ]
+    },
+    {
+      "id": "ifhp",
+      "title": "Understand your temporary health coverage (Interim Federal Health Program)",
+      "summary": "The Interim Federal Health Program (IFHP) gives you limited, temporary health coverage until you qualify for provincial health insurance (OHIP).",
+      "phase": "first_3_days",
+      "priority": 20,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Your unique client identifier (UCI) number, found on the official documents IRCC sent you",
+        "An email address, to create your IFHP portal account"
+      ],
+      "steps": [
+        "Create an account in the IFHP portal. It shows if you are covered, what is covered and where to get care.",
+        "Get care only from health care providers who are registered with the IFHP. Use the IFHP Provider Search Tool to find one.",
+        "Basic care, like hospital services and visits to doctors and nurses, is free.",
+        "You pay $4 for each prescription you fill or refill.",
+        "For some extra care, like urgent dental care, vision care and mental health counselling, you pay 30% of the cost.",
+        "Ask the provider about any costs before you get care.",
+        "If you are not sure what is covered, contact Medavie Blue Cross, the company that runs the IFHP."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/health-care/interim-federal-health-program/eligibility.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: for resettled refugees the eligibility page says basic coverage lasts until provincial insurance starts; supplemental benefits and prescriptions end when RAP income support ends]",
+        "[VERIFY: co-payment amounts ($4 per prescription, 30% for supplemental benefits) and the list of extra care come from the IFHP 'What is covered' page (in sources), dated 2026-05-01]",
+        "[VERIFY: Medavie Blue Cross phone 1-888-614-1880 (in Canada only) is on the coverage page; not shown in steps]"
+      ]
+    },
+    {
+      "id": "phone_number",
+      "title": "Get a Canadian phone number",
+      "summary": "To get a cell phone or home phone, contact a private phone company. Plans and monthly prices are different, so compare before you sign up.",
+      "phase": "first_3_days",
+      "priority": 30,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": null,
+      "documents": [
+        "2 pieces of ID (for example, a passport)"
+      ],
+      "steps": [
+        "Contact a private phone company in your area.",
+        "Choose a plan that fits your needs and how much you want to pay each month.",
+        "Bring 2 pieces of ID when you sign up.",
+        "You may be asked to agree to a credit check or show proof of a job. If you have no credit history or job, explain that you are new to Canada and ask what options you have.",
+        "If you buy phone, internet and TV from the same company, you can often get a discount."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/communications.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: practical step, not a government service; level is federal because the only source is IRCC's general 'Communications services' page]",
+        "[VERIFY: the page's ID examples are a permanent resident card, driver's licence or passport; new arrivals may only have a COPR and passport]",
+        "[VERIFY: no location set because any phone company can be used; a CRTC consumer rights page could be added if the team fetches one]"
+      ]
+    },
+    {
+      "id": "sin",
+      "title": "Apply for a Social Insurance Number (SIN)",
+      "summary": "A Social Insurance Number (SIN) is a 9-digit number. You need it to work in Canada and to get government programs and benefits.",
+      "phase": "first_2_weeks",
+      "priority": 10,
+      "essential": true,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "adults_seniors",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "service_canada_ottawa",
+      "documents": [
+        "Your Permanent Resident card, or your Confirmation of Permanent Residence (COPR) if you became a permanent resident less than 1 year ago",
+        "A second ID with your legal name and date of birth, such as a passport",
+        "A completed and signed SIN application form"
+      ],
+      "steps": [
+        "You can apply online, by mail or in person at a Service Canada Centre.",
+        "To go in person, ask for an appointment with Service Canada's online service request form.",
+        "Your documents must be valid (not expired) and in English or French. If they are in another language, you need a translation.",
+        "If everything is in order, you get your SIN during your visit and you keep your documents.",
+        "There is no fee to apply.",
+        "Keep your SIN private to protect yourself from fraud."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/employment-social-development/services/sin/apply.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: document list against the page; the page's tool gives the exact list per status and per method (online, mail, in person)]",
+        "[VERIFY: whether the application form is needed for every method, or only for mail]",
+        "[VERIFY: the second ID is required only if you have reached the age of majority in your province, per the page]",
+        "[VERIFY: 'You need a SIN to get benefit and credit payments' is on the CRA newcomers page (in sources); the CRA can give a temporary tax number (TTN) if Service Canada cannot issue a SIN]",
+        "[VERIFY: location is the Ottawa West Service Canada Centre; Ottawa East (Place d'Orleans, Orleans) is the other Service Canada Centre in Ottawa]"
+      ]
+    },
+    {
+      "id": "health_card",
+      "title": "Apply for an Ontario health card (OHIP)",
+      "summary": "OHIP is Ontario's health plan. It pays for many health services, like visits to a family doctor or an emergency room. If you qualify, your coverage starts right away. There is no waiting period.",
+      "phase": "first_2_weeks",
+      "priority": 20,
+      "essential": true,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "everyone",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "serviceontario_ottawa",
+      "documents": [
+        "A completed Registration for Ontario Health Insurance Coverage form",
+        "1 original document that proves your immigration status, such as your Permanent Resident Card or Confirmation of Permanent Residence (COPR)",
+        "1 document that proves you live in Ontario, such as a rental or lease agreement, a monthly bank statement or a phone bill",
+        "1 original document that proves who you are, with your name and signature, such as a passport"
+      ],
+      "steps": [
+        "Go in person to a ServiceOntario centre. You may be able to book an appointment before you go.",
+        "Bring the completed form and 3 separate documents. Photocopies are not accepted.",
+        "Apply for each person in your family.",
+        "Show your health card every time you see a doctor, go to an emergency room or have a medical test."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/apply-ohip-and-get-health-card",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: full list of accepted documents is on ontario.ca/page/documents-needed-get-health-card (in sources); a COPR (IMM 5292) or PR card counts as proof of identity only if the signature is shown]",
+        "[VERIFY: the page does not say in general terms that each family member applies separately, or which documents children need; the rule 'children under 16 do not require proof of residency or identity' is stated only for emergency humanitarian authorizations (CUAET), so it is not used here]",
+        "[VERIFY: an older IRCC video says provincial coverage 'may take up to 3 months'; the Ontario page says there is no waiting period. Use the Ontario page]",
+        "[VERIFY: the Ottawa City Hall ServiceOntario page lists 'Apply for a health card', but its hours could not be displayed on ontario.ca]"
+      ]
+    },
+    {
+      "id": "bank_account",
+      "title": "Open a bank account",
+      "summary": "You have the right to open a bank account in Canada, even if you do not have a job or money to put in right away. Ask about fees before you sign.",
+      "phase": "first_2_weeks",
+      "priority": 30,
+      "essential": true,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "self",
+      "per_person": false,
+      "in_person": true,
+      "location_id": null,
+      "documents": [
+        "2 original ID documents from the bank's list: one with your name and address, and one with your name and date of birth (a foreign passport is on the list)",
+        "Or: 1 ID with your name and date of birth, if a customer in good standing with the bank or a respected person in your community confirms who you are"
+      ],
+      "steps": [
+        "Choose a bank or credit union. Your RAP worker can help you set up a bank account.",
+        "You may need to go to the bank in person because you are not a Canadian citizen.",
+        "Bring original ID. Photocopies are not accepted.",
+        "Ask about fees and interest. Read the terms and keep a copy of your account agreement.",
+        "If the bank refuses to open an account, it must tell you in writing."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/financial-consumer-agency/services/banking/opening-bank-account.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page lists 'identification issued by the Government of Canada' but does not name the PR card or COPR specifically]",
+        "[VERIFY: the CRA newcomers page says a SIN is needed to 'open most types of bank accounts'; the FCAC page does not mention a SIN]",
+        "[VERIFY: 'Your RAP worker can help you set up a bank account' comes from the IRCC RAP providers page (in sources), not the FCAC page]"
+      ]
+    },
+    {
+      "id": "school_registration",
+      "title": "Register children for school",
+      "summary": "Most children can go to a public school for free, no matter their immigration status. Your child's school depends on where you live.",
+      "phase": "first_2_weeks",
+      "priority": 40,
+      "essential": true,
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "people": "children_6_17",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "school_board_reception",
+      "documents": [
+        "1 proof of your child's age, such as a birth certificate, Permanent Resident card or Confirmation of Permanent Residence, or passport",
+        "2 proofs of your Ottawa address, such as a rental or lease agreement plus a utility bill or bank statement (driver's licences and cell phone bills are not accepted)",
+        "Your immigration documents",
+        "Your child's immunization (vaccine) records",
+        "School records, such as report cards or transcripts, if you have them"
+      ],
+      "steps": [
+        "Find your school with the school board's School Locator. Enter your home address.",
+        "Fill out the online registration form on a computer. It does not work on a phone or tablet.",
+        "After you send the form, you get an email with instructions. Upload your documents or bring them to the school.",
+        "New to Canada and in grades 2 to 12? Call the OCDSB Family Reception Centre to book a free education assessment. You can book only after your child arrives in Canada.",
+        "At least one parent must come to the assessment. It takes about 2 hours for elementary students and 3 to 5 hours for high school students.",
+        "Need help in your language? The Family Reception Centre works with staff who speak many languages, including Arabic, Dari, Farsi, Pashto, Somali, Swahili and Tigrinya.",
+        "Catholic and French-language school boards have their own registration steps."
+      ],
+      "conditional_notes": [
+        {
+          "when": "has_children_0_5",
+          "note": "If your child turns 4 by December 31, they can start Kindergarten in September of that year. Children starting Kindergarten or Grade 1 register directly at their local school."
+        }
+      ],
+      "source_url": "https://www.ocdsb.ca/our-schools/registration/elementary-secondary",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: steps follow the Ottawa-Carleton District School Board (OCDSB, English public) only; the Ottawa Catholic School Board (ocsb.ca/our-schools/register, in sources) has a Family Welcome Centre for newcomers; the French boards were not checked]",
+        "[VERIFY: 'free, no matter their immigration status' comes from ontario.ca/page/find-elementary-or-secondary-school (in sources): 'Most children can attend a publicly funded school for free regardless of their immigration status'. Not from the OCDSB page]",
+        "[VERIFY: OCDSB asks families with temporary status, including 'Refugee', to email boundaries@ocdsb.ca or call 613-596-8731 to submit immigration documents; GARs are permanent residents, so confirm if this applies]",
+        "[VERIFY: Colonel By, Lisgar Collegiate and Nepean High School require 3 proofs of address, per the OCDSB page]",
+        "[VERIFY: Family Reception Centre details (grades 2-12, book after arrival, parent must attend, 2 h / 3-5 h, documents: immigration documents, immunization records, school records, proof of address, no fee, liaison languages) come from ocdsb.ca/family-community-support/family-reception-centre (added to sources)]",
+        "[VERIFY: the Kindergarten note comes from ocdsb.ca/our-schools/registration/kindergarten ('If your child turns 4 years old by December 31 of this year, they are eligible to start Kindergarten this September') and the Family Reception Centre page; it is the OCDSB rule, not checked on an ontario.ca page]",
+        "[VERIFY: this item's people group is children_6_17, so a family with only children 0-5 never sees the Kindergarten note; consider a separate Kindergarten item]"
+      ]
+    },
+    {
+      "id": "transit",
+      "title": "Get a transit card and check discounted passes",
+      "summary": "OC Transpo buses and the O-Train use a Presto card. While adults get RAP income support, RAP gives a transportation benefit that can be used to buy an adult monthly pass.",
+      "phase": "first_2_weeks",
+      "priority": 50,
+      "essential": false,
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "people": "adults_seniors",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "oc_transpo_customer_service",
+      "documents": [
+        "Later, for the EquiPass: a completed EquiPass application form",
+        "Later, for the EquiPass: proof of income, such as your CRA Notice of Assessment, or other documents if you have not filed taxes yet"
+      ],
+      "steps": [
+        "Buy a Presto card at an OC Transpo Customer Service Centre, or at some Shoppers Drug Mart, Loblaws and Real Canadian Superstore stores.",
+        "Ask your RAP worker about the transportation benefit. Adults who get RAP support can use it to buy an adult monthly pass.",
+        "Seniors ride free on Wednesdays and Sundays.",
+        "When your RAP support ends, after about a year, you can apply for the EquiPass if your family income is low. The EquiPass costs about half the regular price.",
+        "Get an EquiPass form online, by mail, at the Rideau Centre Customer Service Centre or at a City of Ottawa Client Service Centre.",
+        "If you have not filed taxes in Canada yet, you can still apply with other documents. Email equipass@ottawa.ca to ask which ones."
+      ],
+      "conditional_notes": [
+        {
+          "when": "has_children_0_5",
+          "note": "Children 10 and under ride OC Transpo for free."
+        },
+        {
+          "when": "has_children_6_17",
+          "note": "Children 10 and under ride for free. Youth 11 to 18 ride free in the evenings (after 5 pm), on weekends and on holidays. Government-assisted refugees under 18 can be eligible for the EquiPass."
+        }
+      ],
+      "source_url": "https://www.octranspo.com/en/fares/reduced-fares/equipass/",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the EquiPass FAQ says government-assisted refugees over 18 who get RAP financial assistance are not eligible, because they can buy an adult monthly pass with the RAP transportation benefit; they can apply after a year, when RAP support ends. The page calls RAP the 'Refugee Assistance Program']",
+        "[VERIFY: Presto card price ($4.00), where to buy it, free rides for seniors on Wednesdays and Sundays, and youth/child fares come from octranspo.com/en/fares/costs (in sources); 2026 prices]",
+        "[VERIFY: EquiPass prices on the page: monthly pass $58.25, single ride $1.75 (2026); not shown to users]",
+        "[VERIFY: OC Transpo's 'Displaced Persons and Refugees Transit Pass Program' (6 months free) says participants must NOT be government-assisted refugees, so it is not offered here]",
+        "[VERIFY: ODSP recipients should use the Community Pass instead of the EquiPass, per the page]"
+      ]
+    },
+    {
+      "id": "housing",
+      "title": "Find permanent housing with your resettlement worker",
+      "summary": "RAP gives you a temporary place to live when you arrive. Your resettlement worker helps you find a permanent place to live.",
+      "phase": "first_month",
+      "priority": 10,
+      "essential": true,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": "rap_provider_ottawa",
+      "documents": [],
+      "steps": [
+        "Ask your resettlement worker for help finding permanent housing.",
+        "Visit a home before you agree to rent it. Turn on the faucets and appliances to check that they work.",
+        "Ask if heat, water, electricity and internet are included in the rent.",
+        "Landlords may ask for references, proof of income or a credit check. If you do not have these yet, ask a newcomer services provider what to do.",
+        "Make sure you understand the lease before you sign it. You can ask a friend, relative or newcomer services provider to help.",
+        "Always ask your landlord for a receipt when you pay rent, and keep it.",
+        "If you feel unsafe, call 911 or your local police."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/government-assisted-refugee-program/providers.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: 'temporary place to live' and 'help finding a permanent place to live' are on the IRCC RAP providers page and the Financial help for refugees page (in sources)]",
+        "[VERIFY: steps 2-7 come from IRCC's 'Renting a home' page (in sources); Ontario tenant rules are on ontario.ca/page/renting-ontario-your-rights (in sources)]",
+        "[VERIFY: how long temporary housing lasts in Ottawa is not stated; confirm with the RAP provider]",
+        "[VERIFY: no document list on the pages; landlords' requests (references, proof of income, credit check) are shown as a step]"
+      ]
+    },
+    {
+      "id": "address_ircc",
+      "title": "Give IRCC your Canadian address so your PR card can be mailed",
+      "summary": "IRCC mails your first permanent resident (PR) card to your Canadian address. If IRCC does not have your current address, important documents could be delayed or lost.",
+      "phase": "first_month",
+      "priority": 20,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Your Canadian mailing address",
+        "Your photo (IRCC needs your address and photo to send your first PR card)"
+      ],
+      "steps": [
+        "Check that the Canadian address on your Confirmation of Permanent Residence (COPR) is correct.",
+        "If you did not have a permanent address yet, or you move, give IRCC your correct address as soon as you can.",
+        "Use IRCC's online tool to change your address. If it does not work for you, use IRCC's web form.",
+        "Give IRCC your mailing address and photo within 180 days of becoming a permanent resident. Then IRCC sends your first PR card automatically.",
+        "If you have an immigration loan, also tell the loans office when you move."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/change-address.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page's question tool is JavaScript; the result for a first PR card was not readable. Confirm how GARs send their address and photo]",
+        "[VERIFY: 'check the COPR address' and 'give us the correct address as soon as you can' come from IRCC's Prepare for arrival page (in sources)]",
+        "[VERIFY: the loans office address-change contact (1-800-667-7301 or collection@cic.gc.ca) is on the Financial help for refugees page (in sources)]",
+        "[VERIFY: the PR card page (in sources) says the first card can take up to 6 weeks beyond the processing time, and IRCC sends PR cards only to Canadian addresses]"
+      ]
+    },
+    {
+      "id": "ccb",
+      "title": "Apply for the Canada Child Benefit",
+      "summary": "The Canada Child Benefit (CCB) is a tax-free monthly payment to help with the cost of raising children under 18. When you apply, the CRA also checks if you can get related Ontario payments.",
+      "phase": "first_month",
+      "priority": 30,
+      "essential": true,
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["has_children_0_5", "has_children_6_17"]},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Form RC66, Canada Child Benefits Application",
+        "Schedule RC66SCH, Status in Canada/Statement of Income (for newcomers)",
+        "Proof of birth for each child, such as a birth certificate, with a translation if it is not in English or French"
+      ],
+      "steps": [
+        "Fill out and sign Form RC66 and Schedule RC66SCH.",
+        "Add proof of birth for each child.",
+        "Mail the forms and documents to your CRA tax centre.",
+        "If both parents live with the children, the mother is usually the one who applies. If the other parent is mainly responsible for the children, add a letter signed by the mother that says so.",
+        "Apply as soon as you can. Form RC66 also counts as your application for the Canada Groceries and Essentials Benefit.",
+        "File a tax return every year, even with no income, to keep getting payments."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-apply.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: 'monthly, tax-free, children under 18' comes from the CRA newcomers page, not the how-to-apply page]",
+        "[VERIFY: the page says 'the female parent is presumed to be primarily responsible'; no letter is needed if both parents are of the same sex]",
+        "[VERIFY: if your spouse or partner was a non-resident for part of the year, Form CTB9 is also needed]",
+        "[VERIFY: 'RC66 also counts for the CGEB' is on the CGEB 'How to get the benefit' page (in sources); 'no separate application for provincial programs' is on this page and on ontario.ca/page/ontario-child-benefit]",
+        "[VERIFY: eligibility (PR or protected person, resident for tax purposes, primarily responsible for a child under 18) is on the CCB 'Who can apply' page (in sources)]"
+      ]
+    },
+    {
+      "id": "immunization_records",
+      "title": "Bring or update children's vaccination records",
+      "summary": "Children who go to school in Ontario must have certain vaccines, or a valid exemption. Ottawa Public Health keeps your child's vaccine record, but only if you send it to them.",
+      "phase": "first_month",
+      "priority": 40,
+      "essential": false,
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "people": "children",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "ottawa_public_health",
+      "documents": [
+        "Your child's immunization (vaccine) records, with the child's name, date of birth and your phone number or address visible"
+      ],
+      "steps": [
+        "Keep your child's vaccine record in a safe place with other important documents.",
+        "Send a copy to Ottawa Public Health (OPH) with the online webform, the Immunization Connect Ontario (ICON) tool or the CANImmunize app.",
+        "If your child does not have an Ontario health card yet, send the record by mail or fax, or bring it to an OPH Neighbourhood Health and Wellness Hub.",
+        "Do not email vaccine records to OPH.",
+        "Newcomer children can drop in to a Neighbourhood Health and Wellness Hub for routine childhood vaccines. No appointment is needed.",
+        "Every time your child gets a vaccine, tell OPH.",
+        "Questions about vaccines or records? Call OPH and ask to speak with a public health nurse."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ottawapublichealth.ca/clinics-education-and-supports/immunization-and-vaccines/updating-your-childs-immunization-record/",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: required school vaccines come from the OCDSB registration page: diphtheria, tetanus, pertussis, polio, meningococcal, measles, mumps, rubella, and varicella (children born in 2010 and later)]",
+        "[VERIFY: drop-in hub eligibility (newcomer, no OHIP card, no family doctor) comes from OPH's 'Where to get children or youth vaccinated' page (added to sources); hub addresses are not in this dataset]",
+        "[VERIFY: OPH's mail address for records is 'Immunization Unit, Mail Code 26-42, 100 Constellation Drive, Ottawa ON K2G 6J8'; it is a mailing address, not a walk-in office]",
+        "[VERIFY: the page does not say whether records in other languages need a translation]",
+        "[VERIFY: OPH collects records for children 17 and under who attend school or licensed child care; 16-17 year olds must request their own record]"
+      ]
+    },
+    {
+      "id": "settlement_services",
+      "title": "Register with a settlement agency",
+      "summary": "Settlement agencies funded by the Government of Canada give free help to newcomers, for example with daily life, jobs and English or French. Permanent residents, including resettled refugees, can use them.",
+      "phase": "first_month",
+      "priority": 50,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": null,
+      "documents": [],
+      "steps": [
+        "Use IRCC's online service finder. Enter your postal code or city, not your full address.",
+        "Filter by the help you need, such as language assessment, help finding a job, or services for refugees, seniors, children or families.",
+        "Call or email the agency before you go in person, to check that they offer the service you want."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://ircc.canada.ca/english/newcomers/services/index.asp",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page lists no documents to bring; check with a local agency what they ask for]",
+        "[VERIFY: new time limits from April 1, 2026 apply to economic class permanent residents only; resettled refugees are listed as eligible (newcomer-services eligibility page, in sources)]",
+        "[VERIFY: no single Ottawa location set because many agencies exist; agency names are not listed unless an official page lists them]"
+      ]
+    },
+    {
+      "id": "language_assessment",
+      "title": "Book a language assessment for free English or French classes (LINC/CLIC)",
+      "summary": "Permanent residents and protected persons can take English or French classes at no cost. First, you need a language assessment to find your level.",
+      "phase": "first_month",
+      "priority": 60,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "adults_seniors",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "language_assessment_ottawa",
+      "documents": [
+        "Proof of your Ontario address (for example, a phone, gas or hydro bill)",
+        "Proof of your immigration status"
+      ],
+      "steps": [
+        "Tell an organization that helps newcomers that you want to take language classes. They can tell you where to get assessed.",
+        "In Ottawa, call the YMCA-YWCA Language Assessment and Referral Centre to book an assessment. You can also book online.",
+        "After your assessment, register for classes and start learning.",
+        "Classes can be online or in a classroom, full-time or part-time, and during the day, in the evening or on weekends.",
+        "Ask if the class offers child minding or transportation. Some locations do."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/settle-canada/language-skills/classes.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the IRCC page lists no documents; the two documents come from the OCDSB LINC/ESL eligibility page (added to sources), which is for registering in OCDSB classes]",
+        "[VERIFY: the YMCA/YWCA Language Assessment and Referral Centre and its phone numbers (West 613-688-2150, Central 613-238-5462) come from the OCDSB LINC/ESL eligibility page; addresses were not on that page]",
+        "[VERIFY: a CLB level 4 or higher certificate in speaking and listening can be used as proof for the citizenship language requirement, per the IRCC page]"
+      ]
+    },
+    {
+      "id": "family_doctor",
+      "title": "Register to find a family doctor or newcomer health clinic",
+      "summary": "Health Care Connect looks for a family doctor or nurse practitioner who is taking new patients near you. You can register yourself and your whole family.",
+      "phase": "first_month",
+      "priority": 70,
+      "essential": false,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "A valid Ontario health card number",
+        "Your contact information",
+        "Basic health information, if you want to share it"
+      ],
+      "steps": [
+        "Get your Ontario health card first. You need the number to register.",
+        "Register online, or call 811 (TTY 711). The phone line is open 24 hours a day, 7 days a week.",
+        "You can share health information, like a pregnancy, children under 2, a chronic condition or a disability. It helps match you to the right doctor.",
+        "You get a letter in the mail to confirm your registration.",
+        "When you are matched, you get a referral letter. The doctor or nurse practitioner will contact you to book a first visit.",
+        "Joining does not mean you will get a doctor right away. Update your registration if your address, phone number or health needs change."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/find-family-doctor-or-nurse-practitioner",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the mailing address you give must be the one on your health card, per the page]",
+        "[VERIFY: 'newcomer health clinic' in the title is not covered by this page; team to find an official source for newcomer or community health clinics in Ottawa, or change the title]",
+        "[VERIFY: while waiting, IFHP-registered providers (IFHP pages in sources) and walk-in clinics (covered by OHIP, per the OHIP page) may be options]"
+      ]
+    },
+    {
+      "id": "senior_drug_benefit",
+      "title": "Understand prescription coverage for seniors (Ontario Drug Benefit)",
+      "summary": "The Ontario Drug Benefit (ODB) program helps people 65 and older pay for most of the cost of many prescription drugs.",
+      "phase": "first_month",
+      "priority": 80,
+      "essential": false,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "seniors",
+      "per_person": true,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Your Ontario health card"
+      ],
+      "steps": [
+        "People usually join the program automatically on the first day of the month after they turn 65.",
+        "Bring your Ontario health card to the pharmacy. Prescriptions must be filled at a pharmacy in Ontario.",
+        "Seniors pay the first $100 of drug costs each program year (August 1 to July 31). After that, you pay up to $6.11 for each prescription.",
+        "If your income is low, apply to the Seniors Co-Payment Program. Then you pay no $100 deductible and up to $2 for each prescription.",
+        "While you get RAP income support, the Interim Federal Health Program also covers prescriptions."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/get-coverage-prescription-drugs",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page describes a letter sent 3 months before a person's 65th birthday; it does not say how a senior who is already 65 when they arrive joins the program]",
+        "[VERIFY: IFHP prescription coverage for resettled refugees lasts while they receive RAP income support, per the IFHP eligibility page (in sources); IFHP charges a $4 co-payment per prescription]",
+        "[VERIFY: $100 deductible, $6.11 and $2 co-payments are from the page (2026); re-check before the demo]",
+        "[VERIFY: Seniors Co-Payment Program income thresholds are on a linked page that was not fetched]"
+      ]
+    },
+    {
+      "id": "library_card",
+      "title": "Get a library card",
+      "summary": "With an Ottawa Public Library card you can borrow books, music and movies, use public computers, and find language learning and online classes.",
+      "phase": "first_month",
+      "priority": 90,
+      "essential": false,
+      "level": "ottawa",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": "ottawa_public_library",
+      "documents": [
+        "Photo ID",
+        "Proof of address"
+      ],
+      "steps": [
+        "Visit any of the library's 33 branches in person. You can start some cards online.",
+        "Children 15 and under need a parent's signature. Teens 16 and 17 do not.",
+        "No ID or no permanent address? You can still visit a branch to get a card.",
+        "You can join Storytimes and conversation groups even without a card."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://about.biblioottawalibrary.ca/en/get-library-card",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the page lists fees only for people who live outside Ottawa or visit short term; it never says cards are free for Ottawa residents, so the title does not say 'free']",
+        "[VERIFY: 'join Storytimes and conversation groups without a card' comes from OPL's 'New to Canada? The Library Is Here for You!' blog (added to sources)]",
+        "[VERIFY: people is household (one row); the library has separate adult, teen and child cards, so each person may need their own card]"
+      ]
+    },
+    {
+      "id": "drivers_licence",
+      "title": "Exchange or apply for an Ontario driver's licence",
+      "summary": "When you move to Ontario, you can drive with a valid licence from another country for 60 days. After 60 days, you need an Ontario driver's licence.",
+      "phase": "first_3_months",
+      "priority": 10,
+      "essential": false,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": true,
+      "location_id": "drivetest_ottawa",
+      "documents": [
+        "Your original, valid foreign driver's licence",
+        "Original identity documents with your legal name and date of birth",
+        "Original documents that show your driving experience, in English or French, if you have them",
+        "A translation of your licence by an approved translator, if it is not in English or French"
+      ],
+      "steps": [
+        "Go in person to a DriveTest centre.",
+        "Take a vision test, fill out the application form and pay the fees.",
+        "You may need a knowledge test and road tests. It depends on your country and how long you have been driving.",
+        "If your country does not have a licence exchange agreement with Ontario, you take the vision test, knowledge test and G2 road test. Then you wait at least 12 months before the G road test.",
+        "If you cannot show a valid, original licence, ask about special exemptions for refugees and protected persons.",
+        "Do not get an Ontario Photo Card if you want a driver's licence. You cannot have both at the same time."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/exchange-out-province-drivers-licence",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: this is the only ontario.ca page found for licences from other countries; its subtitle is 'How to switch a driver's licence from another province, state or country', and ontario.ca/page/drivers-licence links to it as 'Exchange your licence (out-of-province/country)']",
+        "[VERIFY: the special exemptions for protected persons and refugees are on drivetest.ca/licences/exchanges-foreign-licences, which blocked automated fetching (HTTP 403); team to read it by hand]",
+        "[VERIFY: translations must be dated within 6 months; approved translators include embassies and consulates, but not other translators from the country that issued the licence]",
+        "[VERIFY: from July 1, 2026, drivers from countries without an exchange agreement can get credit for up to 12 months of experience with an original licence and an authentication letter]",
+        "[VERIFY: fee amounts are not on the page]",
+        "[VERIFY: people is household (one optional row) because the app has no 'who drives' question]",
+        "[VERIFY: the Photo Card rule comes from ontario.ca/page/ontario-photo-card (added to sources)]"
+      ]
+    },
+    {
+      "id": "photo_id",
+      "title": "Get an Ontario Photo Card (government ID)",
+      "summary": "The Ontario Photo Card is government photo ID for Ontario residents who do not have a driver's licence. It can help you open a bank account and do other things that need official ID.",
+      "phase": "first_3_months",
+      "priority": 20,
+      "essential": false,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "adults_seniors",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "serviceontario_ottawa",
+      "documents": [
+        "Original identity documents that show your legal name and date of birth"
+      ],
+      "steps": [
+        "You can apply if you are 16 or older, live in Ontario and do not have a driver's licence.",
+        "Go in person to a ServiceOntario centre. You may be able to book an appointment before you go.",
+        "The card costs $35. It comes by mail in 4 to 6 weeks.",
+        "You cannot have a Photo Card and a driver's licence at the same time. When you apply, you must give up any driver's licence you have, even one from another country.",
+        "You cannot use the Photo Card to travel outside Canada."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/ontario-photo-card",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: age rule resolved from the page: 16 years of age or older. people is adults_seniors, so teens 16-17 who could apply are not shown]",
+        "[VERIFY: which documents newcomers can use is on the page's linked 'list of acceptable identification', which was not fetched]",
+        "[VERIFY: $35 fee and 4-6 week delivery are from the page (updated September 21, 2026)]",
+        "[VERIFY: the Ottawa City Hall ServiceOntario location lists 'Get an Ontario photo card'; hours could not be displayed]"
+      ]
+    },
+    {
+      "id": "sin_child",
+      "title": "Apply for children's SINs (needed for education savings)",
+      "summary": "Your child needs their own Social Insurance Number (SIN) to open an education savings plan (RESP) and get benefits like the Canada Learning Bond.",
+      "phase": "first_3_months",
+      "priority": 30,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "children",
+      "per_person": true,
+      "in_person": true,
+      "location_id": "service_canada_ottawa",
+      "documents": [
+        "Your child's Permanent Resident card, or Confirmation of Permanent Residence (COPR) if they became a permanent resident less than 1 year ago",
+        "Your own ID as the parent or legal guardian",
+        "A completed and signed SIN application form"
+      ],
+      "steps": [
+        "A parent or legal guardian can apply for a child. Children 12 or older can also apply for their own SIN.",
+        "Apply online, by mail or in person at a Service Canada Centre.",
+        "Documents must be valid and in English or French, or translated.",
+        "There is no fee to apply.",
+        "When your child has a SIN, you can open an RESP and ask for the Canada Learning Bond."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/employment-social-development/services/sin/apply.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: the exact parent documents come from the page's tool ('parent or legal guardian applying on behalf of a minor'); check the list per method]",
+        "[VERIFY: 'get a SIN for the beneficiary' as the first RESP step comes from canada.ca/en/services/benefits/education/education-savings/opening-plan.html (added to sources)]",
+        "[VERIFY: the Canada Learning Bond also needs the primary caregiver to have filed tax returns and be eligible for the CCB (estimating-amounts page, added to sources)]"
+      ]
+    },
+    {
+      "id": "immigration_loan",
+      "title": "Understand your immigration loan and when repayment starts",
+      "summary": "The Immigration Loans Program gives loans to refugees selected for resettlement, mainly to pay for travel to Canada. After 12 months in Canada, you are expected to start paying it back each month.",
+      "phase": "first_3_months",
+      "priority": 40,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Your loan documents"
+      ],
+      "steps": [
+        "Keep your loan documents in a safe place.",
+        "After 12 months in Canada, start paying each month. IRCC sends you a statement that says how much to pay.",
+        "You can pay online by credit or debit card, by electronic bill payment, or by pre-authorized debit.",
+        "If you cannot pay, you can ask IRCC to review your repayment plan at any time.",
+        "If you have questions or you move, call 1-800-667-7301 (Monday to Friday, 8 am to 4 pm Eastern time) or email collection@cic.gc.ca."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/financial.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: not every GAR household may have a loan; the page says loans cover transportation to Canada and additional settlement costs, if needed]",
+        "[VERIFY: for electronic bill payment the payee is 'Citizenship and Immigration Canada Loans', per the page]",
+        "[VERIFY: phone, hours and email are from the page (updated 2025-12-11)]"
+      ]
+    },
+    {
+      "id": "senior_dental",
+      "title": "Check the Ontario Seniors Dental Care Program",
+      "summary": "The Ontario Seniors Dental Care Program gives free, routine dental care to low-income seniors who are 65 or older.",
+      "phase": "first_3_months",
+      "priority": 50,
+      "essential": false,
+      "level": "ontario",
+      "applies_to": {"all": [], "any": []},
+      "people": "seniors",
+      "per_person": true,
+      "in_person": false,
+      "location_id": "ottawa_public_health",
+      "documents": [
+        "Your date of birth",
+        "A valid Ontario address",
+        "Your Social Insurance Number (SIN) or Temporary Taxation Number (TTN)",
+        "If you have no SIN or did not file taxes last year: the application through guarantor form"
+      ],
+      "steps": [
+        "You can apply if you are 65 or older, live in Ontario, have a low income and have no other dental benefits. Having the Canadian Dental Care Plan is allowed.",
+        "Apply online or by mail. If you and your spouse or partner both apply, send 2 separate applications.",
+        "If you do not have a SIN or did not file taxes last year, apply by mail with a guarantor. A guarantor is a professional, such as a doctor, nurse, social worker or teacher, who can confirm who you are.",
+        "Your local public health unit can help you apply.",
+        "If you are approved, you get a dental card in the mail. Show it at every visit."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.ontario.ca/page/dental-care-seniors",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: income limits on the page (updated July 31, 2026): $25,480 or less for a single senior, $42,290 or less combined for a couple; not shown to users]",
+        "[VERIFY: guarantors must be Canadian citizens, at least 18, and a practising member of a listed profession, per the page]",
+        "[VERIFY: Ottawa Public Health's Dental Health Services page (added to sources) says its dental hygienists help people enrol in the Ontario Seniors Dental Care Program]",
+        "[VERIFY: the program requires 'no other form of dental benefits' from another government program; check whether IFHP coverage during RAP counts]",
+        "[VERIFY: the program name is 'Ontario Seniors Dental Care Program'; the OPH page writes 'Ontario Seniors Dental Care Plan (OSDCP)']"
+      ]
+    },
+    {
+      "id": "tax_return",
+      "title": "File your first tax return (even with no income) to receive benefits",
+      "summary": "File a tax return every year, even if you had no income. The CRA uses it to calculate your benefit payments, like the Canada Child Benefit.",
+      "phase": "first_year",
+      "priority": 10,
+      "essential": true,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "adults_seniors",
+      "per_person": true,
+      "in_person": false,
+      "location_id": "free_tax_clinic_ottawa",
+      "documents": [
+        "Your SIN (or a temporary tax number from the CRA)",
+        "Tax slips from your employer or other payers, if you have any",
+        "Receipts, if you have any",
+        "Valid government photo ID, if you go to a free tax clinic"
+      ],
+      "steps": [
+        "Your first tax return is due by April 30 of the year after you arrive. For example, if you arrived in 2025, file your 2025 return by April 30, 2026.",
+        "File online with certified tax software (some are free), or on paper by mail.",
+        "If you have a modest income and a simple tax situation, a volunteer at a free tax clinic can do your taxes for free.",
+        "Use the CRA's tax clinic directory to find a clinic. Some are walk-in, some are drop-off, and some need an appointment (in person or virtual).",
+        "Keep your tax papers for at least 6 years."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/individuals-leaving-entering-canada-non-residents/newcomers-canada-immigrants.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: for the year you arrived, you report income received after you arrived (see 'Completing your return for newcomers', not in sources)]",
+        "[VERIFY: free tax clinic details and documents come from canada.ca/.../community-volunteer-income-tax-program/need-a-hand-complete-your-tax-return.html (added to sources); suggested income limits start at $40,000 for 1 person and organizations can adjust them]",
+        "[VERIFY: foreign income is not a 'simple tax situation' for free clinics; newcomers with income from before arrival should check]",
+        "[VERIFY: if you or your spouse are self-employed, the deadline is June 15, per the CRA newcomers page]"
+      ]
+    },
+    {
+      "id": "dental_cdcp",
+      "title": "Check the Canadian Dental Care Plan",
+      "summary": "The Canadian Dental Care Plan (CDCP) helps make dental care more affordable for Canadian residents who qualify. You must file a tax return in Canada before you can get it.",
+      "phase": "first_year",
+      "priority": 20,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": []},
+      "people": "household",
+      "per_person": false,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "Social Insurance Number (SIN) for each person applying (if available for children)",
+        "Full name, date of birth, and home and mailing address for each person"
+      ],
+      "steps": [
+        "Check that you meet all 4 rules: no private dental insurance, you filed your tax return in Canada, your adjusted family net income is less than $90,000, and you are a resident of Canada for tax purposes.",
+        "Your spouse or partner must also have filed a tax return.",
+        "Apply online with My Service Canada Account or on Canada.ca, or apply by phone.",
+        "Your spouse or partner must send their own application.",
+        "There is no fee to apply. Be careful of scams that ask for your banking or credit card information."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/services/benefits/dental/dental-care-plan/qualify.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: official name is 'Canadian Dental Care Plan' (the task list said 'Canada Dental Care Plan')]",
+        "[VERIFY: 'what you need to apply', methods and 'no fee' come from the CDCP 'Apply' page (added to sources); phone 1-833-537-4342 is on that page]",
+        "[VERIFY: applications for the 2026-2027 benefit period are open, per the CDCP overview page]",
+        "[VERIFY: the IFHP coverage page says IFHP acts as first payer for urgent dental care when a person is also eligible for the CDCP]"
+      ]
+    },
+    {
+      "id": "dtc",
+      "title": "Apply for the Disability Tax Credit (with a medical practitioner)",
+      "summary": "The Disability Tax Credit (DTC) can lower the income tax a person with a disability, or a family member who supports them, has to pay. It is also needed for other benefits, like the Child Disability Benefit and the Canada Disability Benefit.",
+      "phase": "first_year",
+      "priority": 30,
+      "essential": false,
+      "level": "federal",
+      "applies_to": {"all": [], "any": ["disability_adult", "disability_senior", "disability_child"]},
+      "people": "disability_groups",
+      "per_person": true,
+      "in_person": false,
+      "location_id": null,
+      "documents": [
+        "The DTC application: the digital form, or paper Form T2201, Disability Tax Credit Certificate",
+        "Part B of the application, filled out by a medical practitioner"
+      ],
+      "steps": [
+        "Find a medical practitioner who can certify the effects of the impairment, such as a medical doctor or nurse practitioner.",
+        "The person with the impairment (or their legal representative) fills out Part A: online in their CRA account, by phone, or on paper Form T2201.",
+        "If you apply online or by phone, give the reference number to your medical practitioner. They fill out and send Part B.",
+        "Use only one method (digital or paper) for both parts.",
+        "Your medical practitioner may charge a fee. You may be able to claim it as a medical expense.",
+        "Send your DTC application before you file your tax return, to avoid delays."
+      ],
+      "conditional_notes": [],
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/segments/tax-credits-deductions-persons-disabilities/disability-tax-credit/how-apply-dtc.html",
+      "reviewed": false,
+      "verify_notes": [
+        "[VERIFY: eligibility (severe and prolonged impairment, expected to last at least 12 months, certified by a medical practitioner) is on the DTC 'Who is eligible' page (added to sources)]",
+        "[VERIFY: 'needed for the Child Disability Benefit and the Canada Disability Benefit' comes from those programs' pages (added to sources), not the DTC page]",
+        "[VERIFY: Part A asks for the applicant's SIN on the paper form; newcomers need a SIN first]",
+        "[VERIFY: which practitioners certify which impairment (for example, optometrist for vision, audiologist for hearing) is listed on the page]"
+      ]
+    }
+  ]
+}

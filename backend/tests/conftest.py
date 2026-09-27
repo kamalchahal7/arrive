@@ -79,3 +79,21 @@ class RecordingPool:
 
     def all_args_text(self) -> str:
         return " ".join(str(a) for _, args in self.queries for a in args)
+
+    # pool.acquire() and conn.transaction() both hand back this recorder, so queries inside them are recorded too.
+    def acquire(self) -> "_Passthrough":
+        return _Passthrough(self)
+
+    def transaction(self) -> "_Passthrough":
+        return _Passthrough(self)
+
+
+class _Passthrough:
+    def __init__(self, target: Any) -> None:
+        self.target = target
+
+    async def __aenter__(self) -> Any:
+        return self.target
+
+    async def __aexit__(self, *exc: Any) -> None:
+        return None
