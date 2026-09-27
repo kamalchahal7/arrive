@@ -1,5 +1,7 @@
 # Arrive
 
+**Live site: [arrive-mapple.me](https://arrive-mapple.me)**
+
 **The immigrant's best friend.** Official government information, explained for newcomers in their own language,
 by text or voice, with a real person when they need one, and anonymized needs data that helps government serve them better.
 
@@ -10,7 +12,7 @@ Voice agent setup: [docs/ELEVENLABS_AGENT.md](docs/ELEVENLABS_AGENT.md).
 
 | People served | Institutions | Interaction improved |
 |---|---|---|
-| Government-Assisted Refugees arriving in Ottawa as permanent residents, with their families (English, French, Arabic, Dari, Pashto, Tigrinya) | IRCC, CRA, Service Canada, ServiceOntario, City of Ottawa, settlement agencies | Getting official information in your language, knowing what to do next, reaching a real person, and showing institutions what newcomers struggle with |
+| Government-Assisted Refugees arriving in Ottawa as permanent residents, with their families (English, French, Arabic, Hindi, Mandarin, Spanish) | IRCC, CRA, Service Canada, ServiceOntario, City of Ottawa, settlement agencies | Getting official information in your language, knowing what to do next, reaching a real person, and showing institutions what newcomers struggle with |
 
 ## How it works
 
