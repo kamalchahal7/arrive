@@ -16,7 +16,7 @@ from datetime import datetime, timedelta, timezone
 import asyncpg
 
 from app.config import get_settings
-from app.db.pool import ssl_context
+from app.db.pool import connect
 
 WEEKS = 8
 SEED = 42
@@ -121,7 +121,7 @@ async def main() -> None:
     parser.add_argument("--clear", action="store_true", help="remove all sample rows and sample handoffs")
     args = parser.parse_args()
     s = get_settings()
-    conn = await asyncpg.connect(s.database_url, ssl=ssl_context(s.database_url), timeout=30)
+    conn = await connect(s)
     try:
         await conn.execute("DELETE FROM request_log WHERE is_sample")
         await conn.execute("DELETE FROM handoffs WHERE is_sample")

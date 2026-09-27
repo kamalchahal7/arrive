@@ -1,34 +1,41 @@
-"""asyncpg connection pool. Opened at startup, and retried lazily if the database was unreachable then."""
+"""Database connections. Every connection (API pool, migrations, ingestion, scripts) goes through this module so
+TLS follows the DSN's sslmode the same way everywhere (see app/db/tls.py)."""
 
 import asyncio
+import json
 import logging
-import ssl
 import time
 
 import asyncpg
+
+from app.config import Settings
+from app.db.tls import ssl_context
 
 logger = logging.getLogger(__name__)
 
 _pool: asyncpg.Pool | None = None
 _dsn: str = ""
+_root_cert: str | None = None
 _lock = asyncio.Lock()
 _last_attempt = 0.0
 RETRY_SECONDS = 15
 
 
-def ssl_context(dsn: str) -> ssl.SSLContext | None:
-    # Tiger Cloud requires TLS. asyncpg reads sslmode from the DSN, but an explicit context
-    # makes certificate verification consistent across platforms.
-    if "sslmode=disable" in dsn:
-        return None
-    return ssl.create_default_context()
+def ssl_for(settings: Settings) -> object:
+    """asyncpg `ssl=` value for these settings."""
+    return ssl_context(settings.database_url, settings.db_ssl_root_cert or None)
 
 
 async def _init_connection(conn: asyncpg.Connection) -> None:
     # jsonb in and out as Python objects.
-    import json
-
     await conn.set_type_codec("jsonb", encoder=json.dumps, decoder=json.loads, schema="pg_catalog")
+
+
+async def connect(settings: Settings, *, timeout: float = 30) -> asyncpg.Connection:
+    """A single connection for command-line tools (migrations, ingestion, seeding)."""
+    conn = await asyncpg.connect(settings.database_url, ssl=ssl_for(settings), timeout=timeout)
+    await _init_connection(conn)
+    return conn
 
 
 async def _create() -> asyncpg.Pool | None:
@@ -41,19 +48,20 @@ async def _create() -> asyncpg.Pool | None:
             max_size=10,
             command_timeout=30,
             timeout=10,
-            ssl=ssl_context(_dsn),
+            ssl=ssl_context(_dsn, _root_cert),
             init=_init_connection,
         )
     except Exception as exc:
         # Start anyway so /api/health can report the problem instead of the app crash-looping.
-        logger.error("could not open database pool: %s", type(exc).__name__)
+        logger.error("could not open database pool: %s: %s", type(exc).__name__, exc)
         return None
 
 
-async def open_pool(dsn: str) -> None:
-    global _pool, _dsn
-    _dsn = dsn
-    if not dsn:
+async def open_pool(settings: Settings) -> None:
+    global _pool, _dsn, _root_cert
+    _dsn = settings.database_url
+    _root_cert = settings.db_ssl_root_cert or None
+    if not _dsn:
         logger.warning("DATABASE_URL is not set; database features are disabled")
         return
     _pool = await _create()

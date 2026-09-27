@@ -15,7 +15,7 @@ from pathlib import Path
 import asyncpg
 
 from app.config import Settings, get_settings
-from app.db.pool import ssl_context
+from app.db.pool import connect
 
 logger = logging.getLogger("arrive.migrate")
 
@@ -65,7 +65,7 @@ async def apply_migrations(conn: asyncpg.Connection, settings: Settings) -> list
 async def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     settings = get_settings()
-    conn = await asyncpg.connect(settings.database_url, ssl=ssl_context(settings.database_url), timeout=30)
+    conn = await connect(settings)
     try:
         done = await apply_migrations(conn, settings)
         print(f"Applied {len(done)} migration(s): {', '.join(done) or 'none (up to date)'}")
