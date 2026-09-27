@@ -34,6 +34,41 @@ export const checklist = (lang: string) => {
   };
 };
 
+export const programs = (lang: string) => ({
+  profile_id: PROFILE_ID, language: lang, notes: [],
+  programs: [
+    { id: "healthy_smiles", group: "children", level: "ontario", title: lang === "ar" ? "ابتسامات صحية أونتاريو" : "Healthy Smiles Ontario", summary: "Free dental care for children.", has_location: false },
+    { id: "linc", group: "everyone", level: "federal", title: lang === "ar" ? "دروس اللغة المجانية" : "Free English or French classes", summary: "Language classes for adults.", has_location: true },
+  ],
+});
+
+export const itemDetail = (lang: string, id: string) => {
+  const ar = lang === "ar";
+  return {
+    id, kind: id === "linc" || id === "healthy_smiles" ? "program" : "checklist", language: lang,
+    title: ar ? "قدّم طلب البطاقة الصحية في أونتاريو" : "Apply for an Ontario health card (OHIP)",
+    summary: ar ? "كل فرد في العائلة يحتاج بطاقة صحية." : "Everyone in your family needs a health card.",
+    level: "ontario", phase: "first_2_weeks", phase_label: ar ? "الأسبوعان الأولان" : "First 2 weeks", group: null,
+    essential: true, in_person: true,
+    documents: ar ? ["نموذج التسجيل", "بطاقة الإقامة الدائمة"] : ["A completed registration form", "Your Permanent Resident card or COPR"],
+    steps: ar ? ["اذهب إلى ServiceOntario", "أحضر وثائقك"] : ["Go to a ServiceOntario centre", "Bring your documents"],
+    eligibility: ["Children 17 and under"], how_to_apply: ["Ask your dentist"],
+    notes: [],
+    location: {
+      name: "ServiceOntario - Ottawa City Hall", institution: "ServiceOntario", address: "110 Laurier Avenue West, Ottawa, Ontario K1P 1J1",
+      phone: "613-232-9634", hours: null, lat: 45.4208154, lon: -75.6901177, map_query: "ServiceOntario Ottawa City Hall", photo: null, verified: false,
+    },
+    source: { url: "https://www.ontario.ca/page/apply-ohip-and-get-health-card", title: "Apply for OHIP and get a health card", last_checked: "2026-09-26" },
+    staff_card: true,
+    rows: [
+      { person_key: "self", person_label: "Amira", status: "todo" },
+      { person_key: "child-1", person_label: ar ? "الطفل 1" : "Child 1", status: "done" },
+    ],
+    reviewed: false,
+    disclaimer: "This is information, not legal or tax advice.",
+  };
+};
+
 export type ApiLog = { path: string; method: string; body: unknown }[];
 
 const roadmap = (lang: string) => ({
@@ -108,6 +143,11 @@ export async function mockApi(page: Page, lang: string, options: Options = {}): 
     }
     if (path.startsWith("/profile/")) return json(profile({ ...(body as object) }));
     if (path.startsWith("/checklist/")) return method === "GET" ? json(checklist(lang)) : json({ updated: 1, done: 2, total: 5 });
+    if (path.startsWith("/programs/")) return json(programs(lang));
+    if (path.startsWith("/items/")) {
+      const itemLang = url.searchParams.get("lang") ?? lang;
+      return json(itemDetail(itemLang, path.split("/")[2]));
+    }
     if (path === "/onboarding/answer") {
       const form = req.postDataBuffer()?.toString("latin1") ?? "";
       const key = /name="question_key"\r\n\r\n([a-z_]+)/.exec(form)?.[1] ?? "";
@@ -123,12 +163,17 @@ export async function mockApi(page: Page, lang: string, options: Options = {}): 
   return log;
 }
 
-export async function withProfile(page: Page) {
-  await page.addInitScript((id) => {
-    try {
-      localStorage.setItem("arrive.profileId", id);
-    } catch {
-      /* ignore */
-    }
-  }, PROFILE_ID);
+/** A device that already has a profile (and, like after onboarding, the profile cached on the phone). */
+export async function withProfile(page: Page, lang = "en") {
+  await page.addInitScript(
+    ({ id, cached }) => {
+      try {
+        localStorage.setItem("arrive.profileId", id);
+        localStorage.setItem("arrive.profile", JSON.stringify(cached));
+      } catch {
+        /* ignore */
+      }
+    },
+    { id: PROFILE_ID, cached: profile({ preferred_language: lang }) },
+  );
 }

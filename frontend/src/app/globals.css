@@ -43,6 +43,11 @@ body {
   font-mono still win (give Latin-only text like an Arrive ID lang="en" and font-mono).
 */
 @layer base {
+  /* English or French inside a page in another script (addresses, the staff card) keeps the Latin face. */
+  :lang(en),
+  :lang(fr) {
+    font-family: var(--font-sans);
+  }
   :lang(ar),
   :lang(fa),
   :lang(prs),
@@ -179,6 +184,20 @@ html[data-reduce-motion="true"] *::after {
 .avatar-dot { animation: avatar-dot 1.2s ease-in-out infinite; }
 .avatar-dot-2 { animation-delay: 0.2s; }
 .avatar-dot-3 { animation-delay: 0.4s; }
+
+/* Staff card "Show to staff" mode: when the phone is held upright and the screen could not be locked to landscape,
+   turn the card sideways so the English and French text reads across the long side. */
+@media (orientation: portrait) {
+  .staff-landscape {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: 100dvh;
+    height: 100dvw;
+    transform-origin: top left;
+    transform: translateX(100dvw) rotate(90deg);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

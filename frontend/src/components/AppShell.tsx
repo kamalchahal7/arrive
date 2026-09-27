@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Map, MessageCircle, Settings, ShieldQuestion } from "lucide-react";
+import { ArrowLeft, FileText, Map, MessageCircle, Settings, ShieldQuestion } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -17,7 +17,7 @@ export function AppHeader() {
   return (
     <header className="border-b border-line bg-surface">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2">
-        <Link href="/" lang="en" className="font-display text-2xl font-semibold text-teal" aria-label={t("appName")}>
+        <Link href="/home" lang="en" className="font-display text-2xl font-semibold text-teal" aria-label={t("appName")}>
           Arrive
         </Link>
         <div className="flex items-center gap-2">
@@ -31,6 +31,8 @@ export function AppHeader() {
   );
 }
 
+// The old bottom navigation (Roadmap, Ask, Letters, Is it real?). Replaced by the home screen in the redesign
+// (docs/REDESIGN.md section 2); kept here, unused, so it can come back if needed.
 export function BottomNav() {
   const t = useTranslations("Nav");
   const pathname = usePathname();
@@ -66,12 +68,19 @@ export function BottomNav() {
   );
 }
 
+// Pages reached from "More help" (ask, letters, scam check, settings, trust, talk to a person): a way back home.
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const t = useTranslations("Common");
   return (
     <>
       <AppHeader />
-      <div className="pb-24">{children}</div>
-      <BottomNav />
+      <div className="mx-auto max-w-3xl px-4 pt-3">
+        <Link href="/home" className="btn btn-quiet !px-0">
+          <ArrowLeft aria-hidden className="size-5 rtl:-scale-x-100" />
+          {t("backHome")}
+        </Link>
+      </div>
+      <div className="pb-12">{children}</div>
     </>
   );
 }

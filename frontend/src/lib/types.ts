@@ -180,3 +180,45 @@ export type CardSide = {
 export type StaffCard = { official: CardSide; native: CardSide };
 
 export type ContactMethod = "phone" | "text" | "whatsapp" | "email" | "in_person";
+
+export type Place = {
+  name: string;
+  institution: string | null;
+  address: string | null;
+  phone: string | null;
+  hours: string | null;
+  lat: number | null;
+  lon: number | null;
+  map_query: string | null;
+  photo: string | null;
+  verified: boolean;
+};
+
+export type ItemDetail = {
+  id: string;
+  kind: "checklist" | "program";
+  language: string;
+  title: string;
+  summary: string;
+  level: string;
+  phase: string | null;
+  phase_label: string | null;
+  group: string | null;
+  essential: boolean;
+  in_person: boolean;
+  documents: string[];
+  steps: string[];
+  eligibility: string[];
+  how_to_apply: string[];
+  notes: string[];
+  location: Place | null;
+  source: { url: string; title: string | null; last_checked: string | null } | null;
+  staff_card: boolean;
+  rows: { person_key: string; person_label: string; status: "todo" | "done" }[];
+  reviewed: boolean;
+  disclaimer: string;
+};
+
+export type ProgramSummary = { id: string; group: string; level: string; title: string; summary: string; has_location: boolean };
+
+export type Programs = { profile_id: string; language: string; notes: string[]; programs: ProgramSummary[] };

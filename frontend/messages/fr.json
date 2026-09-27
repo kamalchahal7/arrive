@@ -25,7 +25,8 @@
     "infoNotAdvice": "Ceci est de l'information, pas un avis juridique ou fiscal.",
     "language": "Langue",
     "required": "obligatoire",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "backHome": "Retour à ma liste"
   },
   "Nav": {
     "label": "Principal",
@@ -223,9 +224,94 @@
     "noProfile": "Répondez à quelques questions pour créer votre liste.",
     "start": "Commencer",
     "essential": "Essentiel",
-    "forPerson": "Pour : {person}",
-    "markDone": "Marquer comme fait : {title} ({person})",
-    "offline": "Vous êtes hors ligne. Voici votre liste enregistrée."
+    "offline": "Vous êtes hors ligne. Voici votre liste enregistrée.",
+    "checklistTitle": "Votre liste",
+    "loading": "Chargement de votre liste…",
+    "allDone": "Vous avez terminé toutes les étapes. Bravo!",
+    "now": "Maintenant",
+    "phaseProgress": "{done} sur {total}",
+    "checkLabel": "{title}, pour {person}",
+    "savedLocally": "Enregistré sur ce téléphone. Ce sera envoyé quand vous serez de nouveau en ligne.",
+    "askAvatar": "Demander à l'assistant",
+    "idButton": "Mon ID"
+  },
+  "Programs": {
+    "title": "Programmes pour votre famille",
+    "intro": "Des programmes et des prestations gratuits qui peuvent vous aider.",
+    "none": "Aucun programme à montrer pour le moment.",
+    "group": {
+      "everyone": "Pour tous",
+      "children": "Pour les enfants",
+      "seniors": "Pour les aînés",
+      "disability": "Handicap",
+      "disability_children": "Enfants ayant un handicap"
+    },
+    "level": {
+      "federal": "Canada",
+      "ontario": "Ontario",
+      "ottawa": "Ottawa"
+    }
+  },
+  "MoreHelp": {
+    "title": "Plus d'aide",
+    "talk": "Parler à une personne",
+    "letter": "Lire une lettre",
+    "scam": "Est-ce vrai?",
+    "settings": "Paramètres d'accessibilité",
+    "trust": "Comment fonctionne Arrive"
+  },
+  "Item": {
+    "back": "Retour à ma liste",
+    "offline": "Vous êtes hors ligne. Voici la page enregistrée.",
+    "essential": "Essentiel",
+    "forWho": "Pour qui. Touchez quand c'est fait.",
+    "allDone": "Fait pour tout le monde.",
+    "done": "Fait",
+    "markDone": "Marquer comme fait",
+    "where": "Où aller",
+    "address": "Adresse",
+    "copy": "Copier l'adresse",
+    "copied": "Adresse copiée.",
+    "phone": "Téléphone",
+    "call": "Appeler le {phone}",
+    "hours": "Heures d'ouverture",
+    "notYet": "Pas encore disponible",
+    "eligibility": "Qui peut l'obtenir",
+    "documents": "Documents à apporter",
+    "documentsHint": "Touchez chaque document que vous avez prêt.",
+    "noDocuments": "La page officielle indique ce dont vous avez besoin.",
+    "steps": "Étapes",
+    "howToApply": "Comment faire une demande",
+    "staffCard": "Carte pour le personnel",
+    "staffCardHint": "Montrez cette carte au bureau. Elle explique au personnel, en anglais et en français, ce dont vous avez besoin et demande un interprète.",
+    "staffCardOpen": "Montrer ma carte",
+    "draft": "Brouillon : notre équipe n'a pas encore vérifié cette information. Vérifiez toujours la page officielle.",
+    "photoAlt": "Photo de {place}",
+    "photoPlaceholder": "Pas encore de photo de cet endroit",
+    "mapTitle": "Carte de {place}",
+    "showMap": "Afficher la carte",
+    "openMaps": "Ouvrir dans Google Maps",
+    "opensNewTab": "(s'ouvre dans un nouvel onglet)"
+  },
+  "IdCard": {
+    "title": "Ma carte d'identification",
+    "back": "Retour à ma liste",
+    "none": "Vous n'avez pas encore d'identifiant Arrive sur ce téléphone.",
+    "start": "Créer ma liste",
+    "noName": "Arrive",
+    "id": "Identifiant Arrive",
+    "languages": "Langues",
+    "family": "Famille",
+    "qrLabel": "Code QR avec votre identifiant Arrive",
+    "qrHint": "Scannez ce code avec un autre téléphone pour y ouvrir votre liste.",
+    "intro": "Vous pouvez montrer cette carte quand vous vous présentez."
+  },
+  "Assistant": {
+    "title": "Demander à l'assistant",
+    "back": "Retour à ma liste",
+    "intro": "Posez vos questions sur votre liste ou sur les services au Canada. Les réponses viennent seulement de pages officielles du gouvernement.",
+    "textOnly": "La conversation à voix haute n'est pas encore disponible dans votre langue. Vous pouvez écrire votre question.",
+    "type": "Écrire ma question"
   },
   "Roadmap": {
     "title": "Vos étapes",
@@ -353,7 +439,24 @@
     "forYou": "Pour vous",
     "bigger": "Agrandir le texte",
     "smaller": "Réduire le texte",
-    "back": "Retour à mes étapes"
+    "back": "Retour à mes étapes",
+    "hello": "Bonjour, je m'appelle {name}.",
+    "helloNoName": "Bonjour.",
+    "arrived": "Je suis arrivé(e) récemment au Canada comme réfugié(e) et je ne parle pas encore bien l'anglais ni le français.",
+    "task": "Je suis ici pour : {task}.",
+    "speak": "Je parle {language}.",
+    "speakAlso": "Je parle {language} (et aussi {others}).",
+    "interpreter": "Pourriez-vous m'aider à trouver un interprète ou une personne qui parle {language}? Merci.",
+    "invalid": "Cette carte ne peut pas être lue.",
+    "backToItem": "Retour",
+    "larger": "Texte plus grand",
+    "showStaff": "Montrer au personnel",
+    "exitStaff": "Fermer la vue pour le personnel",
+    "scanTitle": "Code QR de cette carte",
+    "scan": "Le personnel peut scanner ce code pour voir la même carte sur son téléphone.",
+    "onlyThis": "Cette carte contient seulement ce que vous voyez ici.",
+    "created": "Cette carte a été créée le {date}.",
+    "expired": "Cette carte est ancienne. Créez-en une nouvelle à partir de votre liste."
   },
   "Help": {
     "title": "Parler à une personne",

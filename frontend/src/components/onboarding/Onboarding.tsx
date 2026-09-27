@@ -128,6 +128,13 @@ export function Onboarding() {
       setCityInput(saved.draft.city_name ?? "");
     }
     setMicReady(canRecord());
+    // Scanned from an ID card QR code: /onboarding#open=ARV-...
+    const opened = /^#open=([A-Za-z0-9-]{12,24})$/.exec(window.location.hash)?.[1];
+    if (opened) {
+      setRestoreInput(opened);
+      setPhase("restore");
+      history.replaceState(null, "", window.location.pathname);
+    }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 

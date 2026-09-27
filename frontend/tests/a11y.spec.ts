@@ -1,8 +1,9 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { mockApi, withProfile } from "./fixtures";
+import { deflateRawSync } from "node:zlib";
+import { mockApi, PROFILE_ID, withProfile } from "./fixtures";
 
-const PAGES = ["", "/onboarding", "/home", "/roadmap", "/ask", "/letters", "/scam-check", "/help", "/settings", "/trust"];
+const PAGES = ["", "/onboarding", "/home", "/item/health_card", "/id", "/assistant", "/roadmap", "/ask", "/letters", "/scam-check", "/help", "/settings", "/trust"];
 
 for (const locale of ["en", "ar"]) {
   for (const path of PAGES) {
@@ -60,3 +61,23 @@ test("Dari and Pashto are right-to-left, Tigrinya is left-to-right", async ({ pa
     await expect(page.locator("html")).toHaveAttribute("dir", dir);
   }
 });
+
+// A staff card link as the app makes it (lib/cardPayload.ts): "1." + base64url(deflate-raw(JSON)).
+function cardLink(locale: string) {
+  const data = {
+    v: 1, n: "Amira", l: locale, o: ["en"], i: "health_card", t: "Apply for an Ontario health card (OHIP)",
+    de: ["A completed registration form"], dx: [], id: PROFILE_ID, c: 1790000000, e: 4102444800, k: 1,
+  };
+  return `/${locale}/card#1.${deflateRawSync(Buffer.from(JSON.stringify(data))).toString("base64url")}`;
+}
+
+for (const locale of ["en", "ar"]) {
+  test(`axe: /${locale}/card has no serious or critical issues`, async ({ page }) => {
+    await page.goto(cardLink(locale));
+    await expect(page.getByRole("article")).toContainText("Hello, my name is Amira.");
+    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+    const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
+    expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).slice(0, 3).join(", ")}`)).toEqual([]);
+  });
+}
+

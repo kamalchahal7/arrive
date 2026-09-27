@@ -25,7 +25,8 @@
     "infoNotAdvice": "እዚ ሓበሬታ እዩ እምበር ናይ ሕጊ ወይ ናይ ግብሪ ምኽሪ ኣይኮነን።",
     "language": "ቋንቋ",
     "required": "ግድን የድሊ",
-    "cancel": "ሰርዝ"
+    "cancel": "ሰርዝ",
+    "backHome": "ናብ ዝርዝረይ ተመለስ"
   },
   "Nav": {
     "label": "ቀንዲ",
@@ -223,9 +224,94 @@
     "noProfile": "ናይ ስራሕ ዝርዝርካ ንምድላው ሒደት ሕቶታት መልስ።",
     "start": "ጀምር",
     "essential": "ኣገዳሲ",
-    "forPerson": "ንዓኻ: {person}",
-    "markDone": "ከም ዝተሰርሐ ምልክት ግበር: {title} ({person})",
-    "offline": "ኢንተርኔት የብልካን። እዚ ዝተዓቀበ ናይ ስራሕ ዝርዝርካ እዩ።"
+    "offline": "ኢንተርኔት የብልካን። እዚ ዝተዓቀበ ናይ ስራሕ ዝርዝርካ እዩ።",
+    "checklistTitle": "ናይ መደብካ ዝርዝር",
+    "loading": "ዝርዝር መደብካ የውርድ ኣሎ…",
+    "allDone": "ኩሉ ስጉምቲ ወዲእኻዮ። ጽቡቕ ገይርካ!",
+    "now": "ሕጂ",
+    "phaseProgress": "{done} ካብ {total}",
+    "checkLabel": "{title}፣ ን{person}",
+    "savedLocally": "ኣብዚ ቴሌፎን ተኣራሚኡ ኣሎ። ኢንተርነት እንተረኺቡ ክልኣኽ እዩ።",
+    "askAvatar": "ንኣቫታር ሕተቶ",
+    "idButton": "መነጸርተይ"
+  },
+  "Programs": {
+    "title": "ንስ his ስ his ስድራቤትካ ዝኾኑ መደባት",
+    "intro": "ንዓኻ ክሕግዙ ዝኽእሉ ብነጻ ዝ беገሱ መደባትን ረብሓታትን።",
+    "none": "ክሳብ ሕጂ ዝርአ መደባት የለን።",
+    "group": {
+      "everyone": "ንኹሉ ሰብ",
+      "children": "ንቆልዑ",
+      "seniors": "ንዓበይቲ ሰባት",
+      "disability": "ንኣካለ ጽጉማን",
+      "disability_children": "ንጽጉማን ቆልዑ"
+    },
+    "level": {
+      "federal": "Canada",
+      "ontario": "Ontario",
+      "ottawa": "Ottawa"
+    }
+  },
+  "MoreHelp": {
+    "title": "ተወሳኺ ሓገዝ",
+    "talk": "ምስ ሰብ ተዛረብ",
+    "letter": "ደብዳቤ ቃንዮ (ስካን ግበር)",
+    "scam": "እዚ ሓቂዶ እዩ?",
+    "settings": "ናይ ምጥቃም ምምችቻው ምድላዋት",
+    "trust": "Arrive ብከመይ ይሰርሕ"
+  },
+  "Item": {
+    "back": "ናብ ዝርዝረይ ተመለስ",
+    "offline": "ኢንተርነት የለኻን። እዚ እቲ ዘቐመጥካዮ ገጽ እዩ።",
+    "essential": "ኣገዳሲ",
+    "forWho": "ንመን እዩ ዝኸውን። ምስተወደአ ጠውቖ።",
+    "allDone": "ንኹሉ ሰብ ተወዲኡ።",
+    "done": "ተወዲኡ",
+    "markDone": "ተወዲኡ ኢልካ ምልክት ግበረሉ",
+    "where": "ኣበይ ከም እትኸይድ",
+    "address": "ኣድራሻ",
+    "copy": "ኣድራሻ ቅደሕ",
+    "copied": "ኣድራሻ ተቐዲሑ።",
+    "phone": "ቴሌፎን",
+    "call": "ደውል ን{phone}",
+    "hours": "ዝኽፈተሉ ሰዓታት",
+    "notYet": "ገና ኣይተዳለወን",
+    "eligibility": "መን ክረኽቦ ይኽእል",
+    "documents": "እተምጽኦም ሰነዳት",
+    "documentsHint": "ዘለዉኻ ሰነዳት ሓደ ብሓደ ጠውቖም።",
+    "noDocuments": "እቲ ወግዓዊ ገጽ ዝድልየካ ነገራት ይዝርዝር።",
+    "steps": "ስጉምቲታት",
+    "howToApply": "ብከመይ ከም እትሓትት",
+    "staffCard": "ንሰራሕተኛታት ቤት ጽሕፈት ዝኸውን ወረቐት",
+    "staffCardHint": "እዚ ወረቐት ኣብቲ ቤት ጽሕፈት ኣርእዮ። ንሰራሕተኛታት ብእንግሊዝኛን ብፍረንሳይን እንታይ ከም ዝደለኻ ይነግሮም፣ ኣስተርጓሚ እውን ይሓተልካ።",
+    "staffCardOpen": "ወረቐተይ ኣርእይ",
+    "draft": "መርኣያ፡  my ሓበሬታ ብሰራሕተኛታትና ገና ኣይተረጋገጸን። সদpool ወግዓዊ ገጽ ርኣይ።",
+    "photoAlt": "ስእሊ ናይ {place}",
+    "photoPlaceholder": "ናይዚ ቦታ ስእሊ ገና የለን",
+    "mapTitle": "ካርታ ናይ {place}",
+    "showMap": "ካርታ ኣርእይ",
+    "openMaps": "ኣብ Google Maps ኽፈቶ",
+    "opensNewTab": "(ኣብ ሓድሽ ገጽ ይኽፈት)"
+  },
+  "IdCard": {
+    "title": "ናይ መነጸርታ ወረቐተይ",
+    "back": "ናብ ዝርዝረይ ተመለስ",
+    "none": "ኣብዚ ቴሌፎን ናይ Arrive መነጸርታ የለኻን።",
+    "start": "ዝርዝረይ ኣዳልው",
+    "noName": "Arrive",
+    "id": "Arrive ID",
+    "languages": "ቋንቋታት",
+    "family": "ስድራቤት",
+    "qrLabel": "ናይ Arrive መነጸርታ QR ኮድ",
+    "qrHint": "ኣብዚ ዘሎ ዝርዝር ኣብ ካልእ ቴሌፎን ንምኽፋት እዚ ኮድ ስካን ግበሮ።",
+    "intro": "ነፍስኻ ክተངልል ከለኻ እዚ ወረቐት ክታርኢ ትኽእል እያ።"
+  },
+  "Assistant": {
+    "title": "ንኣቫታር ሕተቶ",
+    "back": "ናብ ዝርዝረይ ተመለስ",
+    "intro": "ብዛዕባ ዝርዝርካ ё ብዛዕባ ኣገልግሎታት Canada ሕተት። መልሲ ካብ ወግዓዊ ናይ መንግስቲ ገጻት ጥራይ እዩ ዝመጽእ።",
+    "textOnly": "ብድምጺ ምዝራብ ብቋንቋኻ ገና ኣይተጀመረን። ሕቶኻ ክትጽሕፍ ትኽእል እኻ።",
+    "type": "ሕቶይ ጽሓፍ"
   },
   "Roadmap": {
     "title": "ናይ ጉዕዞ መደብካ",
@@ -353,7 +439,24 @@
     "forYou": "ንዓኻ",
     "bigger": "ጽሑፍ ኣዕብዮ",
     "smaller": "ጽሑፍ ኣንእሶ",
-    "back": "ናብ ናይ ጉዕዞ መደብይ ተመለስ"
+    "back": "ናብ ናይ ጉዕዞ መደብይ ተመለስ",
+    "hello": "ሰላም፣ ስመይ {name} ይበሃል።",
+    "helloNoName": "ሰላም።",
+    "arrived": "ኣነ ናብ Canada ከም ስደተኛ ጽቡቕ ኣቢለ መጺአ፣ እንግሊዝኛ ё ፍረንሳይኛ ገና ጽቡቕ ኣይዛረብን እየ።",
+    "task": "ኣብዚ ዝመጻኹሉ፡ {task}።",
+    "speak": "ቋንቋ {language} እዛረብ።",
+    "speakAlso": "ቋንቋ {language} እዛረብ (ከመኡ እውን {others})።",
+    "interpreter": "ብካcontent ሓደ ኣስተርጓሚ ወይ {language} ዝዛረብ ሰብ ክትደልየለይ ትኽእልዶ? የቐንየለይ።",
+    "invalid": "እዚ ወረቐት ክንበብ ኣይተኻእለን።",
+    "backToItem": "ተመለስ",
+    "larger": "ዓቢ ጽሑፍ",
+    "showStaff": "ንሰራሕተኛታት ኣርእይ",
+    "exitStaff": "ናይ ሰራሕተኛታት ርኢቶ ዓጽዎ",
+    "scanTitle": "ናይዚ ወረቐት QR ኮድ",
+    "scan": "ሰራሕተኛታት ነዚ ኮድ ስካን ብምግባር እዚ ወረቐት ኣብ ቴሌፎኖም ክርእይዎ ይኽእሉ።",
+    "onlyThis": "እዚ ወረቐት ኣብዚ ዘሎ ሓበሬታ ጥራይ እዩ ዘለዎ።",
+    "created": "እዚ ወረቐት ኣብ {date} ተሰሪሑ።",
+    "expired": "እዚ ወረቐት ኣሪጉ እዩ። ብካcontent ካብ ዝርዝርካ ሓድሽ ኣውጽእ።"
   },
   "Help": {
     "title": "ምስ ሰብ ተዛረብ",

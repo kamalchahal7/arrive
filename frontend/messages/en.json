@@ -24,7 +24,8 @@
     "infoNotAdvice": "This is information, not legal or tax advice.",
     "language": "Language",
     "required": "required",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "backHome": "Back to my checklist"
   },
   "Nav": {
     "label": "Main",
@@ -222,9 +223,94 @@
     "noProfile": "Answer a few questions to make your checklist.",
     "start": "Start",
     "essential": "Essential",
-    "forPerson": "For: {person}",
-    "markDone": "Mark as done: {title} ({person})",
-    "offline": "You are offline. This is your saved checklist."
+    "offline": "You are offline. This is your saved checklist.",
+    "checklistTitle": "Your checklist",
+    "loading": "Loading your checklist…",
+    "allDone": "You finished every step. Well done!",
+    "now": "Now",
+    "phaseProgress": "{done} of {total}",
+    "checkLabel": "{title}, for {person}",
+    "savedLocally": "Saved on this phone. It will be sent when you are back online.",
+    "askAvatar": "Ask the avatar",
+    "idButton": "My ID"
+  },
+  "Programs": {
+    "title": "Programs for your family",
+    "intro": "Free programs and benefits that may help you.",
+    "none": "No programs to show yet.",
+    "group": {
+      "everyone": "For everyone",
+      "children": "For children",
+      "seniors": "For seniors",
+      "disability": "Disability",
+      "disability_children": "Children with a disability"
+    },
+    "level": {
+      "federal": "Canada",
+      "ontario": "Ontario",
+      "ottawa": "Ottawa"
+    }
+  },
+  "MoreHelp": {
+    "title": "More help",
+    "talk": "Talk to a person",
+    "letter": "Scan a letter",
+    "scam": "Is this real?",
+    "settings": "Accessibility settings",
+    "trust": "How Arrive works"
+  },
+  "Item": {
+    "back": "Back to my checklist",
+    "offline": "You are offline. This is the page you saved.",
+    "essential": "Essential",
+    "forWho": "Who this is for. Tap when it is done.",
+    "allDone": "Done for everyone.",
+    "done": "Done",
+    "markDone": "Mark as done",
+    "where": "Where to go",
+    "address": "Address",
+    "copy": "Copy address",
+    "copied": "Address copied.",
+    "phone": "Phone",
+    "call": "Call {phone}",
+    "hours": "Opening hours",
+    "notYet": "Not available yet",
+    "eligibility": "Who can get it",
+    "documents": "Documents to bring",
+    "documentsHint": "Tap each document you have ready.",
+    "noDocuments": "The official page lists what you need.",
+    "steps": "Steps",
+    "howToApply": "How to apply",
+    "staffCard": "Card for the office staff",
+    "staffCardHint": "Show this card at the office. It tells the staff, in English and French, what you need and asks for an interpreter.",
+    "staffCardOpen": "Show my card",
+    "draft": "Draft: our team has not checked this information yet. Always check the official page.",
+    "photoAlt": "Photo of {place}",
+    "photoPlaceholder": "No photo of this place yet",
+    "mapTitle": "Map of {place}",
+    "showMap": "Show the map",
+    "openMaps": "Open in Google Maps",
+    "opensNewTab": "(opens in a new tab)"
+  },
+  "IdCard": {
+    "title": "My ID card",
+    "back": "Back to my checklist",
+    "none": "You do not have an Arrive ID on this phone yet.",
+    "start": "Make my checklist",
+    "noName": "Arrive",
+    "id": "Arrive ID",
+    "languages": "Languages",
+    "family": "Family",
+    "qrLabel": "QR code with your Arrive ID",
+    "qrHint": "Scan this code with another phone to open your checklist there.",
+    "intro": "You can show this card when you introduce yourself."
+  },
+  "Assistant": {
+    "title": "Ask the avatar",
+    "back": "Back to my checklist",
+    "intro": "Ask about your checklist or about services in Canada. Answers come only from official government pages.",
+    "textOnly": "Talking is not available in your language yet. You can type your question.",
+    "type": "Type my question"
   },
   "Roadmap": {
     "title": "Your roadmap",
@@ -352,7 +438,24 @@
     "forYou": "For you",
     "bigger": "Make text bigger",
     "smaller": "Make text smaller",
-    "back": "Back to my roadmap"
+    "back": "Back to my roadmap",
+    "hello": "Hello, my name is {name}.",
+    "helloNoName": "Hello.",
+    "arrived": "I recently arrived in Canada as a refugee and I don't speak English or French well yet.",
+    "task": "I am here for: {task}.",
+    "speak": "I speak {language}.",
+    "speakAlso": "I speak {language} (and also {others}).",
+    "interpreter": "Could you please help me find an interpreter or someone who speaks {language}? Thank you.",
+    "invalid": "This card could not be read.",
+    "backToItem": "Back",
+    "larger": "Larger text",
+    "showStaff": "Show to staff",
+    "exitStaff": "Close the staff view",
+    "scanTitle": "QR code of this card",
+    "scan": "Staff can scan this code to see the same card on their own phone.",
+    "onlyThis": "This card contains only what you see here.",
+    "created": "This card was created on {date}.",
+    "expired": "This card is old. Please make a new one from your checklist."
   },
   "Help": {
     "title": "Talk to a person",
